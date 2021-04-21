@@ -242,7 +242,6 @@ def autolog(
 
         param_map = _get_instance_param_map(estimator)
         if isinstance(estimator, Pipeline):
-            raise RuntimeError('DBG: raise error for pipeline case.')
             pipeline_hyerarchy, stages_param_maps = _get_pipeline_stage_hierarchy_and_params(
                 estimator)
             param_map.update(stages_param_maps)
@@ -259,6 +258,8 @@ def autolog(
         try_mlflow_log(mlflow.set_tags, _get_estimator_info_tags(estimator))
 
     def _log_posttraining_metadata(estimator, spark_model, params):
+        if isinstance(estimator, Pipeline):
+            raise RuntimeError('DBG: raise error for pipeline case.')
         # TODO: Log nested runs for spark ml tuning estimators
         #   (CrossValidator/TrainValidationSplit)
         if log_models:
