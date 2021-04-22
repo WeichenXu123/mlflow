@@ -257,6 +257,7 @@ def autolog(
 
         param_map = _get_instance_param_map(estimator)
         if isinstance(estimator, Pipeline):
+            raise RuntimeError('test raising error in _log_pretraining_metadata.')
             pipeline_hierarchy = _get_pipeline_stage_hierarchy(estimator)
             try_mlflow_log(
                 mlflow.log_dict, pipeline_hierarchy, artifact_file="pipeline_hierarchy.json"
