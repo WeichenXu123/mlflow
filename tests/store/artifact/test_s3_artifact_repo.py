@@ -10,6 +10,8 @@ from mlflow.store.artifact.s3_artifact_repo import S3ArtifactRepository
 from tests.helper_functions import set_boto_credentials  # pylint: disable=unused-import
 from tests.helper_functions import mock_s3_bucket  # pylint: disable=unused-import
 
+from unittest import mock
+
 
 @pytest.fixture
 def s3_artifact_root(mock_s3_bucket):
@@ -51,6 +53,16 @@ def test_file_artifact_is_logged_with_content_metadata(s3_artifact_root, tmpdir)
     response = s3_client.head_object(Bucket=bucket, Key="some/path/test.txt")
     assert response.get("ContentType") == "text/plain"
     assert response.get("ContentEncoding") is None
+
+
+@pytest.mark.parametrize("ignore_tls_env, verify", [("", False), ("true", None)])
+def test_get_s3_client_verify_param_set_correctly(
+        s3_artifact_root, tmpdir, ignore_tls_env, verify):
+    with mock.patch.dict('os.environ', {'MLFLOW_S3_IGNORE_TLS', ignore_tls_env}):
+        with mock.patch('boto3._get_s3_client') as mock_get_s3_client:
+            repo = get_artifact_repository(posixpath.join(s3_artifact_root, "some/path"))
+            repo._get_s3_client()
+            assert mock_get_s3_client.assert_called_with(verify=verify)
 
 
 def test_file_artifacts_are_logged_with_content_metadata_in_batch(s3_artifact_root, tmpdir):
