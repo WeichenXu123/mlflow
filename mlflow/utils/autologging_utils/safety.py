@@ -411,6 +411,12 @@ def safe_patch(
                 or (user_created_fluent_run_is_active and exclusive)
                 or mlflow.utils.autologging_utils._AUTOLOGGING_GLOBALLY_DISABLED
             ):
+                raise RuntimeError(
+                    f"active_session_failed={active_session_failed}," + \
+                    f"autologging_is_disabled(autologging_integration)={autologging_is_disabled(autologging_integration)}," + \
+                    f"user_created_fluent_run_is_active={user_created_fluent_run_is_active}, exclusive={exclusive}," + \
+                    f"mlflow.utils.autologging_utils._AUTOLOGGING_GLOBALLY_DISABLED={mlflow.utils.autologging_utils._AUTOLOGGING_GLOBALLY_DISABLED}"
+                )
                 # If the autologging integration associated with this patch is disabled,
                 # or if the current autologging integration is in exclusive mode and a user-created
                 # fluent run is active, call the original function and return. Restore the original
