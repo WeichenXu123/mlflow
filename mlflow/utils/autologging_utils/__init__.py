@@ -450,14 +450,17 @@ def autologging_is_disabled(integration_name):
     """
     explicit_disabled = get_autologging_config(integration_name, "disable", True)
     if explicit_disabled:
+        raise RuntimeError(f'autologging_is_disabled # 1')
         return True
 
     if (
         integration_name in FLAVOR_TO_MODULE_NAME_AND_VERSION_INFO_KEY
         and not is_flavor_supported_for_associated_package_versions(integration_name)
     ):
+        raise RuntimeError(f'autologging_is_disabled # 2')
         return get_autologging_config(integration_name, "disable_for_unsupported_versions", False)
 
+    raise RuntimeError(f'autologging_is_disabled # 3')
     return False
 
 
