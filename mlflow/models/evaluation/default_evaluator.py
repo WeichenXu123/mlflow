@@ -616,11 +616,15 @@ class DefaultEvaluator(ModelEvaluator):
         return EvaluationResult(self.metrics, self.artifacts)
 
     def _evaluate_regressor(self):
+        print('DGB: ###4')
         self.y_pred = self.model.predict(self.X)
+        print('DGB: ###5')
         self.metrics.update(_get_regressor_metrics(self.y, self.y_pred))
 
         self._log_metrics()
+        print('DGB: ###6')
         self._log_model_explainability()
+        print('DGB: ###7')
         return EvaluationResult(self.metrics, self.artifacts)
 
     def evaluate(

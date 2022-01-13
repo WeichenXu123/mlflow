@@ -603,6 +603,7 @@ def _evaluate(
     model_uuid = model.metadata.model_uuid
     dataset._log_dataset_tag(client, run_id, model_uuid)
 
+    print('DGB: ###2')
     eval_results = []
     for evaluator_name in evaluator_name_list:
         config = evaluator_name_to_conf_map.get(evaluator_name) or {}
@@ -614,6 +615,7 @@ def _evaluate(
 
         _last_failed_evaluator = evaluator_name
         if evaluator.can_evaluate(model_type=model_type, evaluator_config=config):
+            print('DGB: ###3')
             _logger.info(f"Evaluating the model with the {evaluator_name} evaluator.")
             result = evaluator.evaluate(
                 model=model,
@@ -796,6 +798,7 @@ def evaluate(
         feature_names=feature_names,
     )
 
+    print('DGB: ###1')
     with _start_run_or_reuse_active_run() as run_id:
         return _evaluate(
             model=model,
