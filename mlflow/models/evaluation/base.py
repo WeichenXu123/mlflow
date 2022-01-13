@@ -790,6 +790,7 @@ def evaluate(
         evaluator_name_to_conf_map,
     ) = _normalize_evaluators_and_evaluator_config_args(evaluators, evaluator_config)
 
+    print('DGB: ###0')
     dataset = _EvaluationDataset(
         data,
         targets=targets,
