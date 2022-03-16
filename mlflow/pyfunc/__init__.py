@@ -909,7 +909,8 @@ def spark_udf(spark, model_uri, result_type="double", env_manager="local"):
         archive_path = SparkModelCache.add_local_model(spark, local_model_path)
     else:
         if env_manager == "conda":
-            prepare_env(local_model_path)
+            # prepare_env(local_model_path)
+            pass
         elif env_manager == "virtualenv":
             raise NotImplementedError()
 
@@ -1034,11 +1035,12 @@ def spark_udf(spark, model_uri, result_type="double", env_manager="local"):
             # this prevents spark UDF task failing fast if other exception raised when scoring
             # server launching.
             if not use_nfs and not spark_in_local_mode:
-                prepare_env(local_model_path_on_executor)
+                # prepare_env(local_model_path_on_executor)
+                pass
             # launch scoring server
             # TODO: adjust timeout for server requests handler.
             scoring_server_proc = start_server(
-                server_port, local_model_path_on_executor, num_workers=1,
+                server_port, local_model_path_on_executor, num_workers=1, no_conda=True
             )
 
             client = ScoringServerClient("127.0.0.1", server_port)
