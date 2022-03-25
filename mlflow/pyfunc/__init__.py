@@ -793,7 +793,22 @@ def _get_or_create_model_cache_dir():
     return tmp_model_dir
 
 
-_MLFLOW_SERVER_OUTPUT_TAIL_LINES_TO_KEEP = 200
+_SUB_PROC_OUTPUT_TAIL_LINES_TO_KEEP = 200
+
+
+def _start_redirect_log_thread(child_stdout, server_tail_logs, sub_proc_name):
+    def server_redirect_log_thread_func():
+        for line in child_stdout:
+            if isinstance(line, bytes):
+                line = line.decode()
+            server_tail_logs.append(line)
+            sys.stdout.write(f"[{sub_proc_name}] {line}")
+
+    server_redirect_log_thread = threading.Thread(
+        target=server_redirect_log_thread_func
+    )
+    server_redirect_log_thread.setDaemon(True)
+    server_redirect_log_thread.start()
 
 
 def spark_udf(spark, model_uri, result_type="double", env_manager="local"):
@@ -1084,9 +1099,26 @@ def spark_udf(spark, model_uri, result_type="double", env_manager="local"):
                 # otherwise we have to set a long timeout for `client.wait_server_ready` time,
                 # this prevents spark UDF task failing fast if other exception raised when scoring
                 # server launching.
-                _get_flavor_backend(
+                prepare_env_proc = _get_flavor_backend(
                     local_model_path_on_executor, no_conda=False, install_mlflow=False
-                ).prepare_env(model_uri=local_model_path_on_executor)
+                ).prepare_env(
+                    model_uri=local_model_path_on_executor,
+                    synchronous=False,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                )
+
+                if prepare_env_proc != 0:  # 0 means the env is cached and skip running conda command
+                    prepare_env_proc_tail_logs = collections.deque(maxlen=_SUB_PROC_OUTPUT_TAIL_LINES_TO_KEEP)
+                    _start_redirect_log_thread(prepare_env_proc.stdout, prepare_env_proc_tail_logs, "prepare conda env")
+                    prepare_env_proc_rc = prepare_env_proc.wait()
+
+                    if prepare_env_proc_rc != 0:
+                        raise MlflowException(
+                            f"Preparing mlflow restored python env failed with return code {prepare_env_proc_rc}."
+                            f"The last {_SUB_PROC_OUTPUT_TAIL_LINES_TO_KEEP} lines output are:\n"
+                            f"{''.join(prepare_env_proc_rc)}"
+                        )
             else:
                 local_model_path_on_executor = local_model_path
             # launch scoring server
@@ -1104,20 +1136,8 @@ def spark_udf(spark, model_uri, result_type="double", env_manager="local"):
                 stderr=subprocess.STDOUT,
             )
 
-            server_tail_logs = collections.deque(maxlen=_MLFLOW_SERVER_OUTPUT_TAIL_LINES_TO_KEEP)
-
-            def server_redirect_log_thread_func(child_stdout):
-                for line in child_stdout:
-                    decoded = line.decode()
-                    server_tail_logs.append(decoded)
-                    sys.stdout.write("[model server] " + decoded)
-
-            server_redirect_log_thread = threading.Thread(
-                target=server_redirect_log_thread_func,
-                args=(scoring_server_proc.stdout,)
-            )
-            server_redirect_log_thread.setDaemon(True)
-            server_redirect_log_thread.start()
+            server_tail_logs = collections.deque(maxlen=_SUB_PROC_OUTPUT_TAIL_LINES_TO_KEEP)
+            _start_redirect_log_thread(scoring_server_proc.stdout, server_tail_logs, "mlflow server")
 
             client = ScoringServerClient("127.0.0.1", server_port)
 
@@ -1125,8 +1145,8 @@ def spark_udf(spark, model_uri, result_type="double", env_manager="local"):
                 client.wait_server_ready(timeout=90, scoring_server_proc=scoring_server_proc)
             except Exception:
                 err_msg = f"During spark UDF task execution, mlflow model server launching failed. "
-                if len(server_tail_logs) == _MLFLOW_SERVER_OUTPUT_TAIL_LINES_TO_KEEP:
-                    err_msg += f"Launching mlflow server command last {_MLFLOW_SERVER_OUTPUT_TAIL_LINES_TO_KEEP} lines output are:\n"
+                if len(server_tail_logs) == _SUB_PROC_OUTPUT_TAIL_LINES_TO_KEEP:
+                    err_msg += f"Launching mlflow server command last {_SUB_PROC_OUTPUT_TAIL_LINES_TO_KEEP} lines output are:\n"
                 else:
                     err_msg += "Launching mlflow server command output are:\n"
                 err_msg += ''.join(server_tail_logs)
