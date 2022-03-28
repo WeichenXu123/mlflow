@@ -14,6 +14,7 @@ from mlflow.pyfunc import ENV, scoring_server, mlserver
 from mlflow.utils.conda import get_or_create_conda_env, get_conda_bin_executable, get_conda_command
 from mlflow.tracking.artifact_utils import _download_artifact_from_uri
 from mlflow.utils.file_utils import path_to_local_file_uri
+from mlflow.utils import _truncate_and_ellipsize
 from mlflow.version import VERSION
 
 
@@ -31,13 +32,13 @@ class PyFuncBackend(FlavorBackend):
         self._no_conda = no_conda
         self._install_mlflow = install_mlflow
 
-    def prepare_env(self, model_uri):
+    def prepare_env(self, model_uri, capture_output=False):
         local_path = _download_artifact_from_uri(model_uri)
         if self._no_conda or ENV not in self._config:
             return 0
         conda_env_path = os.path.join(local_path, self._config[ENV])
         command = 'python -c ""'
-        return _execute_in_conda_env(conda_env_path, command, self._install_mlflow)
+        return _execute_in_conda_env(conda_env_path, command, self._install_mlflow, capture_output=capture_output)
 
     def predict(self, model_uri, input_path, output_path, content_type, json_format):
         """
@@ -220,6 +221,7 @@ def _execute_in_conda_env(
     preexec_fn=None,
     stdout=None,
     stderr=None,
+    capture_output=False
 ):
     """
     :param conda_env_path conda: conda environment file path
@@ -231,9 +233,21 @@ def _execute_in_conda_env(
                         If False, return the server process `Popen` instance immediately.
     :param stdout: Redirect server stdout
     :param stderr: Redirect server stderr
+    :param capture_output: Capture output and if error happen, raise error including captured
+                           output log. IF set True, it require synchronous argument to be True
+                           and stdout/stderr argument not set.
     """
     if command_env is None:
         command_env = os.environ
+
+    if capture_output:
+        if not (synchronous and stdout is None and stderr is None):
+            raise ValueError(
+                "If set capture_output, synchronous should be True and stdout, stderr arguments "
+                "should not be supplied at the same time."
+            )
+        stdout = subprocess.PIPE
+        stderr = subprocess.STDOUT
 
     # PIP_NO_INPUT=1 make pip run in non-interactive mode,
     # otherwise pip might prompt "yes or no" and ask stdin input
@@ -287,11 +301,21 @@ def _execute_in_conda_env(
         )
 
     if synchronous:
-        rc = child.wait()
+        if capture_output:
+            stdout_data, _ = child.communicate()
+            stdout_data = stdout_data.decode()
+            _logger.info(f"=== Command {command} output ===\n{stdout_data}\n")
+            rc = child.returncode
+        else:
+            rc = child.wait()
         if rc != 0:
-            raise Exception(
-                "Command '{0}' returned non zero return code. Return code = {1}".format(command, rc)
-            )
+            err_msg = "Command '{0}' returned non zero return code. Return code = {1}.".format(command, rc)
+            if capture_output:
+                truncated_output_data = _truncate_and_ellipsize(
+                    stdout_data, 2000, left_side=True
+                )
+                err_msg += f"\nstderr outputs:\n{truncated_output_data}"
+            raise Exception(err_msg)
         return 0
     else:
         return child
