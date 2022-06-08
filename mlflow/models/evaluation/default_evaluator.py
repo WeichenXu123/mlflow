@@ -89,8 +89,8 @@ def _extract_raw_model_and_predict_fn(model):
         )
 
     if raw_model:
-        predict_fn = raw_model.predict
-        predict_proba_fn = getattr(raw_model, "predict_proba", None)
+        og_predict_fn = raw_model.predict
+        og_predict_proba_fn = getattr(raw_model, "predict_proba", None)
 
         try:
             import xgboost
@@ -98,11 +98,21 @@ def _extract_raw_model_and_predict_fn(model):
             if isinstance(raw_model, xgboost.XGBModel):
                 # Because shap evaluation will pass evaluation data in ndarray format
                 # (without feature names), if set validate_features=True it will raise error.
-                predict_fn = partial(predict_fn, validate_features=False)
-                if predict_proba_fn is not None:
-                    predict_proba_fn = partial(predict_proba_fn, validate_features=False)
+                og_predict_fn = partial(og_predict_fn, validate_features=False)
+                if og_predict_proba_fn is not None:
+                    og_predict_proba_fn = partial(og_predict_proba_fn, validate_features=False)
         except ImportError:
             pass
+
+        # Wrap the original predict_fn / predict_proba_fn, add `input_df.copy(True)` preprocessing
+        # because some model might modify the input dataframe (e.g., appending new columns,
+        # or modify column values).
+
+        def predict_fn(input_df):
+            return og_predict_fn(input_df.copy(deep=True))
+
+        def predict_proba_fn(input_df):
+            return og_predict_proba_fn(input_df.copy(deep=True))
 
     return model_loader_module, raw_model, predict_fn, predict_proba_fn
 
@@ -537,14 +547,9 @@ class DefaultEvaluator(ModelEvaluator):
         truncated_feature_name_map = {
             f: f2 for f, f2 in zip(self.feature_names, truncated_feature_names)
         }
-
-        if isinstance(self.X, pd.DataFrame):
-            # For some shap explainer, the plot will use the DataFrame column names instead of
-            # using feature_names argument value. So rename the dataframe column names.
-            X_df = self.X.rename(columns=truncated_feature_name_map, copy=False)
-        else:
-            # If X is numpy array, convert to pandas dataframe.
-            X_df = pd.DataFrame(self.X, columns=truncated_feature_names)
+        # For some shap explainer, the plot will use the DataFrame column names instead of
+        # using feature_names argument value. So rename the dataframe column names.
+        X_df = self.X.rename(columns=truncated_feature_name_map, copy=False)
 
         sampled_X = shap.sample(X_df, sample_rows, random_state=0)
 
@@ -554,8 +559,11 @@ class DefaultEvaluator(ModelEvaluator):
         # shap explainer might call provided `predict_fn` with a `numpy.ndarray` type
         # argument, this might break some model inference, so convert the argument into
         # a pandas dataframe.
+        # The `shap_predict_fn` calls model's predict function, we need to restore the input
+        # dataframe with original column names, because some model prediction routine uses
+        # the column name.
         shap_predict_fn = lambda x: self.predict_fn(
-            pd.DataFrame(x, columns=truncated_feature_names)
+            pd.DataFrame(x, columns=self.feature_names)
         )
 
         try:
@@ -571,7 +579,19 @@ class DefaultEvaluator(ModelEvaluator):
                         )
                     background_X = shap.sample(X_df, sample_rows, random_state=3)
                     background_X = background_X.fillna(mode_or_mean_dict)
-                    explainer = shap.KernelExplainer(
+
+                    # `shap.KernelExplainer.not_equal` method fails on some special types such as
+                    # timestamp, this breaks the kernel explainer routine.
+                    # `PatchedKernelExplainer` fixes this issue.
+                    class PatchedKernelExplainer(shap.KernelExplainer):
+                        @staticmethod
+                        def not_equal(_i, _j):
+                            try:
+                                return shap.KernelExplainer.not_equal(_i, _j)
+                            except Exception:
+                                return _i != _j
+
+                    explainer = PatchedKernelExplainer(
                         shap_predict_fn, background_X, link=kernel_link
                     )
                 else:
@@ -998,7 +1018,7 @@ class DefaultEvaluator(ModelEvaluator):
             self.predict_fn = predict_fn
             self.predict_proba_fn = predict_proba_fn
 
-            self.X = dataset.features_data
+            self.X = pd.DataFrame(dataset.features_data, dataset.feature_names)
             self.y = dataset.labels_data
             self.metrics = dict()
             self.artifacts = {}
