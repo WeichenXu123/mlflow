@@ -21,6 +21,7 @@ import urllib
 import pathlib
 from collections import OrderedDict
 from abc import ABCMeta, abstractmethod
+import uuid
 
 
 _logger = logging.getLogger(__name__)
@@ -312,6 +313,7 @@ class EvaluationDataset:
                     f"feature_{str(i + 1).zfill(math.ceil((math.log10(num_features + 1))))}"
                     for i in range(num_features)
                 ]
+            self._original_feature_keys = [idx for idx in range(num_features)]
         elif isinstance(data, self._supported_dataframe_types):
             if not isinstance(targets, str):
                 raise ValueError(
@@ -336,6 +338,13 @@ class EvaluationDataset:
                 self._feature_names = feature_names
             else:
                 self._features_data = data.drop(targets, axis=1, inplace=False)
+
+                self._original_feature_keys = list(self._features_data.columns)
+                self._feature_names = [
+                    key if isinstance(key, str) else f"feature_{str(key)}_{uuid.uuid4().hex}"
+                    for key in self._features_data.columns
+                ]
+
                 self._feature_names = list(self._features_data.columns)
         else:
             raise ValueError(
@@ -347,13 +356,17 @@ class EvaluationDataset:
         md5_gen = hashlib.md5()
         _gen_md5_for_arraylike_obj(md5_gen, self._features_data)
         _gen_md5_for_arraylike_obj(md5_gen, self._labels_data)
-        md5_gen.update(",".join(self._feature_names).encode("UTF-8"))
+        md5_gen.update(",".join([str(x) for x in self._original_feature_keys]).encode("UTF-8"))
 
         self._hash = md5_gen.hexdigest()
 
     @property
     def feature_names(self):
         return self._feature_names
+
+    @property
+    def original_feature_keys(self):
+        return self._original_feature_keys
 
     @property
     def features_data(self):

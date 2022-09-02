@@ -414,8 +414,8 @@ def _compute_df_mode_or_mean(df):
 _SUPPORTED_SHAP_ALGORITHMS = ("exact", "permutation", "partition", "kernel")
 
 
-def _shap_predict_fn(x, predict_fn, feature_names):
-    return predict_fn(pd.DataFrame(x, columns=feature_names))
+def _shap_predict_fn(x, predict_fn, original_feature_keys):
+    return predict_fn(pd.DataFrame(x, columns=original_feature_keys))
 
 
 # pylint: disable=attribute-defined-outside-init
@@ -569,7 +569,9 @@ class DefaultEvaluator(ModelEvaluator):
         # the column name.
 
         shap_predict_fn = functools.partial(
-            _shap_predict_fn, predict_fn=self.predict_fn, feature_names=self.feature_names
+            _shap_predict_fn,
+            predict_fn=self.predict_fn,
+            original_feature_keys=self.dataset.original_feature_keys
         )
 
         try:
@@ -1042,7 +1044,7 @@ class DefaultEvaluator(ModelEvaluator):
         The features (`X`) portion of the dataset, guarded against accidental mutations.
         """
         return DefaultEvaluator._MutationGuardedData(
-            pd.DataFrame(self.dataset.features_data, columns=self.dataset.feature_names)
+            pd.DataFrame(self.dataset.features_data, columns=self.dataset.original_feature_keys)
         )
 
     class _MutationGuardedData:
