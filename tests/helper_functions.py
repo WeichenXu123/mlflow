@@ -4,7 +4,6 @@ import functools
 from unittest import mock
 from contextlib import ExitStack, contextmanager
 
-
 import logging
 import requests
 import time
@@ -14,6 +13,7 @@ import subprocess
 import uuid
 import sys
 import yaml
+import json
 import numbers
 
 import pytest
@@ -27,6 +27,7 @@ from mlflow.utils.environment import (
     _REQUIREMENTS_FILE_NAME,
     _CONSTRAINTS_FILE_NAME,
 )
+
 
 AWS_METADATA_IP = "169.254.169.254"  # Used to fetch AWS Instance and User metadata.
 LOCALHOST = "127.0.0.1"
@@ -62,6 +63,13 @@ def random_file(ext):
     return "temp_test_%d.%s" % (random_int(), ext)
 
 
+def expect_status_code(http_response, expected_code):
+    assert http_response.status_code == expected_code, (
+        f"Unexpected status code. {http_response.status_code} != {expected_code}, "
+        f"body: {http_response.text}"
+    )
+
+
 def score_model_in_sagemaker_docker_container(
     model_uri,
     data,
@@ -91,6 +99,29 @@ def score_model_in_sagemaker_docker_container(
         env=env,
     )
     return _evaluate_scoring_proc(proc, port, data, content_type, activity_polling_timeout_seconds)
+
+
+def pyfunc_generate_dockerfile(output_directory, model_uri=None, extra_args=None):
+    """
+    Builds a dockerfile for the specified model.
+    :param model_uri: URI of model, e.g. runs:/some-run-id/run-relative/path/to/model
+    :param extra_args: List of extra args to pass to `mlflow models build-docker` command
+    :param output_directory: Output directory to generate Dockerfile and model artifacts
+    """
+    cmd = [
+        "mlflow",
+        "models",
+        "generate-dockerfile",
+        *(["-m", model_uri] if model_uri else []),
+        "-d",
+        output_directory,
+    ]
+    mlflow_home = os.environ.get("MLFLOW_HOME")
+    if mlflow_home:
+        cmd += ["--mlflow-home", mlflow_home]
+    if extra_args:
+        cmd += extra_args
+    subprocess.run(cmd, check=True)
 
 
 def pyfunc_build_image(model_uri=None, extra_args=None):
@@ -267,23 +298,18 @@ class RestEndpoint:
                 self._proc.kill()
 
     def invoke(self, data, content_type):
-        import mlflow.pyfunc.scoring_server as pyfunc_scoring_server
         import pandas as pd
+        from mlflow.pyfunc import scoring_server as pyfunc_scoring_server
 
-        if type(data) == pd.DataFrame:
-            if content_type == pyfunc_scoring_server.CONTENT_TYPE_JSON_RECORDS_ORIENTED:
-                data = data.to_json(orient="records")
-            elif (
-                content_type == pyfunc_scoring_server.CONTENT_TYPE_JSON
-                or content_type == pyfunc_scoring_server.CONTENT_TYPE_JSON_SPLIT_ORIENTED
-            ):
-                data = data.to_json(orient="split")
-            elif content_type == pyfunc_scoring_server.CONTENT_TYPE_CSV:
+        if isinstance(data, pd.DataFrame):
+            if content_type == pyfunc_scoring_server.CONTENT_TYPE_CSV:
                 data = data.to_csv(index=False)
             else:
-                raise Exception(
-                    "Unexpected content type for Pandas dataframe input %s" % content_type
-                )
+                assert content_type == pyfunc_scoring_server.CONTENT_TYPE_JSON
+                data = json.dumps({"dataframe_split": data.to_dict(orient="split")})
+        elif type(data) not in {str, dict}:
+            data = json.dumps({"instances": data})
+
         response = requests.post(
             url="http://localhost:%d/invocations" % self._port,
             data=data,

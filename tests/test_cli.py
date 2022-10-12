@@ -169,7 +169,8 @@ def _create_run_in_store(store, create_artifacts=True):
         "experiment_id": "0",
         "user_id": "Anderson",
         "start_time": int(time.time()),
-        "tags": {},
+        "tags": [],
+        "run_name": "name",
     }
     run = store.create_run(**config)
     if create_artifacts:
@@ -318,20 +319,21 @@ def test_mlflow_gc_file_store_older_than(file_store):
 @pytest.mark.parametrize(
     "enable_mlserver",
     [
+        # NB: MLServer does not support mlflow-2.0 yet.
         # MLServer is not supported in Windows yet, so let's skip this test in that case.
         # https://github.com/SeldonIO/MLServer/issues/361
-        pytest.param(
-            True,
-            marks=pytest.mark.skipif(
-                os.name == "nt", reason="MLServer is not supported in Windows"
-            ),
-        ),
+        # pytest.param(
+        #     True,
+        #     marks=pytest.mark.skipif(
+        #         os.name == "nt", reason="MLServer is not supported in Windows"
+        #     ),
+        # ),
         False,
     ],
 )
 def test_mlflow_models_serve(enable_mlserver):
     class MyModel(pyfunc.PythonModel):
-        def predict(self, context, model_input):  # pylint: disable=unused-variable
+        def predict(self, context, model_input):
             return np.array([1, 2, 3])
 
     model = MyModel()
@@ -360,11 +362,11 @@ def test_mlflow_models_serve(enable_mlserver):
     scoring_response = pyfunc_serve_and_score_model(
         model_uri=model_uri,
         data=data,
-        content_type=pyfunc.scoring_server.CONTENT_TYPE_JSON_SPLIT_ORIENTED,
+        content_type=pyfunc.scoring_server.CONTENT_TYPE_JSON,
         extra_args=extra_args,
     )
     assert scoring_response.status_code == 200
-    served_model_preds = np.array(json.loads(scoring_response.content))
+    served_model_preds = np.array(json.loads(scoring_response.content)["predictions"])
     np.testing.assert_array_equal(served_model_preds, model.predict(data, None))
 
 

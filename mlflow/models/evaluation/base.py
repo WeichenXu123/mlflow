@@ -858,6 +858,7 @@ def evaluate(
     custom_metrics=None,
     validation_thresholds=None,
     baseline_model=None,
+    env_manager="local",
 ):
     """
     Evaluate a PyFunc model on the specified dataset using one or more specified ``evaluators``, and
@@ -882,11 +883,12 @@ def evaluate(
 
      - For binary classifiers, the default evaluator additionally logs:
         - **metrics**: true_negatives, false_positives, false_negatives, true_positives, recall,
-          precision, f1_score, accuracy, example_count, log_loss, roc_auc, precision_recall_auc.
+          precision, f1_score, accuracy_score, example_count, log_loss, roc_auc, 
+          precision_recall_auc.
         - **artifacts**: lift curve plot, precision-recall plot, ROC plot.
 
      - For multiclass classifiers, the default evaluator additionally logs:
-        - **metrics**: accuracy, example_count, f1_score_micro, f1_score_macro, log_loss
+        - **metrics**: accuracy_score, example_count, f1_score_micro, f1_score_macro, log_loss
         - **artifacts**: A CSV file for "per_class_metrics" (per-class metrics includes
           true_negatives/false_positives/false_negatives/true_positives/recall/precision/roc_auc,
           precision_recall_auc), precision-recall merged curves plot, ROC merged curves plot.
@@ -927,6 +929,15 @@ def evaluate(
         - **log_metrics_with_dataset_info**: A boolean value specifying whether or not to include
           information about the evaluation dataset in the name of each metric logged to MLflow
           Tracking during evaluation, default value is True.
+        - **pos_label**: The positive label to use when computing classification metrics such as
+          precision, recall, f1, etc. for binary classification models (default: ``1``). For
+          multiclass classification and regression models, this parameter will be ignored.
+        - **average**: The averaging method to use when computing classification metrics such as
+          precision, recall, f1, etc. for multiclass classification models
+          (default: ``'weighted'``). For binary classification and regression models, this
+          parameter will be ignored.
+        - **sample_weights**: Weights for each sample to apply when computing model performance
+          metrics.
 
      - Limitations of evaluation dataset:
         - For classification tasks, dataset labels are used to infer the total number of classes.
@@ -949,7 +960,20 @@ def evaluate(
         - The evaluation dataset label values must be numeric or boolean, all feature values
           must be numeric, and each feature column must only contain scalar values.
 
-    :param model: a URI referring to an MLflow model.
+     - Limitations when environment restoration is enabled:
+        - When environment restoration is enabled for the evaluated model (i.e. a non-local
+          ``env_manager`` is specified), the model is loaded as a client that invokes a MLflow
+          Model Scoring Server process in an independent Python environment with the model's
+          training time dependencies installed. As such, methods like ``predict_proba`` (for
+          probability outputs) or ``score`` (computes the evaluation criterian for sklearn models)
+          of the model become inaccessible and the default evaluator does not compute metrics or
+          artifacts that require those methods.
+        - Because the model is an MLflow Model Server process, SHAP explanations are slower to
+          compute. As such, model explainaibility is disabled when a non-local ``env_manager``
+          specified, unless the ``evaluator_config`` option **log_model_explainability** is
+          explicitly set to ``True``.
+
+    :param model: a URI referring to an MLflow model with the ``python_function`` flavor.
 
     :param data: One of the following:
 
@@ -1099,23 +1123,13 @@ def evaluate(
                                                  from mlflow.models import MetricThreshold
 
                                                  thresholds = {
-                                                     # Metric value thresholds
-                                                     "f1_score": MetricThreshold(
-                                                         threshold=0.8,
-                                                         higher_is_better=True
-                                                     ),
-                                                     # Model comparison thresholds
-                                                     "log_loss": MetricThreshold(
-                                                         min_absolute_change=0.05,
-                                                         min_relative_change=0.1,
-                                                         higher_is_better=False
-                                                     ),
-                                                     # Both metric value and model comparison \
-thresholds
-                                                     "accuarcy": MetricThreshold(
-                                                         threshold=0.8,
-                                                         min_absolute_change=0.09,
-                                                         min_relative_change=0.05,
+                                                     "accuracy_score": MetricThreshold(
+                                                         threshold=0.8,            # accuracy \
+should be >=0.8
+                                                         min_absolute_change=0.05, # accuracy \
+should be at least 5 percent greater than baseline model accuracy
+                                                         min_relative_change=0.05, # accuracy \
+should be at least 0.05 greater than baseline model accuracy
                                                          higher_is_better=True
                                                      ),
                                                  }
@@ -1131,26 +1145,47 @@ thresholds
                                                          custom_metrics=[custom_l1_loss],
                                                          validation_thresholds=thresholds,
                                                          baseline_model=your_baseline_model
-
                                                      )
+
+                                            See :ref:`the Model Validation documentation \
+<model-validation>` for more details.
 
     :param baseline_model: (Optional) A string URI referring to an MLflow model with the pyfunc
                                       flavor. If specified, the candidate ``model`` is compared to
                                       this baseline for model validation purposes.
 
+    :param env_manager: Specify an environment manager to load the candidate ``model`` and
+                        ``baseline_model`` in isolated Python evironments and restore their
+                        dependencies. Default value is ``local``, and the following values are
+                        supported:
+
+                         - ``virtualenv``: (Recommended) Use virtualenv to restore the python
+                           environment that was used to train the model.
+                         - ``conda``:  Use Conda to restore the software environment that was used
+                           to train the model.
+                         - ``local``: Use the current Python environment for model inference, which
+                           may differ from the environment used to train the model and may lead to
+                           errors or invalid predictions.
+
     :return: An :py:class:`mlflow.models.EvaluationResult` instance containing
              metrics of candidate model and baseline model, and artifacts of candidate model.
     """
+    import signal
+    from mlflow.pyfunc import _ServedPyFuncModel, _load_model_or_server
+    from mlflow.utils import env_manager as _EnvManager
+
+    _EnvManager.validate(env_manager)
+
     if isinstance(model, str):
-        model = mlflow.pyfunc.load_model(model)
+        model = _load_model_or_server(model, env_manager)
     else:
         raise MlflowException(
-            message="The model argument must be a string URI referring to an MLflow model",
+            message="The model argument must be a string URI referring to an MLflow model.",
             error_code=INVALID_PARAMETER_VALUE,
         )
 
     if isinstance(baseline_model, str):
-        baseline_model = mlflow.pyfunc.load_model(baseline_model)
+        baseline_model = _load_model_or_server(baseline_model, env_manager)
     elif baseline_model is not None:
         raise MlflowException(
             message="The baseline model argument must be a string URI referring to an "
@@ -1179,23 +1214,32 @@ thresholds
     )
 
     with _start_run_or_reuse_active_run() as run_id:
-        evaluate_result = _evaluate(
-            model=model,
-            model_type=model_type,
-            dataset=dataset,
-            run_id=run_id,
-            evaluator_name_list=evaluator_name_list,
-            evaluator_name_to_conf_map=evaluator_name_to_conf_map,
-            custom_metrics=custom_metrics,
-            baseline_model=baseline_model,
-        )
+        try:
+            evaluate_result = _evaluate(
+                model=model,
+                model_type=model_type,
+                dataset=dataset,
+                run_id=run_id,
+                evaluator_name_list=evaluator_name_list,
+                evaluator_name_to_conf_map=evaluator_name_to_conf_map,
+                custom_metrics=custom_metrics,
+                baseline_model=baseline_model,
+            )
+        finally:
+            if isinstance(model, _ServedPyFuncModel):
+                os.kill(model.pid, signal.SIGTERM)
+            if isinstance(baseline_model, _ServedPyFuncModel):
+                os.kill(baseline_model.pid, signal.SIGTERM)
 
         if not validation_thresholds:
             return evaluate_result
 
+        _logger.info("Validating generated model metrics")
         _validate(
             validation_thresholds,
             evaluate_result.metrics,
             evaluate_result.baseline_model_metrics,
         )
+        _logger.info("Model validation passed!")
+
         return evaluate_result

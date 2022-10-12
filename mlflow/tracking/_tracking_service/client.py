@@ -82,7 +82,7 @@ class TrackingServiceClient:
         """
         return self.store.get_metric_history(run_id=run_id, metric_key=key)
 
-    def create_run(self, experiment_id, start_time=None, tags=None):
+    def create_run(self, experiment_id, start_time=None, tags=None, run_name=None):
         """
         Create a :py:class:`mlflow.entities.Run` object that can be associated with
         metrics, parameters, artifacts, etc.
@@ -90,10 +90,11 @@ class TrackingServiceClient:
         Unlike :py:func:`mlflow.start_run`, does not change the "active run" used by
         :py:func:`mlflow.log_param`.
 
-        :param experiment_id: The ID of then experiment to create a run in.
+        :param experiment_id: The ID of the experiment to create a run in.
         :param start_time: If not provided, use the current timestamp.
         :param tags: A dictionary of key-value pairs that are converted into
                      :py:class:`mlflow.entities.RunTag` objects.
+        :param name: The name of this run.
         :return: :py:class:`mlflow.entities.Run` that was created.
         """
 
@@ -109,33 +110,7 @@ class TrackingServiceClient:
             user_id=user_id,
             start_time=start_time or int(time.time() * 1000),
             tags=[RunTag(key, value) for (key, value) in tags.items()],
-        )
-
-    def list_run_infos(
-        self,
-        experiment_id,
-        run_view_type=ViewType.ACTIVE_ONLY,
-        max_results=SEARCH_MAX_RESULTS_DEFAULT,
-        order_by=None,
-        page_token=None,
-    ):
-        """
-        Return run information for runs which belong to the experiment_id.
-
-        :param experiment_id: The experiment id which to search
-        :param run_view_type: ACTIVE_ONLY, DELETED_ONLY, or ALL runs
-        :param max_results: Maximum number of results desired.
-        :param order_by: List of order_by clauses. Currently supported values are
-            are ``metric.key``, ``parameter.key``, ``tag.key``, ``attribute.key``.
-            For example, ``order_by=["tag.release ASC", "metric.click_rate DESC"]``.
-
-        :return: A :py:class:`PagedList <mlflow.store.entities.PagedList>` of
-            :py:class:`RunInfo <mlflow.entities.RunInfo>` objects that satisfy the search
-            expressions. If the underlying tracking store supports pagination, the token for the
-            next page may be obtained via the ``token`` attribute of the returned object.
-        """
-        return self.store.list_run_infos(
-            experiment_id, run_view_type, max_results, order_by, page_token
+            run_name=run_name,
         )
 
     def search_experiments(
@@ -449,7 +424,10 @@ class TrackingServiceClient:
         end_time = end_time if end_time else int(time.time() * 1000)
         status = status if status else RunStatus.to_string(RunStatus.FINISHED)
         self.store.update_run_info(
-            run_id, run_status=RunStatus.from_string(status), end_time=end_time
+            run_id,
+            run_status=RunStatus.from_string(status),
+            end_time=end_time,
+            run_name=None,
         )
 
     def delete_run(self, run_id):

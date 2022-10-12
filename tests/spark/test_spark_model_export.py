@@ -293,11 +293,17 @@ def test_model_deployment(spark_model_iris, model_path, spark_custom_env):
     scoring_response = score_model_in_sagemaker_docker_container(
         model_uri=model_path,
         data=spark_model_iris.pandas_df,
-        content_type=pyfunc_scoring_server.CONTENT_TYPE_JSON_SPLIT_ORIENTED,
+        content_type=pyfunc_scoring_server.CONTENT_TYPE_JSON,
         flavor=mlflow.pyfunc.FLAVOR_NAME,
     )
+    from mlflow.deployments import PredictionsResponse
+
     np.testing.assert_array_almost_equal(
-        spark_model_iris.predictions, np.array(json.loads(scoring_response.content)), decimal=4
+        spark_model_iris.predictions,
+        PredictionsResponse.from_json(scoring_response.content).get_predictions(
+            predictions_format="ndarray"
+        ),
+        decimal=4,
     )
 
 
@@ -314,7 +320,7 @@ def test_sagemaker_docker_model_scoring_with_default_conda_env(spark_model_iris,
         content_type=pyfunc_scoring_server.CONTENT_TYPE_JSON,
         flavor=mlflow.pyfunc.FLAVOR_NAME,
     )
-    deployed_model_preds = np.array(json.loads(scoring_response.content))
+    deployed_model_preds = np.array(json.loads(scoring_response.content)["predictions"])
 
     np.testing.assert_array_almost_equal(
         deployed_model_preds, spark_model_iris.predictions, decimal=4
@@ -664,7 +670,7 @@ def test_model_is_recorded_when_using_direct_save(spark_model_iris):
             "false",
             True,
             False,
-            "dbfs:/databricks/mlflow-tracking/a/b/model/sparkml/sparkml",
+            "dbfs:/databricks/mlflow-tracking/a/b/model/sparkml",
         ),
         (
             "dbfs:/databricks/mlflow-tracking/a/b",
@@ -672,7 +678,7 @@ def test_model_is_recorded_when_using_direct_save(spark_model_iris):
             "",
             False,
             True,
-            "dbfs:/databricks/mlflow-tracking/a/b/model/sparkml/sparkml",
+            "dbfs:/databricks/mlflow-tracking/a/b/model/sparkml",
         ),
         (
             "dbfs:/databricks/mlflow-tracking/a/b",
@@ -680,7 +686,7 @@ def test_model_is_recorded_when_using_direct_save(spark_model_iris):
             "",
             True,
             True,
-            "dbfs:/databricks/mlflow-tracking/a/b/model/sparkml/sparkml",
+            "dbfs:/databricks/mlflow-tracking/a/b/model/sparkml",
         ),
         (
             "dbfs:/databricks/mlflow-tracking/a/b",
@@ -688,10 +694,10 @@ def test_model_is_recorded_when_using_direct_save(spark_model_iris):
             "true",
             True,
             True,
-            "dbfs:/databricks/mlflow-tracking/a/b/model/sparkml/sparkml",
+            "dbfs:/databricks/mlflow-tracking/a/b/model/sparkml",
         ),
-        ("dbfs:/root/a/b", "12.0", "", True, True, "dbfs:/root/a/b/model/sparkml/sparkml"),
-        ("s3://mybucket/a/b", "12.0", "", True, True, "s3://mybucket/a/b/model/sparkml/sparkml"),
+        ("dbfs:/root/a/b", "12.0", "", True, True, "dbfs:/root/a/b/model/sparkml"),
+        ("s3://mybucket/a/b", "12.0", "", True, True, "s3://mybucket/a/b/model/sparkml"),
     ],
 )
 def test_model_logged_via_mlflowdbfs_when_appropriate(
@@ -801,7 +807,7 @@ def test_model_logging_uses_mlflowdbfs_if_appropriate_when_hdfs_check_fails(
             mock_save.assert_called_once_with(
                 f"mlflowdbfs:///artifacts?run_id={run_id}&path=/model/sparkml"
                 if dummy_read_shows_mlflowdbfs_available
-                else "dbfs:/databricks/mlflow-tracking/a/b/model/sparkml/sparkml"
+                else "dbfs:/databricks/mlflow-tracking/a/b/model/sparkml"
             )
 
 

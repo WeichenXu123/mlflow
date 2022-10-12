@@ -17,7 +17,6 @@ from mlflow.store.artifact.s3_artifact_repo import S3ArtifactRepository
 from mlflow.utils.environment import _mlflow_conda_env
 from mlflow.tensorflow import _TF2Wrapper
 from mlflow.utils.conda import get_or_create_conda_env
-from mlflow.pyfunc.backend import _execute_in_conda_env
 
 from tests.helper_functions import (
     pyfunc_serve_and_score_model,
@@ -57,25 +56,22 @@ def save_or_log_tf_model_by_mlflow128(tmpdir, model_type, task_type, save_path=N
     exec_py_path = os.path.join(tf_tests_dir, "save_tf_estimator_model.py")
     mlflow_repo_path = os.path.dirname(os.path.dirname(tf_tests_dir))
 
-    _execute_in_conda_env(
-        conda_env,
+    conda_env.execute(
         f"python {exec_py_path} "
         f"--tracking_uri {tracking_uri} "
         f"--mlflow_repo_path {mlflow_repo_path} "
         f"--model_type {model_type} "
         f"--task_type {task_type} "
         f"--save_path {save_path if save_path else 'none'}",
-        install_mlflow=False,
     )
     with open(output_data_file_path, "rb") as f:
         return ModelDataInfo(*pickle.load(f))
 
 
-def test_load_model_from_remote_uri_succeeds(tmpdir, model_path, mock_s3_bucket, monkeypatch):
-    monkeypatch.chdir(str(tmpdir))
-    model_data_info = save_or_log_tf_model_by_mlflow128(
-        str(tmpdir), "iris", "save_model", model_path
-    )
+def test_load_model_from_remote_uri_succeeds(tmp_path, model_path, mock_s3_bucket, monkeypatch):
+    mlflow.set_tracking_uri(tmp_path.joinpath("mlruns").as_uri())
+    monkeypatch.chdir(tmp_path)
+    model_data_info = save_or_log_tf_model_by_mlflow128(tmp_path, "iris", "save_model", model_path)
 
     artifact_root = "s3://{bucket_name}".format(bucket_name=mock_s3_bucket)
     artifact_path = "model"
@@ -99,11 +95,10 @@ def test_load_model_from_remote_uri_succeeds(tmpdir, model_path, mock_s3_bucket,
         )
 
 
-def test_iris_model_can_be_loaded_and_evaluated_successfully(tmpdir, model_path, monkeypatch):
-    monkeypatch.chdir(str(tmpdir))
-    model_data_info = save_or_log_tf_model_by_mlflow128(
-        str(tmpdir), "iris", "save_model", model_path
-    )
+def test_iris_model_can_be_loaded_and_evaluated_successfully(tmp_path, model_path, monkeypatch):
+    mlflow.set_tracking_uri(tmp_path.joinpath("mlruns").as_uri())
+    monkeypatch.chdir(tmp_path)
+    model_data_info = save_or_log_tf_model_by_mlflow128(tmp_path, "iris", "save_model", model_path)
 
     infer = mlflow.tensorflow.load_model(model_uri=model_path)
     feed_dict = {
@@ -116,18 +111,18 @@ def test_iris_model_can_be_loaded_and_evaluated_successfully(tmpdir, model_path,
         assert_array_almost_equal(pred_dict[key], model_data_info.raw_results[key])
 
 
-def test_log_and_load_model_persists_and_restores_model_successfully(tmpdir, monkeypatch):
-    monkeypatch.chdir(str(tmpdir))
-    model_data_info = save_or_log_tf_model_by_mlflow128(str(tmpdir), "iris", "log_model")
+def test_log_and_load_model_persists_and_restores_model_successfully(tmp_path, monkeypatch):
+    mlflow.set_tracking_uri(tmp_path.joinpath("mlruns").as_uri())
+    monkeypatch.chdir(tmp_path)
+    model_data_info = save_or_log_tf_model_by_mlflow128(tmp_path, "iris", "log_model")
     model_uri = f"runs:/{model_data_info.run_id}/model"
     mlflow.tensorflow.load_model(model_uri=model_uri)
 
 
-def test_iris_data_model_can_be_loaded_and_evaluated_as_pyfunc(tmpdir, model_path, monkeypatch):
-    monkeypatch.chdir(str(tmpdir))
-    model_data_info = save_or_log_tf_model_by_mlflow128(
-        str(tmpdir), "iris", "save_model", model_path
-    )
+def test_iris_data_model_can_be_loaded_and_evaluated_as_pyfunc(tmp_path, model_path, monkeypatch):
+    mlflow.set_tracking_uri(tmp_path.joinpath("mlruns").as_uri())
+    monkeypatch.chdir(tmp_path)
+    model_data_info = save_or_log_tf_model_by_mlflow128(tmp_path, "iris", "save_model", model_path)
 
     pyfunc_wrapper = pyfunc.load_model(model_path)
 
@@ -158,10 +153,11 @@ def test_iris_data_model_can_be_loaded_and_evaluated_as_pyfunc(tmpdir, model_pat
         results = pyfunc_wrapper.predict(inp_list)
 
 
-def test_categorical_model_can_be_loaded_and_evaluated_as_pyfunc(tmpdir, model_path, monkeypatch):
-    monkeypatch.chdir(str(tmpdir))
+def test_categorical_model_can_be_loaded_and_evaluated_as_pyfunc(tmp_path, model_path, monkeypatch):
+    mlflow.set_tracking_uri(tmp_path.joinpath("mlruns").as_uri())
+    monkeypatch.chdir(tmp_path)
     model_data_info = save_or_log_tf_model_by_mlflow128(
-        str(tmpdir), "categorical", "save_model", model_path
+        tmp_path, "categorical", "save_model", model_path
     )
 
     pyfunc_wrapper = pyfunc.load_model(model_path)
@@ -172,7 +168,7 @@ def test_categorical_model_can_be_loaded_and_evaluated_as_pyfunc(tmpdir, model_p
     pandas.testing.assert_frame_equal(
         results_df.sort_index(axis=1),
         model_data_info.expected_results_df.sort_index(axis=1),
-        rtol=1e-5,
+        rtol=1e-3,
     )
 
     # can also call predict with a dict
@@ -184,7 +180,7 @@ def test_categorical_model_can_be_loaded_and_evaluated_as_pyfunc(tmpdir, model_p
     pandas.testing.assert_frame_equal(
         pandas.DataFrame.from_dict(data=results).sort_index(axis=1),
         model_data_info.expected_results_df.sort_index(axis=1),
-        rtol=1e-5,
+        rtol=1e-3,
     )
 
     # can not call predict with a list
@@ -195,18 +191,19 @@ def test_categorical_model_can_be_loaded_and_evaluated_as_pyfunc(tmpdir, model_p
         results = pyfunc_wrapper.predict(inp_list)
 
 
-def test_pyfunc_serve_and_score(tmpdir, monkeypatch):
-    monkeypatch.chdir(str(tmpdir))
-    model_data_info = save_or_log_tf_model_by_mlflow128(str(tmpdir), "iris", "log_model")
+def test_pyfunc_serve_and_score(tmp_path, monkeypatch):
+    mlflow.set_tracking_uri(tmp_path.joinpath("mlruns").as_uri())
+    monkeypatch.chdir(tmp_path)
+    model_data_info = save_or_log_tf_model_by_mlflow128(tmp_path, "iris", "log_model")
     model_uri = f"runs:/{model_data_info.run_id}/model"
 
     resp = pyfunc_serve_and_score_model(
         model_uri=model_uri,
         data=model_data_info.inference_df,
-        content_type=pyfunc_scoring_server.CONTENT_TYPE_JSON_SPLIT_ORIENTED,
+        content_type=pyfunc_scoring_server.CONTENT_TYPE_JSON,
         extra_args=["--env-manager", "local"],
     )
-    actual = pd.DataFrame(json.loads(resp.content))["class_ids"].values
+    actual = pd.DataFrame(json.loads(resp.content)["predictions"])["class_ids"].values
     expected = (
         model_data_info.expected_results_df["predictions"].map(iris_data_utils.SPECIES.index).values
     )

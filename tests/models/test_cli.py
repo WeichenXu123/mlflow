@@ -21,7 +21,7 @@ import mlflow
 from mlflow import pyfunc
 import mlflow.sklearn
 from mlflow.models.flavor_backend_registry import get_flavor_backend
-from mlflow.pyfunc.backend import _execute_in_conda_env
+
 from mlflow.utils.conda import _get_conda_env_name
 
 import mlflow.models.cli as models_cli
@@ -40,10 +40,11 @@ from tests.helper_functions import (
     get_safe_port,
     pyfunc_serve_and_score_model,
     PROTOBUF_REQUIREMENT,
+    pyfunc_generate_dockerfile,
 )
+from mlflow.exceptions import MlflowException
 from mlflow.protos.databricks_pb2 import ErrorCode, BAD_REQUEST
 from mlflow.pyfunc.scoring_server import (
-    CONTENT_TYPE_JSON_SPLIT_ORIENTED,
     CONTENT_TYPE_JSON,
     CONTENT_TYPE_CSV,
 )
@@ -112,8 +113,6 @@ def test_predict_with_old_mlflow_in_conda_and_with_orient_records(iris_data):
                 output_json_path,
                 "-t",
                 "json",
-                "--json-format",
-                "records",
             ]
             + no_conda
         )
@@ -199,7 +198,7 @@ def test_serve_gunicorn_opts(iris_data, sk_model):
                 scoring_response = pyfunc_serve_and_score_model(
                     model_uri,
                     pd.DataFrame(x),
-                    content_type=CONTENT_TYPE_JSON_SPLIT_ORIENTED,
+                    content_type=CONTENT_TYPE_JSON,
                     stdout=output_file,
                     extra_args=["-w", "3"],
                 )
@@ -225,7 +224,9 @@ def test_predict(iris_data, sk_model):
         input_csv_path = tmp.path("input.csv")
         output_json_path = tmp.path("output.json")
         x, _ = iris_data
-        pd.DataFrame(x).to_json(input_json_path, orient="split")
+        with open(input_json_path, "w") as f:
+            json.dump({"dataframe_split": pd.DataFrame(x).to_dict(orient="split")}, f)
+
         pd.DataFrame(x).to_csv(input_csv_path, index=False)
 
         # Test with no conda & model registry URI
@@ -245,10 +246,12 @@ def test_predict(iris_data, sk_model):
                 "--env-manager",
                 "local",
             ],
+            stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             env=env_with_tracking_uri,
         )
-        assert p.wait() == 0
+        rc = p.wait()
+        assert rc == 0
         actual = pd.read_json(output_json_path, orient="records")
         actual = actual[actual.columns[0]].values
         expected = sk_model.predict(x)
@@ -314,8 +317,6 @@ def test_predict(iris_data, sk_model):
                 output_json_path,
                 "-t",
                 "json",
-                "--json-format",
-                "split",
             ]
             + extra_options,
             env=env_with_tracking_uri,
@@ -328,8 +329,7 @@ def test_predict(iris_data, sk_model):
 
         # read from stdin, write to stdout.
         p = subprocess.Popen(
-            ["mlflow", "models", "predict", "-m", model_uri, "-t", "json", "--json-format", "split"]
-            + extra_options,
+            ["mlflow", "models", "predict", "-m", model_uri, "-t", "json"] + extra_options,
             text=True,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
@@ -381,13 +381,6 @@ def test_prepare_env_passes(sk_model):
             mlflow.sklearn.log_model(sk_model, "model")
             model_uri = "runs:/{run_id}/model".format(run_id=active_run.info.run_id)
 
-        # Test with no conda
-        p = subprocess.Popen(
-            ["mlflow", "models", "prepare-env", "-m", model_uri, "--env-manager", "local"],
-            stderr=subprocess.PIPE,
-        )
-        assert p.wait() == 0
-
         # With conda
         p = subprocess.Popen(
             ["mlflow", "models", "prepare-env", "-m", model_uri], stderr=subprocess.PIPE
@@ -412,18 +405,39 @@ def test_prepare_env_fails(sk_model):
             )
             model_uri = "runs:/{run_id}/model".format(run_id=active_run.info.run_id)
 
-        # Test with no conda
-        p = subprocess.Popen(
-            ["mlflow", "models", "prepare-env", "-m", model_uri, "--env-manager", "local"]
-        )
-        assert p.wait() == 0
-
         # With conda - should fail due to bad conda environment.
         p = subprocess.Popen(["mlflow", "models", "prepare-env", "-m", model_uri])
         assert p.wait() != 0
 
 
-@pytest.mark.parametrize("enable_mlserver", [True, False])
+# NB: mlserver is not compatible with mlflow 2.0, we should re-enable if it does support mlflow in
+# the future.
+@pytest.mark.parametrize("enable_mlserver", [False])
+def test_generate_dockerfile(sk_model, enable_mlserver, tmp_path):
+    with mlflow.start_run() as active_run:
+        if enable_mlserver:
+            mlflow.sklearn.log_model(
+                sk_model, "model", extra_pip_requirements=[PROTOBUF_REQUIREMENT]
+            )
+        else:
+            mlflow.sklearn.log_model(sk_model, "model")
+        model_uri = "runs:/{run_id}/model".format(run_id=active_run.info.run_id)
+    extra_args = ["--install-mlflow"]
+    if enable_mlserver:
+        extra_args.append("--enable-mlserver")
+
+    output_directory = tmp_path.joinpath("output_directory")
+    pyfunc_generate_dockerfile(output_directory, model_uri, extra_args=extra_args)
+    assert output_directory.is_dir()
+    assert output_directory.joinpath("Dockerfile").exists()
+    assert output_directory.joinpath("model_dir").is_dir()
+    # Assert file is not empty
+    assert output_directory.joinpath("Dockerfile").stat().st_size != 0
+
+
+# NB: mlserver is not compatible with mlflow 2.0, we should re-enable if it does support mlflow in
+# the future.
+@pytest.mark.parametrize("enable_mlserver", [False])
 def test_build_docker(iris_data, sk_model, enable_mlserver):
     with mlflow.start_run() as active_run:
         if enable_mlserver:
@@ -461,7 +475,9 @@ def test_build_docker_virtualenv(iris_data, sk_model):
     _validate_with_rest_endpoint(scoring_proc, host_port, df, x, sk_model)
 
 
-@pytest.mark.parametrize("enable_mlserver", [True, False])
+# NB: ml_serve is not compatible with mlflow 2.0, we should re-enable if it does support mlflow in
+# the future.
+@pytest.mark.parametrize("enable_mlserver", [False])
 def test_build_docker_with_env_override(iris_data, sk_model, enable_mlserver):
     with mlflow.start_run() as active_run:
         if enable_mlserver:
@@ -504,16 +520,16 @@ def test_build_docker_without_model_uri(iris_data, sk_model, tmp_path):
 
 def _validate_with_rest_endpoint(scoring_proc, host_port, df, x, sk_model, enable_mlserver=False):
     with RestEndpoint(proc=scoring_proc, port=host_port) as endpoint:
-        for content_type in [CONTENT_TYPE_JSON_SPLIT_ORIENTED, CONTENT_TYPE_CSV, CONTENT_TYPE_JSON]:
+        for content_type in [CONTENT_TYPE_JSON, CONTENT_TYPE_CSV]:
             scoring_response = endpoint.invoke(df, content_type)
             assert scoring_response.status_code == 200, (
                 "Failed to serve prediction, got response %s" % scoring_response.text
             )
             np.testing.assert_array_equal(
-                np.array(json.loads(scoring_response.text)), sk_model.predict(x)
+                np.array(json.loads(scoring_response.text)["predictions"]), sk_model.predict(x)
             )
         # Try examples of bad input, verify we get a non-200 status code
-        for content_type in [CONTENT_TYPE_JSON_SPLIT_ORIENTED, CONTENT_TYPE_CSV, CONTENT_TYPE_JSON]:
+        for content_type in [CONTENT_TYPE_JSON, CONTENT_TYPE_CSV, CONTENT_TYPE_JSON]:
             scoring_response = endpoint.invoke(data="", content_type=content_type)
             expected_status_code = 500 if enable_mlserver else 400
             assert scoring_response.status_code == expected_status_code, (
@@ -532,7 +548,6 @@ def _validate_with_rest_endpoint(scoring_proc, host_port, df, x, sk_model, enabl
             assert "error_code" in scoring_response_dict
             assert scoring_response_dict["error_code"] == ErrorCode.Name(BAD_REQUEST)
             assert "message" in scoring_response_dict
-            assert "stack_trace" in scoring_response_dict
 
 
 def test_env_manager_warning_for_use_of_conda(monkeypatch):
@@ -557,7 +572,7 @@ def test_env_manager_warning_for_use_of_conda(monkeypatch):
 
 
 def test_env_manager_unsupported_value():
-    with pytest.raises(ValueError, match=r"Invalid value for `env_manager`"):
+    with pytest.raises(MlflowException, match=r"Invalid value for `env_manager`"):
         CliRunner().invoke(
             models_cli.serve,
             ["--model-uri", "model", "--env-manager", "abc"],
@@ -592,7 +607,7 @@ def test_change_conda_env_root_location(tmp_path, sk_model):
             "1.0.2",
         ),  # test different env created in the same env root path.
     ]:
-        get_flavor_backend(
+        env = get_flavor_backend(
             str(model_path),
             env_manager=_EnvManager.CONDA,
             install_mlflow=False,
@@ -608,13 +623,10 @@ def test_change_conda_env_root_location(tmp_path, sk_model):
 
         python_exec_path = str(env_path / "bin" / "python")
 
-        # Test `_execute_in_conda_env` run command under the correct activated python env.
-        _execute_in_conda_env(
-            conda_env_name,
+        # Test execution of command under the correct activated python env.
+        env.execute(
             command=f"python -c \"import sys; assert sys.executable == '{python_exec_path}'; "
             f"import sklearn; assert sklearn.__version__ == '{sklearn_ver}'\"",
-            install_mlflow=False,
-            env_root_dir=str(env_root_path),
         )
 
     assert len(env_path_set) == 3

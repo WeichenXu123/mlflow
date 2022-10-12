@@ -133,11 +133,11 @@ def test_run_local_git_repo(local_git_repo, local_git_repo_uri, use_start_run, v
     # Validate run contents in the FileStore
     run_id = submitted_run.run_id
     mlflow_service = MlflowClient()
-    run_infos = mlflow_service.list_run_infos(
-        experiment_id=FileStore.DEFAULT_EXPERIMENT_ID, run_view_type=ViewType.ACTIVE_ONLY
+    runs = mlflow_service.search_runs(
+        [FileStore.DEFAULT_EXPERIMENT_ID], run_view_type=ViewType.ACTIVE_ONLY
     )
-    assert len(run_infos) == 1
-    store_run_id = run_infos[0].run_id
+    assert len(runs) == 1
+    store_run_id = runs[0].info.run_id
     assert run_id == store_run_id
     run = mlflow_service.get_run(run_id)
 
@@ -195,11 +195,11 @@ def test_run(use_start_run):
     run_id = submitted_run.run_id
     mlflow_service = MlflowClient()
 
-    run_infos = mlflow_service.list_run_infos(
-        experiment_id=FileStore.DEFAULT_EXPERIMENT_ID, run_view_type=ViewType.ACTIVE_ONLY
+    runs = mlflow_service.search_runs(
+        [FileStore.DEFAULT_EXPERIMENT_ID], run_view_type=ViewType.ACTIVE_ONLY
     )
-    assert len(run_infos) == 1
-    store_run_id = run_infos[0].run_id
+    assert len(runs) == 1
+    store_run_id = runs[0].info.run_id
     assert run_id == store_run_id
     run = mlflow_service.get_run(run_id)
 
@@ -361,7 +361,7 @@ def test_create_env_with_mamba():
                 mlflow.utils.conda.get_or_create_conda_env(conda_env_path)
 
 
-def test_conda_environment_cleaned_up_when_pip_fails(tmp_path, capfd):
+def test_conda_environment_cleaned_up_when_pip_fails(tmp_path):
     conda_yaml = tmp_path / "conda.yaml"
     content = """
 name: {name}
@@ -381,13 +381,8 @@ dependencies:
     envs_before = mlflow.utils.conda._list_conda_environments()
 
     # `conda create` should fail because mlflow 999.999.999 doesn't exist
-    with pytest.raises(ShellCommandException, match=r".*"):
-        mlflow.utils.conda.get_or_create_conda_env(conda_yaml)
-
-    # Ensure `conda create` failed because of pip failure
-    captured = capfd.readouterr()
-    assert "ERROR: No matching distribution found for mlflow==999.999.999" in captured.err
-    assert "CondaEnvException: Pip failed" in captured.err
+    with pytest.raises(ShellCommandException, match=r"No matching distribution found"):
+        mlflow.utils.conda.get_or_create_conda_env(conda_yaml, capture_output=True)
 
     # Ensure the environment is cleaned up
     envs_after = mlflow.utils.conda._list_conda_environments()

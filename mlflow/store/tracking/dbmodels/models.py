@@ -27,6 +27,7 @@ from mlflow.entities import (
 )
 from mlflow.entities.lifecycle_stage import LifecycleStage
 from mlflow.store.db.base_sql_model import Base
+from mlflow.utils.mlflow_tags import _get_run_name_from_tags
 
 SourceTypes = [
     SourceType.to_string(SourceType.NOTEBOOK),
@@ -71,6 +72,14 @@ class SqlExperiment(Base):
     Lifecycle Stage of experiment: `String` (limit 32 characters).
                                     Can be either ``active`` (default) or ``deleted``.
     """
+    creation_time = Column(BigInteger(), default=int(time.time() * 1000))
+    """
+    Creation time of experiment: `BigInteger`.
+    """
+    last_update_time = Column(BigInteger(), default=int(time.time() * 1000))
+    """
+    Last Update time of experiment: `BigInteger`.
+    """
 
     __table_args__ = (
         CheckConstraint(
@@ -95,6 +104,8 @@ class SqlExperiment(Base):
             artifact_location=self.artifact_location,
             lifecycle_stage=self.lifecycle_stage,
             tags=[t.to_mlflow_entity() for t in self.tags],
+            creation_time=self.creation_time,
+            last_update_time=self.last_update_time,
         )
 
 
@@ -135,7 +146,7 @@ class SqlRun(Base):
     Run Status: `String` (limit 20 characters). Can be one of ``RUNNING``, ``SCHEDULED`` (default),
                 ``FINISHED``, ``FAILED``.
     """
-    start_time = Column(BigInteger, default=int(time.time()))
+    start_time = Column(BigInteger, default=int(time.time() * 1000))
     """
     Run start time: `BigInteger`. Defaults to current system time.
     """
@@ -198,6 +209,7 @@ class SqlRun(Base):
         run_info = RunInfo(
             run_uuid=self.run_uuid,
             run_id=self.run_uuid,
+            run_name=self.name,
             experiment_id=str(self.experiment_id),
             user_id=self.user_id,
             status=self.status,
@@ -207,11 +219,16 @@ class SqlRun(Base):
             artifact_uri=self.artifact_uri,
         )
 
+        tags = [t.to_mlflow_entity() for t in self.tags]
         run_data = RunData(
             metrics=[m.to_mlflow_entity() for m in self.latest_metrics],
             params=[p.to_mlflow_entity() for p in self.params],
-            tags=[t.to_mlflow_entity() for t in self.tags],
+            tags=tags,
         )
+        if not run_info.run_name:
+            run_name = _get_run_name_from_tags(tags)
+            if run_name:
+                run_info._set_run_name(run_name)
 
         return Run(run_info=run_info, run_data=run_data)
 

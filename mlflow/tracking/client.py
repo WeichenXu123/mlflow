@@ -13,7 +13,7 @@ import tempfile
 import yaml
 from typing import Any, Dict, Sequence, List, Optional, Union, TYPE_CHECKING
 
-from mlflow.entities import Experiment, Run, RunInfo, Param, Metric, RunTag, FileInfo, ViewType
+from mlflow.entities import Experiment, Run, Param, Metric, RunTag, FileInfo, ViewType
 from mlflow.store.entities.paged_list import PagedList
 from mlflow.entities.model_registry import RegisteredModel, ModelVersion
 from mlflow.entities.model_registry.model_version_stages import ALL_STAGES
@@ -221,6 +221,7 @@ class MlflowClient:
         experiment_id: str,
         start_time: Optional[int] = None,
         tags: Optional[Dict[str, Any]] = None,
+        run_name: Optional[str] = None,
     ) -> Run:
         """
         Create a :py:class:`mlflow.entities.Run` object that can be associated with
@@ -233,6 +234,7 @@ class MlflowClient:
         :param start_time: If not provided, use the current timestamp.
         :param tags: A dictionary of key-value pairs that are converted into
                      :py:class:`mlflow.entities.RunTag` objects.
+        :param run_name: The name of this run.
         :return: :py:class:`mlflow.entities.Run` that was created.
 
         .. code-block:: python
@@ -242,14 +244,16 @@ class MlflowClient:
 
             # Create a run with a tag under the default experiment (whose id is '0').
             tags = {"engineering": "ML Platform"}
+            name = "platform-run-24"
             client = MlflowClient()
             experiment_id = "0"
-            run = client.create_run(experiment_id, tags=tags)
+            run = client.create_run(experiment_id, tags=tags, run_name=name)
 
             # Show newly created run metadata info
             print("Run tags: {}".format(run.data.tags))
             print("Experiment id: {}".format(run.info.experiment_id))
             print("Run id: {}".format(run.info.run_id))
+            print("Run name: {}".format(run.info.run_name))
             print("lifecycle_stage: {}".format(run.info.lifecycle_stage))
             print("status: {}".format(run.info.status))
 
@@ -259,82 +263,11 @@ class MlflowClient:
             Run tags: {'engineering': 'ML Platform'}
             Experiment id: 0
             Run id: 65fb9e2198764354bab398105f2e70c1
+            Run name: platform-run-24
             lifecycle_stage: active
             status: RUNNING
         """
-        return self._tracking_client.create_run(experiment_id, start_time, tags)
-
-    @deprecated(alternative="search_runs()")
-    def list_run_infos(
-        self,
-        experiment_id: str,
-        run_view_type: int = ViewType.ACTIVE_ONLY,
-        max_results: int = SEARCH_MAX_RESULTS_DEFAULT,
-        order_by: Optional[List[str]] = None,
-        page_token: Optional[str] = None,
-    ) -> PagedList[RunInfo]:
-        """
-        Return run information for runs which belong to the experiment_id.
-
-        :param experiment_id: The experiment id which to search
-        :param run_view_type: ACTIVE_ONLY, DELETED_ONLY, or ALL runs
-        :param max_results: Maximum number of results desired.
-        :param order_by: List of order_by clauses. Currently supported values are
-            are ``metric.key``, ``parameter.key``, ``tag.key``, ``attribute.key``.
-            For example, ``order_by=["tag.release ASC", "metric.click_rate DESC"]``.
-
-        :return: A :py:class:`PagedList <mlflow.store.entities.PagedList>` of
-            :py:class:`RunInfo <mlflow.entities.RunInfo>` objects that satisfy the search
-            expressions. If the underlying tracking store supports pagination, the token for the
-            next page may be obtained via the ``token`` attribute of the returned object.
-
-        .. code-block:: python
-            :caption: Example
-
-            import mlflow
-            from mlflow import MlflowClient
-            from mlflow.entities import ViewType
-
-            def print_run_infos(run_infos):
-                for r in run_infos:
-                    print("- run_id: {}, lifecycle_stage: {}".format(r.run_id, r.lifecycle_stage))
-
-            # Create two runs
-            with mlflow.start_run() as run1:
-                mlflow.log_metric("click_rate", 1.55)
-
-            with mlflow.start_run() as run2:
-                mlflow.log_metric("click_rate", 2.50)
-
-            # Delete the last run
-            client = MlflowClient()
-            client.delete_run(run2.info.run_id)
-
-            # Get all runs under the default experiment (whose id is 0)
-            print("Active runs:")
-            print_run_infos(mlflow.list_run_infos("0", run_view_type=ViewType.ACTIVE_ONLY))
-
-            print("Deleted runs:")
-            print_run_infos(mlflow.list_run_infos("0", run_view_type=ViewType.DELETED_ONLY))
-
-            print("All runs:")
-            print_run_infos(mlflow.list_run_infos("0", run_view_type=ViewType.ALL,
-                            order_by=["metric.click_rate DESC"]))
-
-        .. code-block:: text
-            :caption: Output
-
-            Active runs:
-            - run_id: 47b11b33f9364ee2b148c41375a30a68, lifecycle_stage: active
-            Deleted runs:
-            - run_id: bc4803439bdd4a059103811267b6b2f4, lifecycle_stage: deleted
-            All runs:
-            - run_id: bc4803439bdd4a059103811267b6b2f4, lifecycle_stage: deleted
-            - run_id: 47b11b33f9364ee2b148c41375a30a68, lifecycle_stage: active
-        """
-        return self._tracking_client.list_run_infos(
-            experiment_id, run_view_type, max_results, order_by, page_token
-        )
+        return self._tracking_client.create_run(experiment_id, start_time, tags, run_name)
 
     def search_experiments(
         self,
