@@ -256,8 +256,8 @@ def read_parquet_as_pandas_df(data_parquet_path: str):
     :return: pandas dataframe
     """
     from pyspark.sql import SparkSession
-    spark_session = SparkSession.builder.master("local").getOrCreate()
-    return spark_session.read.parquet(data_parquet_path).toPandas()
+    spark_session = SparkSession.getActiveSession()
+    return spark_session.read.parquet("file:" + data_parquet_path).toPandas()
 
 
 def write_pandas_df_as_parquet(df, data_parquet_path: str):
