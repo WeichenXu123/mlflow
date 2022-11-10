@@ -267,6 +267,13 @@ def read_parquet_as_pandas_df(data_parquet_path: str):
         os.environ.pop("PYSPARK_GATEWAY_SECRET", None)
 
         spark_session = SparkSession.builder.master("local[1]").getOrCreate()
+
+        def mapper(x):
+            return os.path.exists(data_parquet_path)
+
+        ingest_file_in_task_exist = spark_session.sparkContext.parallelize([1], 1).map(mapper).collect()
+        print(f"ingest_file_in_task_exist={ingest_file_in_task_exist}")
+
         print(f"DBG: ingest spark master: {str(spark_session.conf.get('spark.master'))}")
         return spark_session.read.parquet("file://" + data_parquet_path).toPandas()
     else:
