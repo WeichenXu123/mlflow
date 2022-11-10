@@ -255,13 +255,21 @@ def read_parquet_as_pandas_df(data_parquet_path: str):
     path could be: file://localhost/path/to/tables or s3://bucket/partition_dir.
     :return: pandas dataframe
     """
-    import os
     from mlflow.utils.databricks_utils import is_in_databricks_runtime
-    print(f"DBG, Ingest PID: {os.getpid()}, on databricks={is_in_databricks_runtime()}")
 
-    from pyspark.sql import SparkSession
-    spark_session = SparkSession.getActiveSession()
-    return spark_session.read.parquet("file:" + data_parquet_path).toPandas()
+    if is_in_databricks_runtime():
+        from pyspark.sql import SparkSession
+        
+        os.environ["SPARK_DIST_CLASSPATH"] = "/databricks/jars/*"
+        os.environ.pop("PYSPARK_GATEWAY_PORT", None)
+        os.environ.pop("PYSPARK_GATEWAY_SECRET", None)
+
+        spark_session = SparkSession.builder.master("local[1]").getOrCreate()
+        return spark_session.read.parquet("file:" + data_parquet_path).toPandas()
+    else:
+        import pandas as pd
+        return pd.read_parquet(data_parquet_path, engine="pyarrow")
+
 
 
 def write_pandas_df_as_parquet(df, data_parquet_path: str):
