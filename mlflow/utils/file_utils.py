@@ -255,6 +255,9 @@ def read_parquet_as_pandas_df(data_parquet_path: str):
     path could be: file://localhost/path/to/tables or s3://bucket/partition_dir.
     :return: pandas dataframe
     """
+    import os
+    print(f"DBG, Ingest PID: {os.getpid()}")
+
     from pyspark.sql import SparkSession
     spark_session = SparkSession.getActiveSession()
     return spark_session.read.parquet("file:" + data_parquet_path).toPandas()
