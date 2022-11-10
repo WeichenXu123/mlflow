@@ -262,6 +262,8 @@ def read_parquet_as_pandas_df(data_parquet_path: str):
     if is_in_databricks_runtime():
         from pyspark.sql import SparkSession
 
+        SparkSession.getActiveSession().stop()
+
         os.environ["SPARK_DIST_CLASSPATH"] = "/databricks/jars/*"
         os.environ.pop("PYSPARK_GATEWAY_PORT", None)
         os.environ.pop("PYSPARK_GATEWAY_SECRET", None)
