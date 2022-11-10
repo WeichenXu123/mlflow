@@ -256,7 +256,8 @@ def read_parquet_as_pandas_df(data_parquet_path: str):
     :return: pandas dataframe
     """
     import os
-    print(f"DBG, Ingest PID: {os.getpid()}")
+    from mlflow.utils.databricks_utils import is_in_databricks_runtime
+    print(f"DBG, Ingest PID: {os.getpid()}, on databricks={is_in_databricks_runtime()}")
 
     from pyspark.sql import SparkSession
     spark_session = SparkSession.getActiveSession()
