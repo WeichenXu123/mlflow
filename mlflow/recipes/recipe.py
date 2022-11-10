@@ -79,6 +79,8 @@ class _BaseRecipe:
                      executed.
         :return: None
         """
+        if step == "ingest":
+            print(f"DBG, Ingest PID: {os.getpid()}")
 
         # TODO Record performance here.
         self._steps = self._resolve_recipe_steps()

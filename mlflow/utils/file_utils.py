@@ -262,7 +262,7 @@ def read_parquet_as_pandas_df(data_parquet_path: str):
     if is_in_databricks_runtime():
         from pyspark.sql import SparkSession
 
-        SparkSession.getActiveSession().stop()
+        print(f"DBG, Ingest PID in ingest task: {os.getpid()}")
 
         os.environ["SPARK_DIST_CLASSPATH"] = "/databricks/jars/*"
         os.environ.pop("PYSPARK_GATEWAY_PORT", None)
