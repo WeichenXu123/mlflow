@@ -19,12 +19,19 @@ def _get_active_spark_session():
 
 def _create_local_spark_session_for_recipes():
     """Create a sparksession to be used within an recipe step run in a subprocess locally."""
-
+    from mlflow.utils.databricks_utils import is_in_databricks_runtime
     try:
         from pyspark.sql import SparkSession
     except ImportError:
         # Return None if user doesn't have PySpark installed
         return None
+
+    if is_in_databricks_runtime():
+        os.environ["SPARK_DIST_CLASSPATH"] = "/databricks/jars/*"
+
+    os.environ.pop("PYSPARK_GATEWAY_PORT", None)
+    os.environ.pop("PYSPARK_GATEWAY_SECRET", None)
+
     return (
         SparkSession.builder.master("local[*]")
         .config("spark.jars.packages", "io.delta:delta-core_2.12:1.2.1")

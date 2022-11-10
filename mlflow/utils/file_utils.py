@@ -256,20 +256,14 @@ def read_parquet_as_pandas_df(data_parquet_path: str):
     :return: pandas dataframe
     """
     from mlflow.utils.databricks_utils import is_in_databricks_runtime
+    from mlflow.utils._spark_utils import _create_local_spark_session_for_recipes
 
     print(f"ingest file {data_parquet_path} exists: {os.path.exists(data_parquet_path)}")
 
     if is_in_databricks_runtime():
-        from pyspark.sql import SparkSession
-
         print(f"DBG, Ingest PID in ingest task: {os.getpid()}")
 
-        os.environ.clear()
-        os.environ["SPARK_DIST_CLASSPATH"] = "/databricks/jars/*"
-        os.environ.pop("PYSPARK_GATEWAY_PORT", None)
-        os.environ.pop("PYSPARK_GATEWAY_SECRET", None)
-
-        spark_session = SparkSession.builder.master("local[1]").getOrCreate()
+        spark_session = _create_local_spark_session_for_recipes()
 
         def mapper(x):
             return os.path.exists(data_parquet_path)
