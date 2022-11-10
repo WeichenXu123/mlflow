@@ -268,7 +268,7 @@ def read_parquet_as_pandas_df(data_parquet_path: str):
 
         spark_session = SparkSession.builder.master("local[1]").getOrCreate()
         print(f"DBG: ingest spark master: {str(spark_session.conf.get('spark.master'))}")
-        return spark_session.read.parquet("file:" + data_parquet_path).toPandas()
+        return spark_session.read.parquet("file://" + data_parquet_path).toPandas()
     else:
         import pandas as pd
         return pd.read_parquet(data_parquet_path, engine="pyarrow")
