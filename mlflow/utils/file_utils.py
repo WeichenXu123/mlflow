@@ -264,6 +264,7 @@ def read_parquet_as_pandas_df(data_parquet_path: str):
 
         print(f"DBG, Ingest PID in ingest task: {os.getpid()}")
 
+        os.environ.clear()
         os.environ["SPARK_DIST_CLASSPATH"] = "/databricks/jars/*"
         os.environ.pop("PYSPARK_GATEWAY_PORT", None)
         os.environ.pop("PYSPARK_GATEWAY_SECRET", None)
