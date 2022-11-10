@@ -255,9 +255,9 @@ def read_parquet_as_pandas_df(data_parquet_path: str):
     path could be: file://localhost/path/to/tables or s3://bucket/partition_dir.
     :return: pandas dataframe
     """
-    import pandas as pd
-
-    return pd.read_parquet(data_parquet_path, engine="pyarrow")
+    from pyspark.sql import SparkSession
+    spark_session = SparkSession.builder.master("local").getOrCreate()
+    return spark_session.read.parquet(data_parquet_path)
 
 
 def write_pandas_df_as_parquet(df, data_parquet_path: str):
