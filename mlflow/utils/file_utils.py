@@ -257,7 +257,7 @@ def read_parquet_as_pandas_df(data_parquet_path: str):
     """
     from mlflow.utils.databricks_utils import is_in_databricks_runtime
 
-    print(f"ingest file exists: {os.path.exists(data_parquet_path)}")
+    print(f"ingest file {data_parquet_path} exists: {os.path.exists(data_parquet_path)}")
 
     if is_in_databricks_runtime():
         from pyspark.sql import SparkSession
