@@ -259,12 +259,13 @@ def read_parquet_as_pandas_df(data_parquet_path: str):
 
     if is_in_databricks_runtime():
         from pyspark.sql import SparkSession
-        
+
         os.environ["SPARK_DIST_CLASSPATH"] = "/databricks/jars/*"
         os.environ.pop("PYSPARK_GATEWAY_PORT", None)
         os.environ.pop("PYSPARK_GATEWAY_SECRET", None)
 
         spark_session = SparkSession.builder.master("local[1]").getOrCreate()
+        print(f"DBG: ingest spark master: {str(spark_session.conf.get('spark.master'))}")
         return spark_session.read.parquet("file:" + data_parquet_path).toPandas()
     else:
         import pandas as pd
