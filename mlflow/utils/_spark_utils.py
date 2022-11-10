@@ -26,6 +26,9 @@ def _create_local_spark_session_for_recipes():
         # Return None if user doesn't have PySpark installed
         return None
 
+    curr_session = SparkSession.getActiveSession()
+    print(f"DBG: current session is {curr_session.conf.get('spark.master')}")
+
     if is_in_databricks_runtime():
         os.environ["SPARK_DIST_CLASSPATH"] = "/databricks/jars/*"
 
