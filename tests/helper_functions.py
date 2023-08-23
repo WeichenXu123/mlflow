@@ -100,6 +100,8 @@ def score_model_in_sagemaker_docker_container(
         cmd=scoring_cmd.split(" "),
         env=env,
     )
+    import time
+    time.sleep(3600)
     return _evaluate_scoring_proc(
         proc, port, data, content_type, activity_polling_timeout_seconds, False
     )
