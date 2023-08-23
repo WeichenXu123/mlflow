@@ -77,7 +77,7 @@ def score_model_in_sagemaker_docker_container(
     data,
     content_type,
     flavor="python_function",
-    activity_polling_timeout_seconds=500,
+    activity_polling_timeout_seconds=3600,
 ):
     """
     :param model_uri: URI to the model to be served.

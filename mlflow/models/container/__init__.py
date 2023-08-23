@@ -74,6 +74,8 @@ def _serve(env_manager):
     if serving_flavor == mleap.FLAVOR_NAME:
         _serve_mleap()
     elif pyfunc.FLAVOR_NAME in m.flavors:
+        import time
+        time.sleep(3600)
         _serve_pyfunc(m, env_manager)
     else:
         raise Exception("This container only supports models with the MLeap or PyFunc flavors.")
