@@ -439,6 +439,7 @@ def get_databricks_host_creds(server_uri=None):
         MlflowHostCreds which includes the hostname and authentication information necessary to
         talk to the Databricks server.
     """
+    print(f"DBG: call get_databricks_host_creds")
     profile, path = get_db_info_from_uri(server_uri)
     config = ProfileConfigProvider(profile).get_config() if profile else get_config()
     # if a path is specified, that implies a Databricks tracking URI of the form:
