@@ -48,13 +48,15 @@ def test_adding_libraries_to_model_default(sklearn_knn_model):
     # Log a model
     with mlflow.start_run():
         run_id = mlflow.tracking.fluent._get_or_start_run().info.run_id
-        mlflow.sklearn.log_model(
+        model_info = mlflow.sklearn.log_model(
             sk_model=sklearn_knn_model.model,
             artifact_path=artifact_path,
             registered_model_name=model_name,
         )
 
     wheeled_model_info = add_libraries_to_model(model_uri)
+    model_path = mlflow.artifacts.download_artifacts(model_info.model_uri)
+    breakpoint()
     assert wheeled_model_info.run_id == run_id
 
     # Verify new model version created
