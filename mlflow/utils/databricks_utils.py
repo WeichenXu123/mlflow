@@ -951,4 +951,4 @@ if is_in_databricks_runtime():
         # If there is no dbutils available, it means it is run in databricks driver local suite,
         # in this case, we don't need to initialize databricks token because
         # there is no backend mlflow service available.
-        pass
+        raise  # debug
