@@ -172,76 +172,80 @@ class APIRequest:
                 for doc in response["source_documents"]
             ]
 
+    def single_call_api(self, callback_handlers: Optional[List[BaseCallbackHandler]]):
+        from langchain.schema import BaseRetriever
+        from mlflow.langchain.utils import lc_runnables_types
+
+        if isinstance(self.lc_model, BaseRetriever):
+            # Retrievers are invoked differently than Chains
+            docs = self.lc_model.get_relevant_documents(**self.request_json)
+            response = [
+                {"page_content": doc.page_content, "metadata": doc.metadata} for doc in docs
+            ]
+        elif isinstance(self.lc_model, lc_runnables_types()):
+            if isinstance(self.request_json, dict):
+                # This is a temporary fix for the case when spark_udf converts
+                # input into pandas dataframe with column name, while the model
+                # does not accept dictionaries as input, it leads to errors like
+                # Expected Scalar value for String field 'query_text'
+                try:
+                    response = self.lc_model.invoke(
+                        self.converted_chat_request_json or self.request_json,
+                        config={"callbacks": callback_handlers},
+                    )
+                except TypeError as e:
+                    _logger.warning(
+                        f"Failed to invoke {self.lc_model.__class__.__name__} "
+                        f"with {self.request_json}. Error: {e!r}. Trying to "
+                        "invoke with the first value of the dictionary."
+                    )
+                    self.request_json = next(iter(self.request_json.values()))
+                    (
+                        prepared_request_json,
+                        did_perform_chat_conversion,
+                    ) = APIRequest._transform_request_json_for_chat_if_necessary(
+                        self.request_json, self.lc_model
+                    )
+
+                    response = self.lc_model.invoke(
+                        prepared_request_json, config={"callbacks": callback_handlers}
+                    )
+            else:
+                response = self.lc_model.invoke(
+                    self.converted_chat_request_json or self.request_json,
+                    config={"callbacks": callback_handlers},
+                )
+            if self.converted_chat_request_json is not None or self.convert_chat_responses:
+                response = APIRequest._try_transform_response_to_chat_format(response)
+        else:
+            response = self.lc_model(
+                self.converted_chat_request_json or self.request_json,
+                return_only_outputs=True,
+                callbacks=callback_handlers,
+            )
+
+            if self.converted_chat_request_json is not None or self.convert_chat_responses:
+                response = APIRequest._try_transform_response_to_chat_format(response)
+            elif len(response) == 1:
+                # to maintain existing code, single output chains will still return
+                # only the result
+                response = response.popitem()[1]
+            else:
+                self._prepare_to_serialize(response)
+
+        return response
+
     def call_api(
         self, status_tracker: StatusTracker, callback_handlers: Optional[List[BaseCallbackHandler]]
     ):
         """
         Calls the LangChain API and stores results.
         """
-        from langchain.schema import BaseRetriever
-
-        from mlflow.langchain.utils import lc_runnables_types
 
         _logger.debug(f"Request #{self.index} started with payload: {self.request_json}")
 
         try:
-            if isinstance(self.lc_model, BaseRetriever):
-                # Retrievers are invoked differently than Chains
-                docs = self.lc_model.get_relevant_documents(**self.request_json)
-                response = [
-                    {"page_content": doc.page_content, "metadata": doc.metadata} for doc in docs
-                ]
-            elif isinstance(self.lc_model, lc_runnables_types()):
-                if isinstance(self.request_json, dict):
-                    # This is a temporary fix for the case when spark_udf converts
-                    # input into pandas dataframe with column name, while the model
-                    # does not accept dictionaries as input, it leads to errors like
-                    # Expected Scalar value for String field 'query_text'
-                    try:
-                        response = self.lc_model.invoke(
-                            self.converted_chat_request_json or self.request_json,
-                            config={"callbacks": callback_handlers},
-                        )
-                    except TypeError as e:
-                        _logger.warning(
-                            f"Failed to invoke {self.lc_model.__class__.__name__} "
-                            f"with {self.request_json}. Error: {e!r}. Trying to "
-                            "invoke with the first value of the dictionary."
-                        )
-                        self.request_json = next(iter(self.request_json.values()))
-                        (
-                            prepared_request_json,
-                            did_perform_chat_conversion,
-                        ) = APIRequest._transform_request_json_for_chat_if_necessary(
-                            self.request_json, self.lc_model
-                        )
-
-                        response = self.lc_model.invoke(
-                            prepared_request_json, config={"callbacks": callback_handlers}
-                        )
-                else:
-                    response = self.lc_model.invoke(
-                        self.converted_chat_request_json or self.request_json,
-                        config={"callbacks": callback_handlers},
-                    )
-                if self.converted_chat_request_json is not None or self.convert_chat_responses:
-                    response = APIRequest._try_transform_response_to_chat_format(response)
-            else:
-                response = self.lc_model(
-                    self.converted_chat_request_json or self.request_json,
-                    return_only_outputs=True,
-                    callbacks=callback_handlers,
-                )
-
-                if self.converted_chat_request_json is not None or self.convert_chat_responses:
-                    response = APIRequest._try_transform_response_to_chat_format(response)
-                elif len(response) == 1:
-                    # to maintain existing code, single output chains will still return
-                    # only the result
-                    response = response.popitem()[1]
-                else:
-                    self._prepare_to_serialize(response)
-
+            response = self.single_call_api(callback_handlers)
             _logger.debug(f"Request #{self.index} succeeded with response: {response}")
             self.results.append((self.index, response))
             status_tracker.complete_task(success=True)
