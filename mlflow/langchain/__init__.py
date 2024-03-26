@@ -28,6 +28,7 @@ from packaging.version import Version
 import mlflow
 from mlflow import pyfunc
 from mlflow.environment_variables import _MLFLOW_TESTING
+from mlflow.exceptions import MlflowException
 from mlflow.langchain._langchain_autolog import (
     _update_langchain_model_config,
     patched_inference,
@@ -337,6 +338,7 @@ def save_model(
         conda_env=_CONDA_ENV_FILE_NAME,
         python_env=_PYTHON_ENV_FILE_NAME,
         code=code_dir_subpath,
+        predict_stream_fn="predict_stream",
         **model_data_kwargs,
     )
 
@@ -584,6 +586,20 @@ def _load_model(local_model_path, flavor_conf):
     return model
 
 
+# numpy array is not json serializable, so we convert it to list
+# then send it to the model
+def _convert_ndarray_to_list(data):
+    import numpy as np
+
+    if isinstance(data, np.ndarray):
+        return data.tolist()
+    if isinstance(data, list):
+        return [_convert_ndarray_to_list(d) for d in data]
+    if isinstance(data, dict):
+        return {k: _convert_ndarray_to_list(v) for k, v in data.items()}
+    return data
+
+
 class _LangChainModelWrapper:
     def __init__(self, lc_model):
         self.lc_model = lc_model
@@ -648,20 +664,6 @@ class _LangChainModelWrapper:
         and `return_first_element` means if True, we should return the first element
         of inference result, otherwise we should return the whole inference result.
         """
-
-        # numpy array is not json serializable, so we convert it to list
-        # then send it to the model
-        def _convert_ndarray_to_list(data):
-            import numpy as np
-
-            if isinstance(data, np.ndarray):
-                return data.tolist()
-            if isinstance(data, list):
-                return [_convert_ndarray_to_list(d) for d in data]
-            if isinstance(data, dict):
-                return {k: _convert_ndarray_to_list(v) for k, v in data.items()}
-            return data
-
         if isinstance(data, pd.DataFrame):
             data = data.to_dict(orient="records")
 
@@ -680,6 +682,20 @@ class _LangChainModelWrapper:
             "Input must be a pandas DataFrame or a list "
             f"for model {self.lc_model.__class__.__name__}"
         )
+
+    def predict_stream(
+        self,
+        data: Union[Any, Dict[str, Any]],
+        params: Optional[Dict[str, Any]] = None,
+    ) -> List[str]:
+        from mlflow.langchain.api_request_parallel_processor import process_stream_request
+
+        # TODO: Q: shall we put `callback_handlers` in params ?
+        if isinstance(data, list):
+            raise MlflowException("Langchain model predict_stream only supports single input.")
+
+        data = _convert_ndarray_to_list(data)
+        return process_stream_request(lc_model=self.lc_model, request_json=data)
 
 
 class _TestLangChainWrapper(_LangChainModelWrapper):
