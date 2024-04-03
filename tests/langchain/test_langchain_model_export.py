@@ -1986,9 +1986,9 @@ def test_predict_with_builtin_pyfunc_chat_conversion_for_aimessage_response():
     signature = infer_signature(model_input=input_example)
 
     chain = ChatModel()
-    assert chain.invoke([HumanMessage(content="Who owns MLflow?")]) == AIMessage(
-        content="You own MLflow"
-    )
+    result = chain.invoke([HumanMessage(content="Who owns MLflow?")])
+    assert isinstance(result, AIMessage)
+    assert result.content == "You own MLflow"
 
     with mlflow.start_run():
         model_info = mlflow.langchain.log_model(
@@ -1996,9 +1996,9 @@ def test_predict_with_builtin_pyfunc_chat_conversion_for_aimessage_response():
         )
 
     loaded_model = mlflow.langchain.load_model(model_info.model_uri)
-    assert loaded_model.invoke([HumanMessage(content="Who owns MLflow?")]) == AIMessage(
-        content="You own MLflow"
-    )
+    result = loaded_model.invoke([HumanMessage(content="Who owns MLflow?")])
+    assert isinstance(result, AIMessage)
+    assert result.content == "You own MLflow"
 
     pyfunc_loaded_model = mlflow.pyfunc.load_model(model_info.model_uri)
     with mock.patch("time.time", return_value=1677858242):
@@ -2523,9 +2523,12 @@ def test_save_load_chain_as_code_optional_code_path():
         content_type=pyfunc_scoring_server.CONTENT_TYPE_JSON,
         extra_args=["--env-manager", "local"],
     )
-    assert PredictionsResponse.from_json(response.content.decode("utf-8")) == {
-        "predictions": [APIRequest._try_transform_response_to_chat_format(answer)]
-    }
+    # avoid minor diff of created time in the response
+    prediction_result = PredictionsResponse.from_json(response.content.decode("utf-8"))
+    prediction_result["predictions"][0]["created"] = 123
+    expected_prediction = APIRequest._try_transform_response_to_chat_format(answer)
+    expected_prediction["created"] = 123
+    assert prediction_result == {"predictions": [expected_prediction]}
 
     langchain_flavor = model_info.flavors["langchain"]
     assert langchain_flavor["databricks_dependency"] == {
@@ -2541,3 +2544,175 @@ def test_config_path_context():
         )
 
     assert mlflow.langchain._rag_utils.__databricks_rag_config_path__ is None
+
+
+def get_fake_chat_stream_model(endpoint_name="fake-stream-endpoint"):
+    from langchain.callbacks.manager import CallbackManagerForLLMRun
+    from langchain.chat_models.base import SimpleChatModel
+    from langchain.schema.messages import BaseMessage, AIMessageChunk
+    from langchain_core.outputs import ChatGenerationChunk
+    from typing import Iterator
+
+    class FakeChatStreamModel(SimpleChatModel):
+        """Fake Chat Stream Model wrapper for testing purposes."""
+
+        endpoint_name: str = "fake-stream-endpoint"
+
+        def _call(
+            self,
+            messages: List[BaseMessage],
+            stop: Optional[List[str]] = None,
+            run_manager: Optional[CallbackManagerForLLMRun] = None,
+            **kwargs: Any,
+        ) -> str:
+            return "Databricks"
+
+        def _stream(
+            self,
+            messages: List[BaseMessage],
+            stop: Optional[List[str]] = None,
+            run_manager: Optional[CallbackManagerForLLMRun] = None,
+            **kwargs: Any,
+        ) -> Iterator[ChatGenerationChunk]:
+            for chunk_content, finish_reason in [("Da", None), ("tab", None), ("ricks", "stop")]:
+                chunk = ChatGenerationChunk(
+                    message=AIMessageChunk(content=chunk_content),
+                    generation_info={"finish_reason": finish_reason},
+                )
+                if run_manager:
+                    run_manager.on_llm_new_token(chunk.text, chunk=chunk)
+
+                yield chunk
+
+        @property
+        def _llm_type(self) -> str:
+            return "fake chat model"
+
+    return FakeChatStreamModel(endpoint_name=endpoint_name)
+
+
+@pytest.fixture
+def fake_chat_stream_model():
+    return get_fake_chat_stream_model()
+
+
+@pytest.mark.skipif(
+    Version(langchain.__version__) < Version("0.0.311"), reason="feature not existing"
+)
+def test_simple_chat_model_stream_inference(fake_chat_stream_model):
+    with mlflow.start_run():
+        model_info = mlflow.langchain.log_model(fake_chat_stream_model, "model")
+
+    loaded_model = mlflow.pyfunc.load_model(model_info.model_uri)
+
+    input_example = {
+        "messages": [
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "assistant", "content": "What would you like to ask?"},
+            {"role": "user", "content": "Who owns MLflow?"},
+        ]
+    }
+
+    chunk_iter = loaded_model.predict_stream(input_example)
+
+    if Version(langchain.__version__) < Version("0.1.0"):
+        finish_reason = None
+    else:
+        finish_reason = "stop"
+
+    with mock.patch("time.time", return_value=1677858242):
+        chunks = list(chunk_iter)
+
+        assert chunks == [
+            {
+                "id": None,
+                "object": "chat.completion.chunk",
+                "created": 1677858242,
+                "model": None,
+                "choices": [
+                    {
+                        "index": 0,
+                        "finish_reason": None,
+                        "delta": {"role": "assistant", "content": "Da"},
+                    }
+                ],
+            },
+            {
+                "id": None,
+                "object": "chat.completion.chunk",
+                "created": 1677858242,
+                "model": None,
+                "choices": [
+                    {
+                        "index": 0,
+                        "finish_reason": None,
+                        "delta": {"role": "assistant", "content": "tab"},
+                    }
+                ],
+            },
+            {
+                "id": None,
+                "object": "chat.completion.chunk",
+                "created": 1677858242,
+                "model": None,
+                "choices": [
+                    {
+                        "index": 0,
+                        "finish_reason": finish_reason,
+                        "delta": {"role": "assistant", "content": "ricks"},
+                    }
+                ],
+            },
+        ]
+
+
+@pytest.mark.skipif(
+    Version(langchain.__version__) < Version("0.0.311"), reason="feature not existing"
+)
+def test_simple_chat_model_stream_with_callbacks(fake_chat_stream_model):
+    from langchain.callbacks.base import BaseCallbackHandler
+    from langchain.prompts import ChatPromptTemplate
+    from langchain.schema.output_parser import StrOutputParser
+
+    class TestCallbackHandler(BaseCallbackHandler):
+        def __init__(self):
+            super().__init__()
+            self.num_llm_start_calls = 0
+
+        def on_llm_start(
+            self,
+            serialized: Dict[str, Any],
+            prompts: List[str],
+            **kwargs: Any,
+        ) -> Any:
+            self.num_llm_start_calls += 1
+
+    prompt = ChatPromptTemplate.from_template("What's your favorite {industry} company?")
+    chain = prompt | fake_chat_stream_model | StrOutputParser()
+    # Test the basic functionality of the chain
+    assert chain.invoke({"industry": "tech"}) == "Databricks"
+
+    with mlflow.start_run():
+        model_info = mlflow.langchain.log_model(
+            chain, "model_path", input_example={"industry": "tech"}
+        )
+
+    pyfunc_loaded_model = mlflow.pyfunc.load_model(model_info.model_uri)
+
+    callback_handler1 = TestCallbackHandler()
+    callback_handler2 = TestCallbackHandler()
+
+    # Ensure handlers have not been called yet
+    assert callback_handler1.num_llm_start_calls == 0
+    assert callback_handler2.num_llm_start_calls == 0
+
+    assert list(
+        pyfunc_loaded_model._model_impl._predict_stream_with_callbacks(
+            {"industry": "tech"},
+            callback_handlers=[callback_handler1, callback_handler2],
+        )
+    ) == ["Da", "tab", "ricks"]
+
+    # Test that the callback handlers were called
+    assert callback_handler1.num_llm_start_calls == 1
+    assert callback_handler2.num_llm_start_calls == 1
