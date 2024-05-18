@@ -192,6 +192,14 @@ def _serve_pyfunc(model, env_manager):
             bash_cmds.append("source /miniconda/bin/activate custom_env")
         elif env_manager == em.VIRTUALENV:
             bash_cmds.append("source /opt/activate")
+
+        if env_manager != em.LOCAL and _container_includes_mlflow_source():
+            # If MLflow is not installed as package but source is copied to container
+            # and env_manager is not local,
+            # we need to install MLflow dependencies in conda / virtualenv environment
+            # by `pip install /opt/mlflow`
+            bash_cmds.append("pip install /opt/mlflow")
+
     procs = []
 
     start_nginx = True
