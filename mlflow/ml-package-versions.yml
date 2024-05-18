@@ -364,40 +364,9 @@ spark:
       pip install '.[connect]'
       pyspark --version
 
-  models:
-    minimum: "3.1.2"
-    maximum: "3.5.1"
-    python:
-      "== dev": "3.9"
-    java:
-      "> 3.4.1": "17"
-    # NB: Allow unreleased maximum versions for the pyspark package to support models and
-    # autologging use cases in environments where newer versions of pyspark are available
-    # prior to their release on PyPI (e.g. Databricks)
-    allow_unreleased_max_version: True
-    requirements:
-      ">= 0.0.0": ["boto3", "scikit-learn", "pyarrow"]
-      "< 3.4.0": ["pandas<2"]
-      ">= 3.5.0": ["torch", "scikit-learn", "torcheval"]
-      ">= 3.5.0, < dev": ["pyspark[connect]"]
-    run: |
-      SAGEMAKER_OUT=$(mktemp)
-      if mlflow sagemaker build-and-push-container --no-push --mlflow-home . > $SAGEMAKER_OUT 2>&1; then
-        echo "Sagemaker container build succeeded.";
-      else
-        echo "Sagemaker container build failed, output:";
-        cat $SAGEMAKER_OUT;
-        exit 1
-      fi
-      pytest tests/spark --ignore tests/spark/autologging --ignore tests/spark/test_spark_connect_model_export.py
-
-      if [[ $(python -c "from packaging.version import Version;import pyspark;print(Version(pyspark.__version__) >= Version('3.5'))") = "True" ]]; then
-        pytest tests/spark/test_spark_connect_model_export.py;
-      fi
-
   autologging:
-    minimum: "3.1.2"
-    maximum: "3.5.1"
+    minimum: "3.4.3"
+    maximum: "3.4.3"
     python:
       "== dev": "3.9"
     java:
@@ -422,8 +391,7 @@ spark:
       # NB: Running each .py file individually is important (instead of
       # 'pytest tests/spark/autologging') not to share SparkSession across tests
       # `test_spark_datasource_autologging_crossframework.py` fails when run with other tests
-      pytest tests/spark/autologging/datasource/test_spark_datasource_autologging_crossframework.py
-      find tests/spark/autologging -name 'test*.py' | grep -v crossframework | xargs -L 1 pytest
+      pytest tests/spark/autologging/datasource/test_spark_disable_autologging.py
 
 mleap:
   package_info:

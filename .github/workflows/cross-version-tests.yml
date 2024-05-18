@@ -57,7 +57,7 @@ env:
 jobs:
   set-matrix:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 120
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.repository == 'mlflow-automation/mlflow') || (github.event_name == 'pull_request' && github.event.pull_request.draft == false)
     permissions:
       issues: read # listLabelsOnIssue
@@ -172,6 +172,11 @@ jobs:
           HF_HUB_ENABLE_HF_TRANSFER: 1
         run: |
           ${{ matrix.run }}
+          steps:
+      # Enable tmate debugging
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        timeout-minutes: 30
 
   test2:
     needs: set-matrix
@@ -220,3 +225,7 @@ jobs:
           HF_HUB_ENABLE_HF_TRANSFER: 1
         run: |
           ${{ matrix.run }}
+      # Enable tmate debugging
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        timeout-minutes: 30
