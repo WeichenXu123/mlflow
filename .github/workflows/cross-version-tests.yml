@@ -172,7 +172,6 @@ jobs:
           HF_HUB_ENABLE_HF_TRANSFER: 1
         run: |
           ${{ matrix.run }}
-          steps:
       # Enable tmate debugging
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
