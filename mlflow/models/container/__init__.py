@@ -181,24 +181,17 @@ def _serve_pyfunc(model, env_manager):
         # files are loaded into the container at runtime rather than build time. In this case,
         # we need to create a virtual environment and install the model dependencies into it when
         # starting the container.
-        if not disable_env_creation:
-            _install_pyfunc_deps(
-                MODEL_PATH,
-                install_mlflow=True,
-                enable_mlserver=enable_mlserver,
-                env_manager=env_manager,
-            )
+        # if not disable_env_creation:
+        _install_pyfunc_deps(
+            MODEL_PATH,
+            install_mlflow=True,
+            enable_mlserver=enable_mlserver,
+            env_manager=env_manager,
+        )
         if env_manager == em.CONDA:
             bash_cmds.append("source /miniconda/bin/activate custom_env")
         elif env_manager == em.VIRTUALENV:
             bash_cmds.append("source /opt/activate")
-
-        if env_manager != em.LOCAL and _container_includes_mlflow_source():
-            # If MLflow is not installed as package but source is copied to container
-            # and env_manager is not local,
-            # we need to install MLflow dependencies in conda / virtualenv environment
-            # by `pip install /opt/mlflow`
-            bash_cmds.append("pip install /opt/mlflow")
 
     procs = []
 
