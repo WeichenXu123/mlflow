@@ -299,17 +299,32 @@ def _add_code_from_conf_to_system_path(local_path, conf, code_key=FLAVOR_CONFIG_
         # old code path files which have the same path
         # and old code path files have already been loaded as module
         # and are cached in `sys.modules`.
-        modules_to_reload = set()
-        for loaded_module in sys.modules:
-            mod_path = code_path / loaded_module.replace('.', os.sep)
+        modules_to_reload = {}
+        for loaded_module_name, loaded_module in sys.modules:
+            mod_path = code_path / loaded_module_name.replace('.', os.sep)
 
-            if mod_path.is_dir() or mod_path.with_name(mod_path.name + ".py").is_file():
-                # this is a module loaded from code path
-                modules_to_reload.add(loaded_module)
+            new_mod_sha = None
+            if mod_path.is_dir():
+                mod_init_file = mod_path / "__init__.py"
+                if mod_init_file.is_file():
+                    new_mod_sha = hashlib.sha256(mod_init_file.read_bytes()).hexdigest()
+                else:
+                    # no __init__.py file, equivalent to empty __init__.py file.
+                    new_mod_sha = hashlib.sha256(b"").hexdigest()
+            else:
+                mod_py_file = mod_path.with_name(mod_path.name + ".py")
+                if mod_py_file.is_file():
+                    new_mod_sha = hashlib.sha256(mod_py_file.read_bytes()).hexdigest()
+
+            if new_mod_sha:
+                loaded_mod_sha = getattr(loaded_module_name, "__mlflow_code_path_module_sha__")
+                if loaded_mod_sha is None or loaded_mod_sha != new_mod_sha:
+                    # loaded module is out-of-date, trigger reloading.
+                    modules_to_reload[loaded_module_name] = new_mod_sha
 
         # invalidate these modules cache
-        for module in modules_to_reload:
-            sys.modules.pop(module)
+        for module_name, new_mod_sha in modules_to_reload:
+            sys.modules.pop(module_name)
 
         # reload these modules
         for module in modules_to_reload:
