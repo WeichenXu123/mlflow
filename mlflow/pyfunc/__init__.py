@@ -2117,6 +2117,7 @@ Compound types:
                 print("DBGDBG#2")
                 if scoring_server_proc is not None:
                     os.kill(scoring_server_proc.pid, signal.SIGTERM)
+            print("DBGDBG#UDF-completes")
 
     udf.metadata = model_metadata
 
@@ -2150,6 +2151,7 @@ Compound types:
                 )
         else:
             return udf(*args)
+        print("DBGDBG#UDF-wrapper-completes")
 
     return udf_with_default_cols
 
