@@ -34,7 +34,7 @@ from tests.projects.utils import TEST_PROJECT_DIR
 
 @pytest.fixture(scope="module")
 def spark_session():
-    with SparkSession.builder.master("local[*]").getOrCreate() as session:
+    with SparkSession.builder.master("local[*]").config("spark.task.maxFailures", "1").getOrCreate() as session:
         yield session
 
 

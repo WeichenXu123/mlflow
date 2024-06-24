@@ -922,7 +922,6 @@ def _get_pip_requirements_from_model_path(model_path: str):
     return [req.req_str for req in _parse_requirements(req_file_path, is_constraint=False)]
 
 
-@trace_disabled  # Suppress traces while loading model
 def load_model(
     model_uri: str,
     suppress_warnings: bool = False,
@@ -1025,10 +1024,13 @@ def load_model(
                 "score_batch for offline predictions.",
                 BAD_REQUEST,
             ) from None
+        import traceback
+        print("DBGDBG#3\n" + traceback.format_exc())
         raise e
     finally:
         # clean up the dependencies schema which is set to global state after loading the model.
         # This avoids the schema being used by other models loaded in the same process.
+        print("DBGDBG#4\n")
         _clear_dependencies_schemas()
     predict_fn = conf.get("predict_fn", "predict")
     streamable = conf.get("streamable", False)
@@ -2090,6 +2092,7 @@ Compound types:
                     _log_warning_if_params_not_in_predict_signature(_logger, params)
                     return loaded_model.predict(pdf)
 
+            print("DBGDBG#UDF-load-model-completes")
             try:
                 for input_batch in iterator:
                     # If the UDF is called with only multiple arguments,
@@ -2105,7 +2108,12 @@ Compound types:
 
                     if len(row_batch_args[0]) > 0:
                         yield _predict_row_batch(batch_predict_fn, row_batch_args)
+                print("DBGDBG#predict-completes")
+            except Exception as e:
+                import traceback
+                print("DBGDB#1: " + traceback.format_exc())
             finally:
+                print("DBGDBG#2")
                 if scoring_server_proc is not None:
                     os.kill(scoring_server_proc.pid, signal.SIGTERM)
 
