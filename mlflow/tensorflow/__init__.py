@@ -610,6 +610,11 @@ def load_model(model_uri, dst_path=None, saved_model_kwargs=None, keras_model_kw
     import tensorflow as tf
 
     local_model_path = _download_artifact_from_uri(artifact_uri=model_uri, output_path=dst_path)
+    with open(
+            os.path.join(local_model_path, "data", "model.weights.h5"),
+            "wb"
+    ) as f:
+        f.close()
 
     model_configuration_path = os.path.join(local_model_path, MLMODEL_FILE_NAME)
     model_conf = Model.load(model_configuration_path)

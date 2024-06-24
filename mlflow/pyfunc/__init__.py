@@ -2108,8 +2108,6 @@ Compound types:
             finally:
                 if scoring_server_proc is not None:
                     os.kill(scoring_server_proc.pid, signal.SIGTERM)
-            with open(os.path.join(local_model_path, "data", "model.weights.h5"), "w") as f:
-                f.close()
 
     udf.metadata = model_metadata
 
