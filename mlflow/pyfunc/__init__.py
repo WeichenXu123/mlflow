@@ -2079,6 +2079,7 @@ Compound types:
                     except Exception:
                         os.makedirs(model_path, exist_ok=True)
                         loaded_model = mlflow.pyfunc.load_model(model_uri, dst_path=model_path)
+                    print(f"DBGDBG: UDF load_model: {model_path}")
                 elif should_use_spark_to_broadcast_file:
                     loaded_model, _ = SparkModelCache.get_or_load(archive_path)
                 else:
@@ -2110,10 +2111,7 @@ Compound types:
             finally:
                 if scoring_server_proc is not None:
                     os.kill(scoring_server_proc.pid, signal.SIGTERM)
-            print("DBGDBG#UDF-completes, traceback stack:")
-            import traceback
-            for line in traceback.format_stack():
-                print(line.strip())
+            print("DBGDBG#UDF-completes")
 
 
     udf.metadata = model_metadata
