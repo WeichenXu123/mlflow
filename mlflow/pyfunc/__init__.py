@@ -2084,8 +2084,7 @@ Compound types:
                 else:
                     loaded_model = mlflow.pyfunc.load_model(local_model_path)
                     print(f"DBGDBG: UDF load_model: {local_model_path}, "
-                          f"list: {str(os.listdir(os.path.join(local_model_path, '/model/data')))}")
-
+                          f"list: {str(os.listdir(os.path.join(local_model_path, 'model/data')))}")
 
                 def batch_predict_fn(pdf, params=None):
                     if inspect.signature(loaded_model.predict).parameters.get("params"):
@@ -2114,6 +2113,8 @@ Compound types:
                 if scoring_server_proc is not None:
                     os.kill(scoring_server_proc.pid, signal.SIGTERM)
             print("DBGDBG#UDF-completes")
+            with open(os.path.join(local_model_path, "data", "model.weights.h5")) as f:
+                f.close()
 
 
     udf.metadata = model_metadata
