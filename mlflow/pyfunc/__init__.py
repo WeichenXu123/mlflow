@@ -2083,7 +2083,8 @@ Compound types:
                     loaded_model, _ = SparkModelCache.get_or_load(archive_path)
                 else:
                     loaded_model = mlflow.pyfunc.load_model(local_model_path)
-                    print(f"DBGDBG: UDF load_model: {local_model_path}")
+                    print(f"DBGDBG: UDF load_model: {local_model_path}, list: {str(os.listdir('/tmp/tmppgjvtphh/models/tmpr_3sv4t3/model/data/'))}")
+
 
                 def batch_predict_fn(pdf, params=None):
                     if inspect.signature(loaded_model.predict).parameters.get("params"):
