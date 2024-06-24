@@ -1025,13 +1025,10 @@ def load_model(
                 "score_batch for offline predictions.",
                 BAD_REQUEST,
             ) from None
-        import traceback
-        print("DBGDBG#3\n" + traceback.format_exc())
         raise e
     finally:
         # clean up the dependencies schema which is set to global state after loading the model.
         # This avoids the schema being used by other models loaded in the same process.
-        print("DBGDBG#4\n")
         _clear_dependencies_schemas()
     predict_fn = conf.get("predict_fn", "predict")
     streamable = conf.get("streamable", False)
@@ -2113,7 +2110,11 @@ Compound types:
             finally:
                 if scoring_server_proc is not None:
                     os.kill(scoring_server_proc.pid, signal.SIGTERM)
-            print("DBGDBG#UDF-completes")
+            print("DBGDBG#UDF-completes, traceback stack:")
+            import traceback
+            for line in traceback.format_stack():
+                print(line.strip())
+
 
     udf.metadata = model_metadata
 
