@@ -2110,11 +2110,7 @@ Compound types:
                     if len(row_batch_args[0]) > 0:
                         yield _predict_row_batch(batch_predict_fn, row_batch_args)
                 print("DBGDBG#predict-completes")
-            except Exception as e:
-                import traceback
-                print("DBGDB#1: " + traceback.format_exc())
             finally:
-                print("DBGDBG#2")
                 if scoring_server_proc is not None:
                     os.kill(scoring_server_proc.pid, signal.SIGTERM)
             print("DBGDBG#UDF-completes")
@@ -2151,7 +2147,6 @@ Compound types:
                 )
         else:
             return udf(*args)
-        print("DBGDBG#UDF-wrapper-completes")
 
     return udf_with_default_cols
 
