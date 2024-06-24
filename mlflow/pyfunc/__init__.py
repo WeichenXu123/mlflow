@@ -2079,11 +2079,11 @@ Compound types:
                     except Exception:
                         os.makedirs(model_path, exist_ok=True)
                         loaded_model = mlflow.pyfunc.load_model(model_uri, dst_path=model_path)
-                    print(f"DBGDBG: UDF load_model: {model_path}")
                 elif should_use_spark_to_broadcast_file:
                     loaded_model, _ = SparkModelCache.get_or_load(archive_path)
                 else:
                     loaded_model = mlflow.pyfunc.load_model(local_model_path)
+                    print(f"DBGDBG: UDF load_model: {local_model_path}")
 
                 def batch_predict_fn(pdf, params=None):
                     if inspect.signature(loaded_model.predict).parameters.get("params"):
