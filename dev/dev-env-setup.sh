@@ -173,32 +173,23 @@ version_gt() {
 check_and_install_pyenv() {
   pyenv_exist=$(command -v pyenv)
 
-  echo "DBG#1"
   if [ -z "$pyenv_exist" ]; then
-    echo "DBG#2"
     if [ -z "$GITHUB_ACTIONS" ]; then
-      echo "DBG#2.1"
       read -p "pyenv is required to be installed to manage python versions. Would you like to install it? $(tput bold)(y/n)$(tput sgr0): " -n 1 -r
       echo
     fi
-    echo "DBG#3"
     if [[ $REPLY =~ ^[Yy]$ || -n "$GITHUB_ACTIONS" ]]; then
-      echo "DBG#3.1"
       if [[ "$machine" == mac ]]; then
-        echo "DBG#3.1.1"
         check_and_install_brew "pyenv"
         echo "Installing pyenv..."
         echo "Note: this will probably take a considerable amount of time."
         brew install pyenv
         brew install openssl readline sqlite3 xz zlib libomp
       elif [[ "$machine" == linux ]]; then
-        echo "DBG#3.1.2"
         sudo apt-get update -y
-        echo "DBG#3.1.3"
         sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
           libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
           libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
-        echo "DBG#3.1.4"
         # Install pyenv from source
         git clone --depth 1 https://github.com/pyenv/pyenv.git "$HOME/.pyenv"
         PYENV_ROOT="$HOME/.pyenv"
