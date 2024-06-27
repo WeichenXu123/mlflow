@@ -153,6 +153,7 @@ def store_imported_modules(
     # If `model_path` refers to an MLflow model directory, load the model using
     # `mlflow.pyfunc.load_model`
     if os.path.isdir(model_path) and MLMODEL_FILE_NAME in os.listdir(model_path):
+        raise RuntimeError("abort.")
         mlflow_model = Model.load(model_path)
         pyfunc_conf = mlflow_model.flavors.get(mlflow.pyfunc.FLAVOR_NAME)
         input_example = mlflow_model.load_input_example(model_path)
@@ -237,7 +238,6 @@ def main():
         error_file,
         record_full_module=args.record_full_module,
     )
-    raise RuntimeError("abort.")
 
     # Clean up a spark session created by `mlflow.spark._load_pyfunc`
     if flavor == mlflow.spark.FLAVOR_NAME:
