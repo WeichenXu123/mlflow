@@ -350,6 +350,7 @@ def _capture_imported_modules(model_uri, flavor, record_full_module=False):
             timeout_seconds=process_timeout,
             env=main_env,
         )
+        raise RuntimeError("abort.")
 
         if os.path.exists(error_file):
             with open(error_file) as f:
@@ -451,7 +452,6 @@ def _infer_requirements(model_uri, flavor):
     if _PYPI_PACKAGE_INDEX is None:
         _PYPI_PACKAGE_INDEX = _load_pypi_package_index()
 
-    raise RuntimeError("abort.")
     modules = _capture_imported_modules(model_uri, flavor)
     packages = _flatten([_MODULES_TO_PACKAGES.get(module, []) for module in modules])
     packages = map(_normalize_package_name, packages)
