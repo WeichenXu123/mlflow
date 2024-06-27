@@ -433,7 +433,7 @@ def _save_model_with_class_artifacts_params(
     # `mlflow_model.code` is updated, re-generate `MLmodel` file.
     mlflow_model.save(os.path.join(path, MLMODEL_FILE_NAME))
     # -------
-    # return
+    return
     if conda_env is None:
         if pip_requirements is None:
             default_reqs = get_default_pip_requirements()
@@ -454,7 +454,7 @@ def _save_model_with_class_artifacts_params(
         )
     else:
         conda_env, pip_requirements, pip_constraints = _process_conda_env(conda_env)
-    return
+
     with open(os.path.join(path, _CONDA_ENV_FILE_NAME), "w") as f:
         yaml.safe_dump(conda_env, stream=f, default_flow_style=False)
 
