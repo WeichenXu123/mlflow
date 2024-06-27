@@ -197,10 +197,10 @@ def store_imported_modules(
 
             loader_module._load_pyfunc = _load_pyfunc_patch
             try:
+                raise RuntimeError("abort.")
                 mlflow.pyfunc.load_model(model_path)
             finally:
                 loader_module._load_pyfunc = original
-            raise RuntimeError("abort.")
     # Otherwise, load the model using `mlflow.<flavor>._load_pyfunc`.
     # For models that don't contain pyfunc flavor (e.g. scikit-learn estimator
     # that doesn't implement a `predict` method),
