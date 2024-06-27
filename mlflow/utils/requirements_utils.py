@@ -445,7 +445,6 @@ def _infer_requirements(model_uri, flavor):
         A list of inferred pip requirements.
 
     """
-    raise RuntimeError("abort.")
     raise_on_error = MLFLOW_REQUIREMENTS_INFERENCE_RAISE_ERRORS.get()
     _init_modules_to_packages_map()
     global _PYPI_PACKAGE_INDEX
@@ -453,6 +452,7 @@ def _infer_requirements(model_uri, flavor):
         _PYPI_PACKAGE_INDEX = _load_pypi_package_index()
 
     modules = _capture_imported_modules(model_uri, flavor)
+    raise RuntimeError("abort.")
     packages = _flatten([_MODULES_TO_PACKAGES.get(module, []) for module in modules])
     packages = map(_normalize_package_name, packages)
     packages = _prune_packages(packages)
