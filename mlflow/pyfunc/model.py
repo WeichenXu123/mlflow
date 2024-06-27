@@ -339,7 +339,8 @@ def _save_model_with_class_artifacts_params(
 
         custom_model_config_kwargs[CONFIG_KEY_PYTHON_MODEL] = saved_python_model_subpath
 
-    return
+    # -------
+    # return
     if artifacts:
         saved_artifacts_config = {}
         with TempDir() as tmp_artifacts_dir:
@@ -433,7 +434,7 @@ def _save_model_with_class_artifacts_params(
 
     # `mlflow_model.code` is updated, re-generate `MLmodel` file.
     mlflow_model.save(os.path.join(path, MLMODEL_FILE_NAME))
-
+    return
     if conda_env is None:
         if pip_requirements is None:
             default_reqs = get_default_pip_requirements()
