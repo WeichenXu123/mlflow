@@ -197,7 +197,6 @@ def store_imported_modules(
 
             loader_module._load_pyfunc = _load_pyfunc_patch
             try:
-                raise RuntimeError("abort.")
                 mlflow.pyfunc.load_model(model_path)
             finally:
                 loader_module._load_pyfunc = original
