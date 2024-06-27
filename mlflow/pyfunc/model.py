@@ -298,6 +298,7 @@ def _save_model_with_class_artifacts_params(
                     If None, MLflow will try to inspect if the model supports streaming
                     by checking if `predict_stream` method exists. Default None.
     """
+    return
     if mlflow_model is None:
         mlflow_model = Model()
 
