@@ -968,10 +968,12 @@ def load_model(
     )
 
     try:
+        mod = importlib.import_module(conf[MAIN])
+        raise RuntimeError(f"abort")
         if model_config:
-            model_impl = importlib.import_module(conf[MAIN])._load_pyfunc(data_path, model_config)
+            model_impl = mod._load_pyfunc(data_path, model_config)
         else:
-            model_impl = importlib.import_module(conf[MAIN])._load_pyfunc(data_path)
+            model_impl = mod._load_pyfunc(data_path)
     except ModuleNotFoundError as e:
         # This error message is particularly for the case when the error is caused by module
         # "databricks.feature_store.mlflow_model". But depending on the environment, the offending
