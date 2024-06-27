@@ -663,6 +663,7 @@ class Model:
                 artifact_path=artifact_path, run_id=run_id, metadata=metadata, resources=resources
             )
             flavor.save_model(path=local_path, mlflow_model=mlflow_model, **kwargs)
+            return
 
             # Copy model metadata files to a sub-directory 'metadata',
             # For UC sharing use-cases.
