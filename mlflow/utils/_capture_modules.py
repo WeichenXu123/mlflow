@@ -228,6 +228,7 @@ def main():
         _prepare_subprocess_environ_for_creating_local_spark_session()
         _create_local_spark_session_for_loading_spark_model()
 
+    raise RuntimeError("abort.")
     cap_cm = _CaptureImportedModules(record_full_module=args.record_full_module)
     store_imported_modules(
         cap_cm,
