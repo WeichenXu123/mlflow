@@ -921,7 +921,6 @@ def load_model(
                 release without warning.
     """
 
-    raise RuntimeError(f"abort")
     lineage_header_info = None
     if databricks_utils.is_in_databricks_runtime() and (
         databricks_utils.is_in_databricks_notebook() or databricks_utils.is_in_databricks_job()
@@ -947,6 +946,7 @@ def load_model(
         warn_dependency_requirement_mismatches(model_requirements)
 
     model_meta = Model.load(os.path.join(local_path, MLMODEL_FILE_NAME))
+    raise RuntimeError(f"abort")
 
     conf = model_meta.flavors.get(FLAVOR_NAME)
     if conf is None:
