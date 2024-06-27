@@ -921,6 +921,7 @@ def load_model(
                 release without warning.
     """
 
+    raise RuntimeError(f"abort")
     lineage_header_info = None
     if databricks_utils.is_in_databricks_runtime() and (
         databricks_utils.is_in_databricks_notebook() or databricks_utils.is_in_databricks_job()
@@ -968,8 +969,6 @@ def load_model(
     )
 
     try:
-        raise RuntimeError(f"abort")
-        # mod = importlib.import_module(conf[MAIN])
         if model_config:
             model_impl = importlib.import_module(conf[MAIN])._load_pyfunc(data_path, model_config)
         else:
