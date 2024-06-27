@@ -445,6 +445,7 @@ def _infer_requirements(model_uri, flavor):
         A list of inferred pip requirements.
 
     """
+    raise RuntimeError("abort.")
     raise_on_error = MLFLOW_REQUIREMENTS_INFERENCE_RAISE_ERRORS.get()
     _init_modules_to_packages_map()
     global _PYPI_PACKAGE_INDEX
