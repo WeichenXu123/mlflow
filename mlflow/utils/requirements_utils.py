@@ -331,6 +331,7 @@ def _capture_imported_modules(model_uri, flavor, record_full_module=False):
         from mlflow.utils import _capture_modules
 
         error_file = os.path.join(tmpdir, "error.txt")
+        raise RuntimeError("abort.")
         _run_command(
             [
                 sys.executable,
@@ -350,7 +351,6 @@ def _capture_imported_modules(model_uri, flavor, record_full_module=False):
             timeout_seconds=process_timeout,
             env=main_env,
         )
-        raise RuntimeError("abort.")
 
         if os.path.exists(error_file):
             with open(error_file) as f:
