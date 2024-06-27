@@ -968,8 +968,8 @@ def load_model(
     )
 
     try:
-        mod = importlib.import_module(conf[MAIN])
         raise RuntimeError(f"abort")
+        mod = importlib.import_module(conf[MAIN])
         if model_config:
             model_impl = mod._load_pyfunc(data_path, model_config)
         else:
