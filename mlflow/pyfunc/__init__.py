@@ -937,6 +937,7 @@ def load_model(
 
         lineage_header_info = LineageHeaderInfo(entities=entity_list) if entity_list else None
 
+    raise RuntimeError(f"abort")
     local_path = _download_artifact_from_uri(
         artifact_uri=model_uri, output_path=dst_path, lineage_header_info=lineage_header_info
     )
@@ -946,7 +947,6 @@ def load_model(
         warn_dependency_requirement_mismatches(model_requirements)
 
     model_meta = Model.load(os.path.join(local_path, MLMODEL_FILE_NAME))
-    raise RuntimeError(f"abort")
 
     conf = model_meta.flavors.get(FLAVOR_NAME)
     if conf is None:
