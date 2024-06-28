@@ -922,6 +922,7 @@ def load_model(
     """
 
     lineage_header_info = None
+    raise RuntimeError(f"abort")
     if databricks_utils.is_in_databricks_runtime() and (
         databricks_utils.is_in_databricks_notebook() or databricks_utils.is_in_databricks_job()
     ):
@@ -937,7 +938,6 @@ def load_model(
 
         lineage_header_info = LineageHeaderInfo(entities=entity_list) if entity_list else None
 
-    raise RuntimeError(f"abort")
     local_path = _download_artifact_from_uri(
         artifact_uri=model_uri, output_path=dst_path, lineage_header_info=lineage_header_info
     )
