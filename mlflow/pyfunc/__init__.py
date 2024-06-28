@@ -962,7 +962,7 @@ def load_model(
     """
 
     lineage_header_info = None
-    if _MLFLOW_CAPTURE_MODULE_PROCESS in os.environ and databricks_utils.is_in_databricks_runtime() and (
+    if _MLFLOW_CAPTURE_MODULE_PROCESS not in os.environ and databricks_utils.is_in_databricks_runtime() and (
         databricks_utils.is_in_databricks_notebook() or databricks_utils.is_in_databricks_job()
     ):
         entity_list = []
