@@ -16,9 +16,9 @@ from mlflow.utils._spark_utils import _prepare_subprocess_environ_for_creating_l
 from mlflow.utils.exception_utils import get_stacktrace
 from mlflow.utils.file_utils import write_to
 from mlflow.utils.requirements_utils import (
+    _MLFLOW_CAPTURE_MODULE_PROCESS,
     DATABRICKS_MODULES_TO_PACKAGES,
     MLFLOW_MODULES_TO_PACKAGES,
-    _MLFLOW_CAPTURE_MODULE_PROCESS,
 )
 
 
