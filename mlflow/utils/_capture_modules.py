@@ -18,6 +18,7 @@ from mlflow.utils.file_utils import write_to
 from mlflow.utils.requirements_utils import (
     DATABRICKS_MODULES_TO_PACKAGES,
     MLFLOW_MODULES_TO_PACKAGES,
+    _MLFLOW_CAPTURE_MODULE_PROCESS,
 )
 
 
@@ -213,6 +214,7 @@ def store_imported_modules(
 
 
 def main():
+    os.environ[_MLFLOW_CAPTURE_MODULE_PROCESS] = "1"
     args = parse_args()
     model_path = args.model_path
     flavor = args.flavor

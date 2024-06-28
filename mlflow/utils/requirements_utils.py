@@ -37,6 +37,9 @@ from mlflow.utils.databricks_utils import (
 _logger = logging.getLogger(__name__)
 
 
+_MLFLOW_CAPTURE_MODULE_PROCESS = "MLFLOW_CAPTURE_MODULE_PROCESS"
+
+
 def _is_comment(line):
     return line.startswith("#")
 

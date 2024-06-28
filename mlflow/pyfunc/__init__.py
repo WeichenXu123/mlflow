@@ -520,6 +520,7 @@ from mlflow.utils.nfs_on_spark import get_nfs_cache_root_dir
 from mlflow.utils.requirements_utils import (
     _parse_requirements,
     warn_dependency_requirement_mismatches,
+    _MLFLOW_CAPTURE_MODULE_PROCESS,
 )
 
 try:
@@ -961,7 +962,7 @@ def load_model(
     """
 
     lineage_header_info = None
-    if databricks_utils.is_in_databricks_runtime() and (
+    if _MLFLOW_CAPTURE_MODULE_PROCESS in os.environ and databricks_utils.is_in_databricks_runtime() and (
         databricks_utils.is_in_databricks_notebook() or databricks_utils.is_in_databricks_job()
     ):
         entity_list = []
