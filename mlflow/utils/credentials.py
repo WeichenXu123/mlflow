@@ -130,7 +130,7 @@ def _validate_databricks_auth():
             f"Successfully connected to MLflow hosted tracking server! Host: {w.config.host}."
         )
     except Exception as e:
-        raise MlflowException(f"Failed to validate databricks credentials: {e}")
+        raise MlflowException(f"Failed to validate databricks credentials: {e}") from e
 
 
 def _overwrite_or_create_databricks_profile(
