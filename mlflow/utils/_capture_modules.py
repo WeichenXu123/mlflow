@@ -213,6 +213,8 @@ def store_imported_modules(
 
 
 def main():
+    print(f"mlflow-req-infer-sub-process-pid:{os.getpid()}", flush=True)
+
     args = parse_args()
     model_path = args.model_path
     flavor = args.flavor

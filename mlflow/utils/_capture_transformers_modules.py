@@ -35,6 +35,8 @@ class _CaptureImportedModulesForHF(_CaptureImportedModules):
 
 
 def main():
+    print(f"mlflow-req-infer-sub-process-pid:{os.getpid()}", flush=True)
+
     args = parse_args()
     model_path = args.model_path
     flavor = args.flavor
