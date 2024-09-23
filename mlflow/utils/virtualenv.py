@@ -147,13 +147,13 @@ def _install_python(version, pyenv_root=None, capture_output=False):
         )
     else:
         pyenv_install_options_str = ' '.join(pyenv_install_options)
-        pyenv_root = os.getenv("PYENV_ROOT")
         success_file_path = f"{pyenv_root}/versions/{version}/_SUCCESS"
         proc = subprocess.Popen(
             f"({pyenv_bin_path} install "
             f"{pyenv_install_options_str} {version} > {pyenv_root}/pyenv.log 2>&1) "
             f"&& touch {success_file_path}",
             shell=True,
+            extra_env=extra_env,
         )
         while True:
             time.sleep(1)
@@ -165,7 +165,7 @@ def _install_python(version, pyenv_root=None, capture_output=False):
                 proc.kill()
                 break
         if return_code != 0:
-            with open("/tmp/pyenv.log", "r") as f:
+            with open(f"{pyenv_root}/pyenv.log", "r") as f:
                 pyenv_log = f.read()
             raise RuntimeError(f"pyenv install command failed. Error: {pyenv_log}")
 
