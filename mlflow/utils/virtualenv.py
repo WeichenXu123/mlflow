@@ -89,7 +89,9 @@ _SEMANTIC_VERSION_REGEX = re.compile(r"^([0-9]+)\.([0-9]+)\.([0-9]+)$")
 
 
 def _get_pyenv_bin_path():
-    if is_in_databricks_runtime() and os.path.exists(_DATABRICKS_PYENV_BIN_PATH):
+    # We don't check "DATABRICKS_RUNTIME_VERSION" environment variable
+    # becasue spark executor side doesn't set this environment variable.
+    if os.path.exists(_DATABRICKS_PYENV_BIN_PATH):
         return _DATABRICKS_PYENV_BIN_PATH
     return shutil.which("pyenv")
 
@@ -125,13 +127,11 @@ def _install_python(version, pyenv_root=None, capture_output=False):
     Returns:
         Path to the installed python binary.
     """
-    """
     version = (
         version
         if _SEMANTIC_VERSION_REGEX.match(version)
         else _find_latest_installable_python_version(version)
     )
-    """
     _logger.info("Installing python %s if it does not exist", version)
     # pyenv-win doesn't support `--skip-existing` but its behavior is enabled by default
     # https://github.com/pyenv-win/pyenv-win/pull/314
@@ -139,40 +139,13 @@ def _install_python(version, pyenv_root=None, capture_output=False):
     extra_env = {"PYENV_ROOT": pyenv_root} if pyenv_root else None
     pyenv_bin_path = _get_pyenv_bin_path()
 
-    if is_windows():
-        _exec_cmd(
-            [pyenv_bin_path, "install", *pyenv_install_options, version],
-            capture_output=capture_output,
-            # Windows fails to find pyenv and throws `FileNotFoundError` without `shell=True`
-            shell=is_windows(),
-            extra_env=extra_env,
-        )
-    else:
-        pyenv_install_options_str = ' '.join(pyenv_install_options)
-        success_file_path = f"{pyenv_root}/versions/{version}/_SUCCESS"
-        log_path = f"{pyenv_root}/pyenv-install.log"
-        pyenv_command = f"{pyenv_bin_path} install {pyenv_install_options_str} {version}"
-        proc = subprocess.Popen(
-            f"({pyenv_command} > {log_path} 2>&1) && touch {success_file_path}",
-            shell=True,
-            env={**os.environ, **extra_env},
-        )
-        while True:
-            time.sleep(1)
-            if proc.poll() is not None:
-                return_code = proc.returncode
-                break
-            if os.path.exists(success_file_path):
-                return_code = 0
-                proc.kill()
-                break
-        if return_code != 0:
-            with open(f"{log_path}", "r") as f:
-                pyenv_log = f.read()
-            raise RuntimeError(
-                f"Command '{pyenv_command}' failed with return code {return_code}. "
-                f"Output logs:\n{pyenv_log}"
-            )
+    _exec_cmd(
+        [pyenv_bin_path, "install", *pyenv_install_options, version],
+        capture_output=capture_output,
+        # Windows fails to find pyenv and throws `FileNotFoundError` without `shell=True`
+        shell=is_windows(),
+        extra_env=extra_env,
+    )
 
     if not is_windows():
         if pyenv_root is None:

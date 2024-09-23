@@ -2,6 +2,7 @@ import functools
 import os
 import subprocess
 import sys
+import uuid
 
 from mlflow.utils.databricks_utils import is_in_databricks_runtime
 from mlflow.utils.os import is_windows
@@ -101,6 +102,39 @@ def _exec_cmd(
     # stringify all elements in `cmd`. Note `str(pathlib.Path("abc"))` returns 'abc'.
     if isinstance(cmd, list):
         cmd = list(map(str, cmd))
+
+    import platform
+    import time
+    if platform.system().lower() == "linux":
+        if isinstance(cmd, list):
+            cmd = " ".join(cmd)
+        uid = uuid.uuid4()
+        success_file_path = f"/tmp/{uid}.success"
+        log_path = f"/tmp/{uid}.log"
+        proc = subprocess.Popen(
+            f"({cmd} > {log_path} 2>&1) && touch {success_file_path}",
+            shell=True,
+            env=env,
+        )
+        if not synchronous:
+            return proc
+        while True:
+            time.sleep(1)
+            if proc.poll() is not None:
+                return_code = proc.returncode
+                break
+            if os.path.exists(success_file_path):
+                return_code = 0
+                proc.kill()
+                break
+        if return_code != 0:
+            with open(f"{log_path}", "r") as f:
+                log_content = f.read()
+            raise RuntimeError(
+                f"Command '{cmd}' failed with return code {return_code}. "
+                f"Output logs:\n{log_content}"
+            )
+        return
 
     if capture_output or stream_output:
         if kwargs.get("stdout") is not None or kwargs.get("stderr") is not None:
