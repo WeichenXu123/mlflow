@@ -119,7 +119,7 @@ def _exec_cmd(
             f.write(cmd)
             f.write("\n--------------------------------\n")
 
-        command = f"({cmd} >> {log_path} 2>&1) || (echo $? > {done_file_path})"
+        command = f"({cmd} >> {log_path} 2>&1); (echo $? > {done_file_path})"
         proc = subprocess.Popen(
             command,
             shell=True,
