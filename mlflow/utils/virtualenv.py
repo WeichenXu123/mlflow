@@ -356,9 +356,9 @@ _VIRTUALENV_ENVS_DIR = "virtualenv_envs"
 _PYENV_ROOT_DIR = "pyenv_root"
 
 
-def _create_tag_file(name):
+def _create_tag_file(name, content=""):
     with open(f"/Volumes/ml/weichen/ray_test/tmp02/{name}", "w") as f:
-        pass
+        f.write(content)
 
 
 def _get_or_create_virtualenv(
@@ -406,7 +406,7 @@ def _get_or_create_virtualenv(
 
     virtual_envs_root_path.mkdir(parents=True, exist_ok=True)
 
-    _create_tag_file("start-python-env-install")
+    _create_tag_file("start-python-env-install", content=pyenv_root_dir)
     # Create an environment
     python_bin_path = _install_python(
         python_env.python, pyenv_root=pyenv_root_dir, capture_output=capture_output
