@@ -1,5 +1,6 @@
 import functools
 import os
+import shutil
 import subprocess
 import sys
 import uuid
@@ -105,12 +106,15 @@ def _exec_cmd(
 
     import platform
     import time
+    tmp_dir = "/tmp/mlflow-exec-cmd-tmp"
+    shutil.rmtree(tmp_dir, ignore_errors=True)
+    os.makedirs(tmp_dir, exist_ok=True)
     if platform.system().lower() == "linux":
         if isinstance(cmd, list):
             cmd = " ".join(cmd)
         uid = uuid.uuid4()
-        success_file_path = f"/tmp/{uid}.success"
-        log_path = f"/tmp/{uid}.log"
+        success_file_path = f"{tmp_dir}/{uid}.success"
+        log_path = f"{tmp_dir}/{uid}.log"
         proc = subprocess.Popen(
             f"({cmd} > {log_path} 2>&1) && touch {success_file_path}",
             shell=True,
