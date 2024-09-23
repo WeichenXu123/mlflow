@@ -151,7 +151,7 @@ def _install_python(version, pyenv_root=None, capture_output=False):
         success_file_path = f"{pyenv_root}/versions/{version}/_SUCCESS"
         proc = subprocess.Popen(
             f"({pyenv_bin_path} install "
-            f"{pyenv_install_options_str} {version} >/tmp/pyenv.log 2>&1) "
+            f"{pyenv_install_options_str} {version} > {pyenv_root}/pyenv.log 2>&1) "
             f"&& touch {success_file_path}",
             shell=True,
         )
