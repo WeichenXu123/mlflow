@@ -288,8 +288,9 @@ def _create_virtualenv(
                     _copy_model_to_writeable_destination(local_model_path, tmpdir)
 
                 tmp_req_file = f"requirements.{uuid.uuid4().hex}.txt"
-                Path(tmpdir).joinpath(tmp_req_file).write_text("\n".join(deps))
-                pip_install_command = f"{env_dir}/bin/python -m pip install --quiet -r {tmp_req_file}"
+                tmp_req_file_path = Path(tmpdir).joinpath(tmp_req_file)
+                tmp_req_file_path.write_text("\n".join(deps))
+                pip_install_command = f"{env_dir}/bin/python -m pip install --quiet -r {tmp_req_file_path}"
                 if is_windows():
                     _exec_cmd(pip_install_command, capture_output=capture_output, cwd=tmpdir, extra_env=extra_env)
                 else:
