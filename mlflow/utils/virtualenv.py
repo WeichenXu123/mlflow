@@ -165,7 +165,9 @@ def _install_python(version, pyenv_root=None, capture_output=False):
                 proc.kill()
                 break
         if return_code != 0:
-            raise RuntimeError(f"pyenv install command failed.")
+            with open("/tmp/pyenv.log", "r") as f:
+                pyenv_log = f.read()
+            raise RuntimeError(f"pyenv install command failed. Error: {pyenv_log}")
 
     if not is_windows():
         if pyenv_root is None:
