@@ -289,18 +289,14 @@ def _create_virtualenv(
 
                 tmp_req_file = f"requirements.{uuid.uuid4().hex}.txt"
                 Path(tmpdir).joinpath(tmp_req_file).write_text("\n".join(deps))
-                pip_install_command = f"python -m pip install --quiet -r {tmp_req_file}"
+                pip_install_command = f"{env_dir}/bin/python -m pip install --quiet -r {tmp_req_file}"
                 if is_windows():
-                    cmd = _join_commands(
-                        activate_cmd, pip_install_command
-                    )
-                    _exec_cmd(cmd, capture_output=capture_output, cwd=tmpdir, extra_env=extra_env)
+                    _exec_cmd(pip_install_command, capture_output=capture_output, cwd=tmpdir, extra_env=extra_env)
                 else:
                     _exec_cmd(
                         pip_install_command, capture_output=capture_output, cwd=tmpdir,
                         extra_env=extra_env,
                         shell_mode=True,
-                        shell_mode_source_cmd=activate_cmd
                     )
 
     return activate_cmd
