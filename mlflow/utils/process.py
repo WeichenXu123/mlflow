@@ -107,7 +107,6 @@ def _exec_cmd(
     import platform
     import time
     tmp_dir = "/tmp/mlflow-exec-cmd-tmp"
-    shutil.rmtree(tmp_dir, ignore_errors=True)
     os.makedirs(tmp_dir, exist_ok=True)
     if platform.system().lower() == "linux":
         if isinstance(cmd, list):
