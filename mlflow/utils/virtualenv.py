@@ -267,7 +267,9 @@ def _create_virtualenv(
         )
 
         _logger.info("Installing dependencies")
+        deps_index = 0
         for deps in filter(None, [python_env.build_dependencies, python_env.dependencies]):
+            deps_index += 1
             with tempfile.TemporaryDirectory() as tmpdir:
                 # Create a temporary requirements file in the model directory to resolve the
                 # references in it correctly. To do this, we must first symlink or copy the model
@@ -291,6 +293,7 @@ def _create_virtualenv(
                 tmp_req_file_path = Path(tmpdir).joinpath(tmp_req_file)
                 tmp_req_file_path.write_text("\n".join(deps))
                 pip_install_command = f"{env_dir}/bin/python -m pip install --quiet -r {tmp_req_file_path}"
+                _create_tag_file(f"start-virtualenv-pip-install-{deps_index}")
                 if is_windows():
                     _exec_cmd(pip_install_command, capture_output=capture_output, cwd=tmpdir, extra_env=extra_env)
                 else:
@@ -299,6 +302,7 @@ def _create_virtualenv(
                         extra_env=extra_env,
                         shell_mode=True,
                     )
+                _create_tag_file(f"end-virtualenv-pip-install-{deps_index}")
 
     return activate_cmd
 
