@@ -153,7 +153,7 @@ def _install_python(version, pyenv_root=None, capture_output=False):
             f"{pyenv_install_options_str} {version} > {pyenv_root}/pyenv.log 2>&1) "
             f"&& touch {success_file_path}",
             shell=True,
-            extra_env=extra_env,
+            env={**os.environ, **extra_env},
         )
         while True:
             time.sleep(1)
