@@ -145,6 +145,7 @@ def _install_python(version, pyenv_root=None, capture_output=False):
         # Windows fails to find pyenv and throws `FileNotFoundError` without `shell=True`
         shell=is_windows(),
         extra_env=extra_env,
+        shell_mode=True,
     )
 
     if not is_windows():
@@ -408,7 +409,7 @@ def _get_or_create_virtualenv(
                 activate_cmd,
                 f"python -m pip install --quiet -U {' '.join(pip_requirements_override)}",
             )
-            _exec_cmd(cmd, capture_output=capture_output, extra_env=extra_env)
+            _exec_cmd(cmd, capture_output=capture_output, extra_env=extra_env, shell_mode=True)
 
         _create_tag_file("end-install")
         return activate_cmd

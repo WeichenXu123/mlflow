@@ -49,6 +49,7 @@ def _exec_cmd(
     capture_output=True,
     synchronous=True,
     stream_output=False,
+    shell_mode=False,
     **kwargs,
 ):
     """A convenience wrapper of `subprocess.Popen` for running a command from a Python script.
@@ -108,7 +109,7 @@ def _exec_cmd(
     import time
     tmp_dir = "/tmp/mlflow-exec-cmd-tmp"
     os.makedirs(tmp_dir, exist_ok=True)
-    if platform.system().lower() == "linux":
+    if shell_mode:
         if isinstance(cmd, list):
             cmd = " ".join(cmd)
         uid = uuid.uuid4()
