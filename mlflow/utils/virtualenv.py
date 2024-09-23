@@ -296,11 +296,11 @@ def _create_virtualenv(
                     )
                     _exec_cmd(cmd, capture_output=capture_output, cwd=tmpdir, extra_env=extra_env)
                 else:
-                    cmd = f"({activate_cmd} && {pip_install_command})"
                     _exec_cmd(
-                        cmd, capture_output=capture_output, cwd=tmpdir,
+                        pip_install_command, capture_output=capture_output, cwd=tmpdir,
                         extra_env=extra_env,
                         shell_mode=True,
+                        shell_mode_source_cmd=activate_cmd
                     )
 
     return activate_cmd

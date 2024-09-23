@@ -50,6 +50,7 @@ def _exec_cmd(
     synchronous=True,
     stream_output=False,
     shell_mode=False,
+    shell_mode_source_cmd=None,
     **kwargs,
 ):
     """A convenience wrapper of `subprocess.Popen` for running a command from a Python script.
@@ -115,8 +116,10 @@ def _exec_cmd(
         uid = uuid.uuid4()
         success_file_path = f"{tmp_dir}/{uid}.success"
         log_path = f"{tmp_dir}/{uid}.log"
+
+        shell_mode_source_cmd = shell_mode_source_cmd or ""
         proc = subprocess.Popen(
-            f"({cmd} > {log_path} 2>&1) && touch {success_file_path}",
+            f"{shell_mode_source_cmd} && ({cmd} > {log_path} 2>&1) && touch {success_file_path}",
             shell=True,
             env=env,
         )
