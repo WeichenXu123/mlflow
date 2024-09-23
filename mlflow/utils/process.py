@@ -118,8 +118,12 @@ def _exec_cmd(
         log_path = f"{tmp_dir}/{uid}.log"
 
         shell_mode_source_cmd = shell_mode_source_cmd or ""
+
+        command = f"({cmd} > {log_path} 2>&1) && touch {success_file_path}"
+        if shell_mode_source_cmd:
+            command = f"{shell_mode_source_cmd} && {command}"
         proc = subprocess.Popen(
-            f"{shell_mode_source_cmd} && ({cmd} > {log_path} 2>&1) && touch {success_file_path}",
+            command,
             shell=True,
             env=env,
         )
