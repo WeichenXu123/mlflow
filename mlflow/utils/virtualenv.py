@@ -2,8 +2,10 @@ import logging
 import os
 import re
 import shutil
+import subprocess
 import sys
 import tempfile
+import time
 import uuid
 from pathlib import Path
 
@@ -134,13 +136,36 @@ def _install_python(version, pyenv_root=None, capture_output=False):
     pyenv_install_options = ("--skip-existing",) if not is_windows() else ()
     extra_env = {"PYENV_ROOT": pyenv_root} if pyenv_root else None
     pyenv_bin_path = _get_pyenv_bin_path()
-    _exec_cmd(
-        [pyenv_bin_path, "install", *pyenv_install_options, version],
-        capture_output=capture_output,
-        # Windows fails to find pyenv and throws `FileNotFoundError` without `shell=True`
-        shell=is_windows(),
-        extra_env=extra_env,
-    )
+
+    if is_windows():
+        _exec_cmd(
+            [pyenv_bin_path, "install", *pyenv_install_options, version],
+            capture_output=capture_output,
+            # Windows fails to find pyenv and throws `FileNotFoundError` without `shell=True`
+            shell=is_windows(),
+            extra_env=extra_env,
+        )
+    else:
+        pyenv_install_options_str = ' '.join(pyenv_install_options)
+        pyenv_root = os.getenv("PYENV_ROOT")
+        success_file_path = f"{pyenv_root}/versions/{version}/_SUCCESS"
+        proc = subprocess.Popen(
+            f"({pyenv_bin_path} install "
+            f"{pyenv_install_options_str} {version} >/tmp/pyenv.log 2>&1) "
+            f"&& touch {success_file_path}",
+            shell=True,
+        )
+        while True:
+            time.sleep(1)
+            if proc.poll() is not None:
+                return_code = proc.returncode
+                break
+            if os.path.exists(success_file_path):
+                return_code = 0
+                proc.kill()
+                break
+        if return_code != 0:
+            raise RuntimeError(f"pyenv install command failed.")
 
     if not is_windows():
         if pyenv_root is None:
