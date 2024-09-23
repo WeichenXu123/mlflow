@@ -140,7 +140,7 @@ def _install_python(version, pyenv_root=None, capture_output=False):
     pyenv_bin_path = _get_pyenv_bin_path()
 
     _exec_cmd(
-        [pyenv_bin_path, "install", *pyenv_install_options, version],
+        [pyenv_bin_path, "install", *pyenv_install_options, version, "--verbose"],
         capture_output=capture_output,
         # Windows fails to find pyenv and throws `FileNotFoundError` without `shell=True`
         shell=is_windows(),
