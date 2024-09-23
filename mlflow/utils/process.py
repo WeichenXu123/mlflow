@@ -113,13 +113,13 @@ def _exec_cmd(
         if isinstance(cmd, list):
             cmd = " ".join(cmd)
         uid = uuid.uuid4()
-        success_file_path = f"{tmp_dir}/{uid}.success"
+        done_file_path = f"{tmp_dir}/{uid}.success"
         log_path = f"{tmp_dir}/{uid}.log"
         with open(log_path, "w") as f:
             f.write(cmd)
             f.write("\n--------------------------------\n")
 
-        command = f"({cmd} >> {log_path} 2>&1) && touch {success_file_path}"
+        command = f"({cmd} >> {log_path} 2>&1) || (echo $? > {done_file_path})"
         proc = subprocess.Popen(
             command,
             shell=True,
@@ -127,15 +127,15 @@ def _exec_cmd(
         )
         if not synchronous:
             return proc
-        while True:
+        while not os.path.exists(done_file_path):
             time.sleep(1)
-            if proc.poll() is not None:
-                return_code = proc.returncode
-                break
-            if os.path.exists(success_file_path):
-                return_code = 0
-                proc.kill()
-                break
+
+        with open(done_file_path, "r") as f:
+            return_code = int(f.read().strip())
+        if proc.poll() is None:
+            # the process is hanging for some unknown reason, kill it.
+            proc.kill()
+
         if return_code != 0:
             with open(f"{log_path}", "r") as f:
                 log_content = f.read()
