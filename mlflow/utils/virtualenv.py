@@ -356,6 +356,11 @@ _VIRTUALENV_ENVS_DIR = "virtualenv_envs"
 _PYENV_ROOT_DIR = "pyenv_root"
 
 
+def _create_tag_file(name):
+    with open(f"/Volumes/ml/weichen/ray_test/tmp02/{name}", "w") as f:
+        pass
+
+
 def _get_or_create_virtualenv(
     local_model_path,
     env_id=None,
@@ -386,6 +391,7 @@ def _get_or_create_virtualenv(
 
     # Read environment information
     local_model_path = Path(local_model_path)
+    _create_tag_file("start")
     python_env = _get_python_env(local_model_path)
 
     extra_env = _get_virtualenv_extra_env_vars(env_root_dir)
@@ -400,12 +406,14 @@ def _get_or_create_virtualenv(
 
     virtual_envs_root_path.mkdir(parents=True, exist_ok=True)
 
+    _create_tag_file("start-python-env-install")
     # Create an environment
     python_bin_path = _install_python(
         python_env.python, pyenv_root=pyenv_root_dir, capture_output=capture_output
     )
     env_name = _get_virtualenv_name(python_env, local_model_path, env_id)
     env_dir = virtual_envs_root_path / env_name
+    _create_tag_file("start-virtual-env-install")
     try:
         activate_cmd = _create_virtualenv(
             local_model_path,
@@ -415,6 +423,7 @@ def _get_or_create_virtualenv(
             extra_env=extra_env,
             capture_output=capture_output,
         )
+        _create_tag_file("start-pip-install")
 
         # Install additional dependencies specified by `requirements_override`
         if pip_requirements_override:
@@ -428,6 +437,7 @@ def _get_or_create_virtualenv(
             )
             _exec_cmd(cmd, capture_output=capture_output, extra_env=extra_env)
 
+        _create_tag_file("end-install")
         return activate_cmd
 
     except:
