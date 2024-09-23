@@ -148,10 +148,10 @@ def _install_python(version, pyenv_root=None, capture_output=False):
     else:
         pyenv_install_options_str = ' '.join(pyenv_install_options)
         success_file_path = f"{pyenv_root}/versions/{version}/_SUCCESS"
+        log_path = f"{pyenv_root}/pyenv-install.log"
+        pyenv_command = f"{pyenv_bin_path} install {pyenv_install_options_str} {version}"
         proc = subprocess.Popen(
-            f"({pyenv_bin_path} install "
-            f"{pyenv_install_options_str} {version} > {pyenv_root}/pyenv.log 2>&1) "
-            f"&& touch {success_file_path}",
+            f"({pyenv_command} > {log_path} 2>&1) && touch {success_file_path}",
             shell=True,
             env={**os.environ, **extra_env},
         )
@@ -165,9 +165,12 @@ def _install_python(version, pyenv_root=None, capture_output=False):
                 proc.kill()
                 break
         if return_code != 0:
-            with open(f"{pyenv_root}/pyenv.log", "r") as f:
+            with open(f"{log_path}", "r") as f:
                 pyenv_log = f.read()
-            raise RuntimeError(f"pyenv install command failed. Error: {pyenv_log}")
+            raise RuntimeError(
+                f"Command '{pyenv_command}' failed with return code {return_code}. "
+                f"Output logs:\n{pyenv_log}"
+            )
 
     if not is_windows():
         if pyenv_root is None:
