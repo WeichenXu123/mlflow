@@ -125,11 +125,13 @@ def _install_python(version, pyenv_root=None, capture_output=False):
     Returns:
         Path to the installed python binary.
     """
+    """
     version = (
         version
         if _SEMANTIC_VERSION_REGEX.match(version)
         else _find_latest_installable_python_version(version)
     )
+    """
     _logger.info("Installing python %s if it does not exist", version)
     # pyenv-win doesn't support `--skip-existing` but its behavior is enabled by default
     # https://github.com/pyenv-win/pyenv-win/pull/314
