@@ -218,6 +218,8 @@ def fastai_model(model_path, fastai_model_raw):
         path=model_path,
         input_example=fastai_model_raw.inference_dataframe[:1],
     )
+    with open(os.path.join(model_path, "requirements.txt"), "r") as f:
+        raise RuntimeError("fastai model deps: " + f.read())
     return model_path
 
 
