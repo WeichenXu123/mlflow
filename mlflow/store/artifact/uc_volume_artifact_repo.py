@@ -217,12 +217,13 @@ def uc_volume_artifact_repo_factory(artifact_uri):
         )
 
     artifact_uri = artifact_uri.rstrip("/")
+    print(f"DBG: artifact_uri={artifact_uri}")
     db_profile_uri = get_databricks_profile_uri_from_artifact_uri(artifact_uri)
     if (
         mlflow.utils.databricks_utils.is_uc_volume_fuse_available()
         and MLFLOW_ENABLE_UC_VOLUME_FUSE_ARTIFACT_REPO.get()
         and not is_databricks_model_registry_artifacts_uri(artifact_uri)
-        and (db_profile_uri is None or db_profile_uri == "databricks")
+        and (db_profile_uri is None or db_profile_uri == "databricks" or db_profile_uri == "databricks-uc")
     ):
         # If the UC Volume FUSE mount is available, write artifacts directly to
         # /Volumes/... using local filesystem APIs.
