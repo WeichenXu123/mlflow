@@ -409,6 +409,7 @@ import subprocess
 import sys
 import tempfile
 import threading
+import time
 import uuid
 import warnings
 from copy import deepcopy
@@ -2433,7 +2434,12 @@ e.g., struct<a:int, b:array<int>>.
                 columns=names,
             )
 
+        from datetime import datetime
+        beg_time = datetime.now().strftime("%H:%M:%S:%f")
+        beg_time_s = time.time()
         result = predict_fn(pdf, params)
+
+        print(f"DBG prediction {local_model_path} at {beg_time}, cost {time.time() - beg_time_s} seconds.")
 
         if isinstance(result, dict):
             result = {k: list(v) for k, v in result.items()}
@@ -2691,7 +2697,7 @@ e.g., struct<a:int, b:array<int>>.
                         yield _predict_row_batch(batch_predict_fn, row_batch_args)
             finally:
                 if scoring_server_proc is not None:
-                    os.kill(scoring_server_proc.pid, signal.SIGTERM)
+                    os.kill(scoring_server_proc.pid, signal.SIGKILL)
 
     udf.metadata = model_metadata
 
