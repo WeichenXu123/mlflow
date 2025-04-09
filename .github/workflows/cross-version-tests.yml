@@ -149,7 +149,8 @@ jobs:
           java-version: ${{ matrix.java }}
       - name: Install mlflow & test dependencies
         run: |
-          pip install -U pip wheel setuptools
+          # wheel >= 0.46 does not support 'bdist_wheel' command
+          pip install -U pip "wheel<0.46" setuptools
           pip install .[extras]
           pip install -r requirements/test-requirements.txt
       - name: Install ${{ matrix.package }} ${{ matrix.version }}
@@ -196,7 +197,8 @@ jobs:
           java-version: ${{ matrix.java }}
       - name: Install mlflow & test dependencies
         run: |
-          pip install -U pip wheel setuptools
+          # wheel >= 0.46 does not support 'bdist_wheel' command
+          pip install -U pip "wheel<0.46" setuptools
           pip install .[extras]
           pip install -r requirements/test-requirements.txt
       - name: Install ${{ matrix.package }} ${{ matrix.version }}

@@ -44,7 +44,8 @@ sudo apt clean
 df -h
 
 python --version
-pip install --upgrade pip setuptools wheel
+# wheel >= 0.46 does not support 'bdist_wheel' command
+pip install --upgrade pip setuptools wheel "wheel<0.46"
 pip --version
 
 if [[ "$SKINNY" == "true" ]]; then
