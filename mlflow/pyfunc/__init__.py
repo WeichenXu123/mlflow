@@ -2402,7 +2402,7 @@ e.g., struct<a:int, b:array<int>>.
             )
     params = _validate_params(params, model_metadata)
 
-    def _predict_row_batch(predict_fn, args):
+    def _predict_row_batch(predict_fn, args, logger):
         input_schema = model_metadata.get_input_schema()
         args = list(args)
         if len(args) == 1 and isinstance(args[0], pandas.DataFrame):
@@ -2435,11 +2435,13 @@ e.g., struct<a:int, b:array<int>>.
             )
 
         from datetime import datetime
+        import time
         beg_time = datetime.now().strftime("%H:%M:%S:%f")
         beg_time_s = time.time()
         result = predict_fn(pdf, params)
-
-        print(f"DBG prediction {local_model_path} at {beg_time}, cost {time.time() - beg_time_s} seconds.")
+        dbg_str = f"DBG prediction <{local_model_path}> at {beg_time}, cost {time.time() - beg_time_s} seconds."
+        print(dbg_str, flush=True)
+        logger.warning(dbg_str)
 
         if isinstance(result, dict):
             result = {k: list(v) for k, v in result.items()}
@@ -2522,6 +2524,9 @@ e.g., struct<a:int, b:array<int>>.
             ScoringServerClient,
             StdinScoringServerClient,
         )
+        import logging
+        logger = logging.getLogger("DBG")
+        logger.setLevel(logging.WARN)
 
         # Note: this is a pandas udf function in iteration style, which takes an iterator of
         # tuple of pandas.Series and outputs an iterator of pandas.Series.
@@ -2694,7 +2699,7 @@ e.g., struct<a:int, b:array<int>>.
                         row_batch_args = input_batch
 
                     if len(row_batch_args[0]) > 0:
-                        yield _predict_row_batch(batch_predict_fn, row_batch_args)
+                        yield _predict_row_batch(batch_predict_fn, row_batch_args, logger)
             finally:
                 if scoring_server_proc is not None:
                     os.kill(scoring_server_proc.pid, signal.SIGKILL)
