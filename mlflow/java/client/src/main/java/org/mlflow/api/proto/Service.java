@@ -150200,6 +150200,9497 @@ public final class Service {
 
   }
 
+  public interface RegisterScorerOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:mlflow.RegisterScorer)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return Whether the experimentId field is set.
+     */
+    boolean hasExperimentId();
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The experimentId.
+     */
+    java.lang.String getExperimentId();
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The bytes for experimentId.
+     */
+    com.google.protobuf.ByteString
+        getExperimentIdBytes();
+
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return Whether the name field is set.
+     */
+    boolean hasName();
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return The name.
+     */
+    java.lang.String getName();
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return The bytes for name.
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+
+    /**
+     * <pre>
+     * The serialized scorer string (JSON).
+     * </pre>
+     *
+     * <code>optional string serialized_scorer = 3;</code>
+     * @return Whether the serializedScorer field is set.
+     */
+    boolean hasSerializedScorer();
+    /**
+     * <pre>
+     * The serialized scorer string (JSON).
+     * </pre>
+     *
+     * <code>optional string serialized_scorer = 3;</code>
+     * @return The serializedScorer.
+     */
+    java.lang.String getSerializedScorer();
+    /**
+     * <pre>
+     * The serialized scorer string (JSON).
+     * </pre>
+     *
+     * <code>optional string serialized_scorer = 3;</code>
+     * @return The bytes for serializedScorer.
+     */
+    com.google.protobuf.ByteString
+        getSerializedScorerBytes();
+  }
+  /**
+   * <pre>
+   * Register a scorer for an experiment.
+   * </pre>
+   *
+   * Protobuf type {@code mlflow.RegisterScorer}
+   */
+  public static final class RegisterScorer extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:mlflow.RegisterScorer)
+      RegisterScorerOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use RegisterScorer.newBuilder() to construct.
+    private RegisterScorer(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private RegisterScorer() {
+      experimentId_ = "";
+      name_ = "";
+      serializedScorer_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new RegisterScorer();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private RegisterScorer(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              experimentId_ = bs;
+              break;
+            }
+            case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              name_ = bs;
+              break;
+            }
+            case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000004;
+              serializedScorer_ = bs;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.mlflow.api.proto.Service.internal_static_mlflow_RegisterScorer_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.mlflow.api.proto.Service.internal_static_mlflow_RegisterScorer_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              org.mlflow.api.proto.Service.RegisterScorer.class, org.mlflow.api.proto.Service.RegisterScorer.Builder.class);
+    }
+
+    public interface ResponseOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:mlflow.RegisterScorer.Response)
+        com.google.protobuf.MessageOrBuilder {
+
+      /**
+       * <pre>
+       * The new version number for the scorer.
+       * </pre>
+       *
+       * <code>optional int32 version = 1;</code>
+       * @return Whether the version field is set.
+       */
+      boolean hasVersion();
+      /**
+       * <pre>
+       * The new version number for the scorer.
+       * </pre>
+       *
+       * <code>optional int32 version = 1;</code>
+       * @return The version.
+       */
+      int getVersion();
+    }
+    /**
+     * Protobuf type {@code mlflow.RegisterScorer.Response}
+     */
+    public static final class Response extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:mlflow.RegisterScorer.Response)
+        ResponseOrBuilder {
+    private static final long serialVersionUID = 0L;
+      // Use Response.newBuilder() to construct.
+      private Response(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        super(builder);
+      }
+      private Response() {
+      }
+
+      @java.lang.Override
+      @SuppressWarnings({"unused"})
+      protected java.lang.Object newInstance(
+          UnusedPrivateParameter unused) {
+        return new Response();
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+      getUnknownFields() {
+        return this.unknownFields;
+      }
+      private Response(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        int mutable_bitField0_ = 0;
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                bitField0_ |= 0x00000001;
+                version_ = input.readInt32();
+                break;
+              }
+              default: {
+                if (!parseUnknownField(
+                    input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e).setUnfinishedMessage(this);
+        } finally {
+          this.unknownFields = unknownFields.build();
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_RegisterScorer_Response_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_RegisterScorer_Response_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.mlflow.api.proto.Service.RegisterScorer.Response.class, org.mlflow.api.proto.Service.RegisterScorer.Response.Builder.class);
+      }
+
+      private int bitField0_;
+      public static final int VERSION_FIELD_NUMBER = 1;
+      private int version_;
+      /**
+       * <pre>
+       * The new version number for the scorer.
+       * </pre>
+       *
+       * <code>optional int32 version = 1;</code>
+       * @return Whether the version field is set.
+       */
+      @java.lang.Override
+      public boolean hasVersion() {
+        return ((bitField0_ & 0x00000001) != 0);
+      }
+      /**
+       * <pre>
+       * The new version number for the scorer.
+       * </pre>
+       *
+       * <code>optional int32 version = 1;</code>
+       * @return The version.
+       */
+      @java.lang.Override
+      public int getVersion() {
+        return version_;
+      }
+
+      private byte memoizedIsInitialized = -1;
+      @java.lang.Override
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      @java.lang.Override
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        if (((bitField0_ & 0x00000001) != 0)) {
+          output.writeInt32(1, version_);
+        }
+        unknownFields.writeTo(output);
+      }
+
+      @java.lang.Override
+      public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (((bitField0_ & 0x00000001) != 0)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeInt32Size(1, version_);
+        }
+        size += unknownFields.getSerializedSize();
+        memoizedSize = size;
+        return size;
+      }
+
+      @java.lang.Override
+      public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+         return true;
+        }
+        if (!(obj instanceof org.mlflow.api.proto.Service.RegisterScorer.Response)) {
+          return super.equals(obj);
+        }
+        org.mlflow.api.proto.Service.RegisterScorer.Response other = (org.mlflow.api.proto.Service.RegisterScorer.Response) obj;
+
+        if (hasVersion() != other.hasVersion()) return false;
+        if (hasVersion()) {
+          if (getVersion()
+              != other.getVersion()) return false;
+        }
+        if (!unknownFields.equals(other.unknownFields)) return false;
+        return true;
+      }
+
+      @java.lang.Override
+      public int hashCode() {
+        if (memoizedHashCode != 0) {
+          return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        if (hasVersion()) {
+          hash = (37 * hash) + VERSION_FIELD_NUMBER;
+          hash = (53 * hash) + getVersion();
+        }
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+      }
+
+      public static org.mlflow.api.proto.Service.RegisterScorer.Response parseFrom(
+          java.nio.ByteBuffer data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.mlflow.api.proto.Service.RegisterScorer.Response parseFrom(
+          java.nio.ByteBuffer data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.RegisterScorer.Response parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.mlflow.api.proto.Service.RegisterScorer.Response parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.RegisterScorer.Response parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.mlflow.api.proto.Service.RegisterScorer.Response parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.RegisterScorer.Response parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static org.mlflow.api.proto.Service.RegisterScorer.Response parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.RegisterScorer.Response parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input);
+      }
+      public static org.mlflow.api.proto.Service.RegisterScorer.Response parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.RegisterScorer.Response parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static org.mlflow.api.proto.Service.RegisterScorer.Response parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+
+      @java.lang.Override
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+      }
+      public static Builder newBuilder(org.mlflow.api.proto.Service.RegisterScorer.Response prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      }
+      @java.lang.Override
+      public Builder toBuilder() {
+        return this == DEFAULT_INSTANCE
+            ? new Builder() : new Builder().mergeFrom(this);
+      }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code mlflow.RegisterScorer.Response}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:mlflow.RegisterScorer.Response)
+          org.mlflow.api.proto.Service.RegisterScorer.ResponseOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return org.mlflow.api.proto.Service.internal_static_mlflow_RegisterScorer_Response_descriptor;
+        }
+
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return org.mlflow.api.proto.Service.internal_static_mlflow_RegisterScorer_Response_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  org.mlflow.api.proto.Service.RegisterScorer.Response.class, org.mlflow.api.proto.Service.RegisterScorer.Response.Builder.class);
+        }
+
+        // Construct using org.mlflow.api.proto.Service.RegisterScorer.Response.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessageV3
+                  .alwaysUseFieldBuilders) {
+          }
+        }
+        @java.lang.Override
+        public Builder clear() {
+          super.clear();
+          version_ = 0;
+          bitField0_ = (bitField0_ & ~0x00000001);
+          return this;
+        }
+
+        @java.lang.Override
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return org.mlflow.api.proto.Service.internal_static_mlflow_RegisterScorer_Response_descriptor;
+        }
+
+        @java.lang.Override
+        public org.mlflow.api.proto.Service.RegisterScorer.Response getDefaultInstanceForType() {
+          return org.mlflow.api.proto.Service.RegisterScorer.Response.getDefaultInstance();
+        }
+
+        @java.lang.Override
+        public org.mlflow.api.proto.Service.RegisterScorer.Response build() {
+          org.mlflow.api.proto.Service.RegisterScorer.Response result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        @java.lang.Override
+        public org.mlflow.api.proto.Service.RegisterScorer.Response buildPartial() {
+          org.mlflow.api.proto.Service.RegisterScorer.Response result = new org.mlflow.api.proto.Service.RegisterScorer.Response(this);
+          int from_bitField0_ = bitField0_;
+          int to_bitField0_ = 0;
+          if (((from_bitField0_ & 0x00000001) != 0)) {
+            result.version_ = version_;
+            to_bitField0_ |= 0x00000001;
+          }
+          result.bitField0_ = to_bitField0_;
+          onBuilt();
+          return result;
+        }
+
+        @java.lang.Override
+        public Builder clone() {
+          return super.clone();
+        }
+        @java.lang.Override
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            java.lang.Object value) {
+          return super.setField(field, value);
+        }
+        @java.lang.Override
+        public Builder clearField(
+            com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return super.clearField(field);
+        }
+        @java.lang.Override
+        public Builder clearOneof(
+            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return super.clearOneof(oneof);
+        }
+        @java.lang.Override
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index, java.lang.Object value) {
+          return super.setRepeatedField(field, index, value);
+        }
+        @java.lang.Override
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            java.lang.Object value) {
+          return super.addRepeatedField(field, value);
+        }
+        @java.lang.Override
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof org.mlflow.api.proto.Service.RegisterScorer.Response) {
+            return mergeFrom((org.mlflow.api.proto.Service.RegisterScorer.Response)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(org.mlflow.api.proto.Service.RegisterScorer.Response other) {
+          if (other == org.mlflow.api.proto.Service.RegisterScorer.Response.getDefaultInstance()) return this;
+          if (other.hasVersion()) {
+            setVersion(other.getVersion());
+          }
+          this.mergeUnknownFields(other.unknownFields);
+          onChanged();
+          return this;
+        }
+
+        @java.lang.Override
+        public final boolean isInitialized() {
+          return true;
+        }
+
+        @java.lang.Override
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          org.mlflow.api.proto.Service.RegisterScorer.Response parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (org.mlflow.api.proto.Service.RegisterScorer.Response) e.getUnfinishedMessage();
+            throw e.unwrapIOException();
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+        private int bitField0_;
+
+        private int version_ ;
+        /**
+         * <pre>
+         * The new version number for the scorer.
+         * </pre>
+         *
+         * <code>optional int32 version = 1;</code>
+         * @return Whether the version field is set.
+         */
+        @java.lang.Override
+        public boolean hasVersion() {
+          return ((bitField0_ & 0x00000001) != 0);
+        }
+        /**
+         * <pre>
+         * The new version number for the scorer.
+         * </pre>
+         *
+         * <code>optional int32 version = 1;</code>
+         * @return The version.
+         */
+        @java.lang.Override
+        public int getVersion() {
+          return version_;
+        }
+        /**
+         * <pre>
+         * The new version number for the scorer.
+         * </pre>
+         *
+         * <code>optional int32 version = 1;</code>
+         * @param value The version to set.
+         * @return This builder for chaining.
+         */
+        public Builder setVersion(int value) {
+          bitField0_ |= 0x00000001;
+          version_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <pre>
+         * The new version number for the scorer.
+         * </pre>
+         *
+         * <code>optional int32 version = 1;</code>
+         * @return This builder for chaining.
+         */
+        public Builder clearVersion() {
+          bitField0_ = (bitField0_ & ~0x00000001);
+          version_ = 0;
+          onChanged();
+          return this;
+        }
+        @java.lang.Override
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.setUnknownFields(unknownFields);
+        }
+
+        @java.lang.Override
+        public final Builder mergeUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.mergeUnknownFields(unknownFields);
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:mlflow.RegisterScorer.Response)
+      }
+
+      // @@protoc_insertion_point(class_scope:mlflow.RegisterScorer.Response)
+      private static final org.mlflow.api.proto.Service.RegisterScorer.Response DEFAULT_INSTANCE;
+      static {
+        DEFAULT_INSTANCE = new org.mlflow.api.proto.Service.RegisterScorer.Response();
+      }
+
+      public static org.mlflow.api.proto.Service.RegisterScorer.Response getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+      }
+
+      @java.lang.Deprecated public static final com.google.protobuf.Parser<Response>
+          PARSER = new com.google.protobuf.AbstractParser<Response>() {
+        @java.lang.Override
+        public Response parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return new Response(input, extensionRegistry);
+        }
+      };
+
+      public static com.google.protobuf.Parser<Response> parser() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<Response> getParserForType() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.RegisterScorer.Response getDefaultInstanceForType() {
+        return DEFAULT_INSTANCE;
+      }
+
+    }
+
+    private int bitField0_;
+    public static final int EXPERIMENT_ID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object experimentId_;
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return Whether the experimentId field is set.
+     */
+    @java.lang.Override
+    public boolean hasExperimentId() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The experimentId.
+     */
+    @java.lang.Override
+    public java.lang.String getExperimentId() {
+      java.lang.Object ref = experimentId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          experimentId_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The bytes for experimentId.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getExperimentIdBytes() {
+      java.lang.Object ref = experimentId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        experimentId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int NAME_FIELD_NUMBER = 2;
+    private volatile java.lang.Object name_;
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return Whether the name field is set.
+     */
+    @java.lang.Override
+    public boolean hasName() {
+      return ((bitField0_ & 0x00000002) != 0);
+    }
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return The name.
+     */
+    @java.lang.Override
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          name_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return The bytes for name.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int SERIALIZED_SCORER_FIELD_NUMBER = 3;
+    private volatile java.lang.Object serializedScorer_;
+    /**
+     * <pre>
+     * The serialized scorer string (JSON).
+     * </pre>
+     *
+     * <code>optional string serialized_scorer = 3;</code>
+     * @return Whether the serializedScorer field is set.
+     */
+    @java.lang.Override
+    public boolean hasSerializedScorer() {
+      return ((bitField0_ & 0x00000004) != 0);
+    }
+    /**
+     * <pre>
+     * The serialized scorer string (JSON).
+     * </pre>
+     *
+     * <code>optional string serialized_scorer = 3;</code>
+     * @return The serializedScorer.
+     */
+    @java.lang.Override
+    public java.lang.String getSerializedScorer() {
+      java.lang.Object ref = serializedScorer_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          serializedScorer_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * The serialized scorer string (JSON).
+     * </pre>
+     *
+     * <code>optional string serialized_scorer = 3;</code>
+     * @return The bytes for serializedScorer.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getSerializedScorerBytes() {
+      java.lang.Object ref = serializedScorer_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        serializedScorer_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (((bitField0_ & 0x00000001) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, experimentId_);
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, name_);
+      }
+      if (((bitField0_ & 0x00000004) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, serializedScorer_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, experimentId_);
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, name_);
+      }
+      if (((bitField0_ & 0x00000004) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, serializedScorer_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof org.mlflow.api.proto.Service.RegisterScorer)) {
+        return super.equals(obj);
+      }
+      org.mlflow.api.proto.Service.RegisterScorer other = (org.mlflow.api.proto.Service.RegisterScorer) obj;
+
+      if (hasExperimentId() != other.hasExperimentId()) return false;
+      if (hasExperimentId()) {
+        if (!getExperimentId()
+            .equals(other.getExperimentId())) return false;
+      }
+      if (hasName() != other.hasName()) return false;
+      if (hasName()) {
+        if (!getName()
+            .equals(other.getName())) return false;
+      }
+      if (hasSerializedScorer() != other.hasSerializedScorer()) return false;
+      if (hasSerializedScorer()) {
+        if (!getSerializedScorer()
+            .equals(other.getSerializedScorer())) return false;
+      }
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasExperimentId()) {
+        hash = (37 * hash) + EXPERIMENT_ID_FIELD_NUMBER;
+        hash = (53 * hash) + getExperimentId().hashCode();
+      }
+      if (hasName()) {
+        hash = (37 * hash) + NAME_FIELD_NUMBER;
+        hash = (53 * hash) + getName().hashCode();
+      }
+      if (hasSerializedScorer()) {
+        hash = (37 * hash) + SERIALIZED_SCORER_FIELD_NUMBER;
+        hash = (53 * hash) + getSerializedScorer().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static org.mlflow.api.proto.Service.RegisterScorer parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.mlflow.api.proto.Service.RegisterScorer parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.RegisterScorer parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.mlflow.api.proto.Service.RegisterScorer parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.RegisterScorer parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.mlflow.api.proto.Service.RegisterScorer parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.RegisterScorer parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.mlflow.api.proto.Service.RegisterScorer parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.RegisterScorer parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static org.mlflow.api.proto.Service.RegisterScorer parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.RegisterScorer parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.mlflow.api.proto.Service.RegisterScorer parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(org.mlflow.api.proto.Service.RegisterScorer prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * Register a scorer for an experiment.
+     * </pre>
+     *
+     * Protobuf type {@code mlflow.RegisterScorer}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:mlflow.RegisterScorer)
+        org.mlflow.api.proto.Service.RegisterScorerOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_RegisterScorer_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_RegisterScorer_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.mlflow.api.proto.Service.RegisterScorer.class, org.mlflow.api.proto.Service.RegisterScorer.Builder.class);
+      }
+
+      // Construct using org.mlflow.api.proto.Service.RegisterScorer.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        experimentId_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        name_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        serializedScorer_ = "";
+        bitField0_ = (bitField0_ & ~0x00000004);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_RegisterScorer_descriptor;
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.RegisterScorer getDefaultInstanceForType() {
+        return org.mlflow.api.proto.Service.RegisterScorer.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.RegisterScorer build() {
+        org.mlflow.api.proto.Service.RegisterScorer result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.RegisterScorer buildPartial() {
+        org.mlflow.api.proto.Service.RegisterScorer result = new org.mlflow.api.proto.Service.RegisterScorer(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.experimentId_ = experimentId_;
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.name_ = name_;
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.serializedScorer_ = serializedScorer_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.mlflow.api.proto.Service.RegisterScorer) {
+          return mergeFrom((org.mlflow.api.proto.Service.RegisterScorer)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(org.mlflow.api.proto.Service.RegisterScorer other) {
+        if (other == org.mlflow.api.proto.Service.RegisterScorer.getDefaultInstance()) return this;
+        if (other.hasExperimentId()) {
+          bitField0_ |= 0x00000001;
+          experimentId_ = other.experimentId_;
+          onChanged();
+        }
+        if (other.hasName()) {
+          bitField0_ |= 0x00000002;
+          name_ = other.name_;
+          onChanged();
+        }
+        if (other.hasSerializedScorer()) {
+          bitField0_ |= 0x00000004;
+          serializedScorer_ = other.serializedScorer_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        org.mlflow.api.proto.Service.RegisterScorer parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (org.mlflow.api.proto.Service.RegisterScorer) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object experimentId_ = "";
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return Whether the experimentId field is set.
+       */
+      public boolean hasExperimentId() {
+        return ((bitField0_ & 0x00000001) != 0);
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return The experimentId.
+       */
+      public java.lang.String getExperimentId() {
+        java.lang.Object ref = experimentId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            experimentId_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return The bytes for experimentId.
+       */
+      public com.google.protobuf.ByteString
+          getExperimentIdBytes() {
+        java.lang.Object ref = experimentId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          experimentId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @param value The experimentId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setExperimentId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        experimentId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearExperimentId() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        experimentId_ = getDefaultInstance().getExperimentId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @param value The bytes for experimentId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setExperimentIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        experimentId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object name_ = "";
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @return Whether the name field is set.
+       */
+      public boolean hasName() {
+        return ((bitField0_ & 0x00000002) != 0);
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @return The name.
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            name_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @return The bytes for name.
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @param value The name to set.
+       * @return This builder for chaining.
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearName() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @param value The bytes for name to set.
+       * @return This builder for chaining.
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        name_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object serializedScorer_ = "";
+      /**
+       * <pre>
+       * The serialized scorer string (JSON).
+       * </pre>
+       *
+       * <code>optional string serialized_scorer = 3;</code>
+       * @return Whether the serializedScorer field is set.
+       */
+      public boolean hasSerializedScorer() {
+        return ((bitField0_ & 0x00000004) != 0);
+      }
+      /**
+       * <pre>
+       * The serialized scorer string (JSON).
+       * </pre>
+       *
+       * <code>optional string serialized_scorer = 3;</code>
+       * @return The serializedScorer.
+       */
+      public java.lang.String getSerializedScorer() {
+        java.lang.Object ref = serializedScorer_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            serializedScorer_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The serialized scorer string (JSON).
+       * </pre>
+       *
+       * <code>optional string serialized_scorer = 3;</code>
+       * @return The bytes for serializedScorer.
+       */
+      public com.google.protobuf.ByteString
+          getSerializedScorerBytes() {
+        java.lang.Object ref = serializedScorer_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          serializedScorer_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The serialized scorer string (JSON).
+       * </pre>
+       *
+       * <code>optional string serialized_scorer = 3;</code>
+       * @param value The serializedScorer to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSerializedScorer(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        serializedScorer_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The serialized scorer string (JSON).
+       * </pre>
+       *
+       * <code>optional string serialized_scorer = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearSerializedScorer() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        serializedScorer_ = getDefaultInstance().getSerializedScorer();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The serialized scorer string (JSON).
+       * </pre>
+       *
+       * <code>optional string serialized_scorer = 3;</code>
+       * @param value The bytes for serializedScorer to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSerializedScorerBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        serializedScorer_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:mlflow.RegisterScorer)
+    }
+
+    // @@protoc_insertion_point(class_scope:mlflow.RegisterScorer)
+    private static final org.mlflow.api.proto.Service.RegisterScorer DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new org.mlflow.api.proto.Service.RegisterScorer();
+    }
+
+    public static org.mlflow.api.proto.Service.RegisterScorer getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<RegisterScorer>
+        PARSER = new com.google.protobuf.AbstractParser<RegisterScorer>() {
+      @java.lang.Override
+      public RegisterScorer parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new RegisterScorer(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<RegisterScorer> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<RegisterScorer> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public org.mlflow.api.proto.Service.RegisterScorer getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ListScorersOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:mlflow.ListScorers)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return Whether the experimentId field is set.
+     */
+    boolean hasExperimentId();
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The experimentId.
+     */
+    java.lang.String getExperimentId();
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The bytes for experimentId.
+     */
+    com.google.protobuf.ByteString
+        getExperimentIdBytes();
+  }
+  /**
+   * <pre>
+   * List all scorers for an experiment.
+   * </pre>
+   *
+   * Protobuf type {@code mlflow.ListScorers}
+   */
+  public static final class ListScorers extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:mlflow.ListScorers)
+      ListScorersOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ListScorers.newBuilder() to construct.
+    private ListScorers(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ListScorers() {
+      experimentId_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ListScorers();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ListScorers(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              experimentId_ = bs;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorers_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorers_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              org.mlflow.api.proto.Service.ListScorers.class, org.mlflow.api.proto.Service.ListScorers.Builder.class);
+    }
+
+    public interface ResponseOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:mlflow.ListScorers.Response)
+        com.google.protobuf.MessageOrBuilder {
+
+      /**
+       * <pre>
+       * List of scorer entities (latest version for each scorer name).
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      java.util.List<org.mlflow.api.proto.Service.Scorer> 
+          getScorersList();
+      /**
+       * <pre>
+       * List of scorer entities (latest version for each scorer name).
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      org.mlflow.api.proto.Service.Scorer getScorers(int index);
+      /**
+       * <pre>
+       * List of scorer entities (latest version for each scorer name).
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      int getScorersCount();
+      /**
+       * <pre>
+       * List of scorer entities (latest version for each scorer name).
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      java.util.List<? extends org.mlflow.api.proto.Service.ScorerOrBuilder> 
+          getScorersOrBuilderList();
+      /**
+       * <pre>
+       * List of scorer entities (latest version for each scorer name).
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      org.mlflow.api.proto.Service.ScorerOrBuilder getScorersOrBuilder(
+          int index);
+    }
+    /**
+     * Protobuf type {@code mlflow.ListScorers.Response}
+     */
+    public static final class Response extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:mlflow.ListScorers.Response)
+        ResponseOrBuilder {
+    private static final long serialVersionUID = 0L;
+      // Use Response.newBuilder() to construct.
+      private Response(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        super(builder);
+      }
+      private Response() {
+        scorers_ = java.util.Collections.emptyList();
+      }
+
+      @java.lang.Override
+      @SuppressWarnings({"unused"})
+      protected java.lang.Object newInstance(
+          UnusedPrivateParameter unused) {
+        return new Response();
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+      getUnknownFields() {
+        return this.unknownFields;
+      }
+      private Response(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        int mutable_bitField0_ = 0;
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                  scorers_ = new java.util.ArrayList<org.mlflow.api.proto.Service.Scorer>();
+                  mutable_bitField0_ |= 0x00000001;
+                }
+                scorers_.add(
+                    input.readMessage(org.mlflow.api.proto.Service.Scorer.PARSER, extensionRegistry));
+                break;
+              }
+              default: {
+                if (!parseUnknownField(
+                    input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e).setUnfinishedMessage(this);
+        } finally {
+          if (((mutable_bitField0_ & 0x00000001) != 0)) {
+            scorers_ = java.util.Collections.unmodifiableList(scorers_);
+          }
+          this.unknownFields = unknownFields.build();
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorers_Response_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorers_Response_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.mlflow.api.proto.Service.ListScorers.Response.class, org.mlflow.api.proto.Service.ListScorers.Response.Builder.class);
+      }
+
+      public static final int SCORERS_FIELD_NUMBER = 1;
+      private java.util.List<org.mlflow.api.proto.Service.Scorer> scorers_;
+      /**
+       * <pre>
+       * List of scorer entities (latest version for each scorer name).
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      @java.lang.Override
+      public java.util.List<org.mlflow.api.proto.Service.Scorer> getScorersList() {
+        return scorers_;
+      }
+      /**
+       * <pre>
+       * List of scorer entities (latest version for each scorer name).
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      @java.lang.Override
+      public java.util.List<? extends org.mlflow.api.proto.Service.ScorerOrBuilder> 
+          getScorersOrBuilderList() {
+        return scorers_;
+      }
+      /**
+       * <pre>
+       * List of scorer entities (latest version for each scorer name).
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      @java.lang.Override
+      public int getScorersCount() {
+        return scorers_.size();
+      }
+      /**
+       * <pre>
+       * List of scorer entities (latest version for each scorer name).
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.Scorer getScorers(int index) {
+        return scorers_.get(index);
+      }
+      /**
+       * <pre>
+       * List of scorer entities (latest version for each scorer name).
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.ScorerOrBuilder getScorersOrBuilder(
+          int index) {
+        return scorers_.get(index);
+      }
+
+      private byte memoizedIsInitialized = -1;
+      @java.lang.Override
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      @java.lang.Override
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        for (int i = 0; i < scorers_.size(); i++) {
+          output.writeMessage(1, scorers_.get(i));
+        }
+        unknownFields.writeTo(output);
+      }
+
+      @java.lang.Override
+      public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        for (int i = 0; i < scorers_.size(); i++) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeMessageSize(1, scorers_.get(i));
+        }
+        size += unknownFields.getSerializedSize();
+        memoizedSize = size;
+        return size;
+      }
+
+      @java.lang.Override
+      public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+         return true;
+        }
+        if (!(obj instanceof org.mlflow.api.proto.Service.ListScorers.Response)) {
+          return super.equals(obj);
+        }
+        org.mlflow.api.proto.Service.ListScorers.Response other = (org.mlflow.api.proto.Service.ListScorers.Response) obj;
+
+        if (!getScorersList()
+            .equals(other.getScorersList())) return false;
+        if (!unknownFields.equals(other.unknownFields)) return false;
+        return true;
+      }
+
+      @java.lang.Override
+      public int hashCode() {
+        if (memoizedHashCode != 0) {
+          return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        if (getScorersCount() > 0) {
+          hash = (37 * hash) + SCORERS_FIELD_NUMBER;
+          hash = (53 * hash) + getScorersList().hashCode();
+        }
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+      }
+
+      public static org.mlflow.api.proto.Service.ListScorers.Response parseFrom(
+          java.nio.ByteBuffer data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.mlflow.api.proto.Service.ListScorers.Response parseFrom(
+          java.nio.ByteBuffer data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.ListScorers.Response parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.mlflow.api.proto.Service.ListScorers.Response parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.ListScorers.Response parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.mlflow.api.proto.Service.ListScorers.Response parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.ListScorers.Response parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static org.mlflow.api.proto.Service.ListScorers.Response parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.ListScorers.Response parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input);
+      }
+      public static org.mlflow.api.proto.Service.ListScorers.Response parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.ListScorers.Response parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static org.mlflow.api.proto.Service.ListScorers.Response parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+
+      @java.lang.Override
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+      }
+      public static Builder newBuilder(org.mlflow.api.proto.Service.ListScorers.Response prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      }
+      @java.lang.Override
+      public Builder toBuilder() {
+        return this == DEFAULT_INSTANCE
+            ? new Builder() : new Builder().mergeFrom(this);
+      }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code mlflow.ListScorers.Response}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:mlflow.ListScorers.Response)
+          org.mlflow.api.proto.Service.ListScorers.ResponseOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorers_Response_descriptor;
+        }
+
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorers_Response_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  org.mlflow.api.proto.Service.ListScorers.Response.class, org.mlflow.api.proto.Service.ListScorers.Response.Builder.class);
+        }
+
+        // Construct using org.mlflow.api.proto.Service.ListScorers.Response.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessageV3
+                  .alwaysUseFieldBuilders) {
+            getScorersFieldBuilder();
+          }
+        }
+        @java.lang.Override
+        public Builder clear() {
+          super.clear();
+          if (scorersBuilder_ == null) {
+            scorers_ = java.util.Collections.emptyList();
+            bitField0_ = (bitField0_ & ~0x00000001);
+          } else {
+            scorersBuilder_.clear();
+          }
+          return this;
+        }
+
+        @java.lang.Override
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorers_Response_descriptor;
+        }
+
+        @java.lang.Override
+        public org.mlflow.api.proto.Service.ListScorers.Response getDefaultInstanceForType() {
+          return org.mlflow.api.proto.Service.ListScorers.Response.getDefaultInstance();
+        }
+
+        @java.lang.Override
+        public org.mlflow.api.proto.Service.ListScorers.Response build() {
+          org.mlflow.api.proto.Service.ListScorers.Response result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        @java.lang.Override
+        public org.mlflow.api.proto.Service.ListScorers.Response buildPartial() {
+          org.mlflow.api.proto.Service.ListScorers.Response result = new org.mlflow.api.proto.Service.ListScorers.Response(this);
+          int from_bitField0_ = bitField0_;
+          if (scorersBuilder_ == null) {
+            if (((bitField0_ & 0x00000001) != 0)) {
+              scorers_ = java.util.Collections.unmodifiableList(scorers_);
+              bitField0_ = (bitField0_ & ~0x00000001);
+            }
+            result.scorers_ = scorers_;
+          } else {
+            result.scorers_ = scorersBuilder_.build();
+          }
+          onBuilt();
+          return result;
+        }
+
+        @java.lang.Override
+        public Builder clone() {
+          return super.clone();
+        }
+        @java.lang.Override
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            java.lang.Object value) {
+          return super.setField(field, value);
+        }
+        @java.lang.Override
+        public Builder clearField(
+            com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return super.clearField(field);
+        }
+        @java.lang.Override
+        public Builder clearOneof(
+            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return super.clearOneof(oneof);
+        }
+        @java.lang.Override
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index, java.lang.Object value) {
+          return super.setRepeatedField(field, index, value);
+        }
+        @java.lang.Override
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            java.lang.Object value) {
+          return super.addRepeatedField(field, value);
+        }
+        @java.lang.Override
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof org.mlflow.api.proto.Service.ListScorers.Response) {
+            return mergeFrom((org.mlflow.api.proto.Service.ListScorers.Response)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(org.mlflow.api.proto.Service.ListScorers.Response other) {
+          if (other == org.mlflow.api.proto.Service.ListScorers.Response.getDefaultInstance()) return this;
+          if (scorersBuilder_ == null) {
+            if (!other.scorers_.isEmpty()) {
+              if (scorers_.isEmpty()) {
+                scorers_ = other.scorers_;
+                bitField0_ = (bitField0_ & ~0x00000001);
+              } else {
+                ensureScorersIsMutable();
+                scorers_.addAll(other.scorers_);
+              }
+              onChanged();
+            }
+          } else {
+            if (!other.scorers_.isEmpty()) {
+              if (scorersBuilder_.isEmpty()) {
+                scorersBuilder_.dispose();
+                scorersBuilder_ = null;
+                scorers_ = other.scorers_;
+                bitField0_ = (bitField0_ & ~0x00000001);
+                scorersBuilder_ = 
+                  com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                     getScorersFieldBuilder() : null;
+              } else {
+                scorersBuilder_.addAllMessages(other.scorers_);
+              }
+            }
+          }
+          this.mergeUnknownFields(other.unknownFields);
+          onChanged();
+          return this;
+        }
+
+        @java.lang.Override
+        public final boolean isInitialized() {
+          return true;
+        }
+
+        @java.lang.Override
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          org.mlflow.api.proto.Service.ListScorers.Response parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (org.mlflow.api.proto.Service.ListScorers.Response) e.getUnfinishedMessage();
+            throw e.unwrapIOException();
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+        private int bitField0_;
+
+        private java.util.List<org.mlflow.api.proto.Service.Scorer> scorers_ =
+          java.util.Collections.emptyList();
+        private void ensureScorersIsMutable() {
+          if (!((bitField0_ & 0x00000001) != 0)) {
+            scorers_ = new java.util.ArrayList<org.mlflow.api.proto.Service.Scorer>(scorers_);
+            bitField0_ |= 0x00000001;
+           }
+        }
+
+        private com.google.protobuf.RepeatedFieldBuilderV3<
+            org.mlflow.api.proto.Service.Scorer, org.mlflow.api.proto.Service.Scorer.Builder, org.mlflow.api.proto.Service.ScorerOrBuilder> scorersBuilder_;
+
+        /**
+         * <pre>
+         * List of scorer entities (latest version for each scorer name).
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public java.util.List<org.mlflow.api.proto.Service.Scorer> getScorersList() {
+          if (scorersBuilder_ == null) {
+            return java.util.Collections.unmodifiableList(scorers_);
+          } else {
+            return scorersBuilder_.getMessageList();
+          }
+        }
+        /**
+         * <pre>
+         * List of scorer entities (latest version for each scorer name).
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public int getScorersCount() {
+          if (scorersBuilder_ == null) {
+            return scorers_.size();
+          } else {
+            return scorersBuilder_.getCount();
+          }
+        }
+        /**
+         * <pre>
+         * List of scorer entities (latest version for each scorer name).
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public org.mlflow.api.proto.Service.Scorer getScorers(int index) {
+          if (scorersBuilder_ == null) {
+            return scorers_.get(index);
+          } else {
+            return scorersBuilder_.getMessage(index);
+          }
+        }
+        /**
+         * <pre>
+         * List of scorer entities (latest version for each scorer name).
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public Builder setScorers(
+            int index, org.mlflow.api.proto.Service.Scorer value) {
+          if (scorersBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            ensureScorersIsMutable();
+            scorers_.set(index, value);
+            onChanged();
+          } else {
+            scorersBuilder_.setMessage(index, value);
+          }
+          return this;
+        }
+        /**
+         * <pre>
+         * List of scorer entities (latest version for each scorer name).
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public Builder setScorers(
+            int index, org.mlflow.api.proto.Service.Scorer.Builder builderForValue) {
+          if (scorersBuilder_ == null) {
+            ensureScorersIsMutable();
+            scorers_.set(index, builderForValue.build());
+            onChanged();
+          } else {
+            scorersBuilder_.setMessage(index, builderForValue.build());
+          }
+          return this;
+        }
+        /**
+         * <pre>
+         * List of scorer entities (latest version for each scorer name).
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public Builder addScorers(org.mlflow.api.proto.Service.Scorer value) {
+          if (scorersBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            ensureScorersIsMutable();
+            scorers_.add(value);
+            onChanged();
+          } else {
+            scorersBuilder_.addMessage(value);
+          }
+          return this;
+        }
+        /**
+         * <pre>
+         * List of scorer entities (latest version for each scorer name).
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public Builder addScorers(
+            int index, org.mlflow.api.proto.Service.Scorer value) {
+          if (scorersBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            ensureScorersIsMutable();
+            scorers_.add(index, value);
+            onChanged();
+          } else {
+            scorersBuilder_.addMessage(index, value);
+          }
+          return this;
+        }
+        /**
+         * <pre>
+         * List of scorer entities (latest version for each scorer name).
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public Builder addScorers(
+            org.mlflow.api.proto.Service.Scorer.Builder builderForValue) {
+          if (scorersBuilder_ == null) {
+            ensureScorersIsMutable();
+            scorers_.add(builderForValue.build());
+            onChanged();
+          } else {
+            scorersBuilder_.addMessage(builderForValue.build());
+          }
+          return this;
+        }
+        /**
+         * <pre>
+         * List of scorer entities (latest version for each scorer name).
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public Builder addScorers(
+            int index, org.mlflow.api.proto.Service.Scorer.Builder builderForValue) {
+          if (scorersBuilder_ == null) {
+            ensureScorersIsMutable();
+            scorers_.add(index, builderForValue.build());
+            onChanged();
+          } else {
+            scorersBuilder_.addMessage(index, builderForValue.build());
+          }
+          return this;
+        }
+        /**
+         * <pre>
+         * List of scorer entities (latest version for each scorer name).
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public Builder addAllScorers(
+            java.lang.Iterable<? extends org.mlflow.api.proto.Service.Scorer> values) {
+          if (scorersBuilder_ == null) {
+            ensureScorersIsMutable();
+            com.google.protobuf.AbstractMessageLite.Builder.addAll(
+                values, scorers_);
+            onChanged();
+          } else {
+            scorersBuilder_.addAllMessages(values);
+          }
+          return this;
+        }
+        /**
+         * <pre>
+         * List of scorer entities (latest version for each scorer name).
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public Builder clearScorers() {
+          if (scorersBuilder_ == null) {
+            scorers_ = java.util.Collections.emptyList();
+            bitField0_ = (bitField0_ & ~0x00000001);
+            onChanged();
+          } else {
+            scorersBuilder_.clear();
+          }
+          return this;
+        }
+        /**
+         * <pre>
+         * List of scorer entities (latest version for each scorer name).
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public Builder removeScorers(int index) {
+          if (scorersBuilder_ == null) {
+            ensureScorersIsMutable();
+            scorers_.remove(index);
+            onChanged();
+          } else {
+            scorersBuilder_.remove(index);
+          }
+          return this;
+        }
+        /**
+         * <pre>
+         * List of scorer entities (latest version for each scorer name).
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public org.mlflow.api.proto.Service.Scorer.Builder getScorersBuilder(
+            int index) {
+          return getScorersFieldBuilder().getBuilder(index);
+        }
+        /**
+         * <pre>
+         * List of scorer entities (latest version for each scorer name).
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public org.mlflow.api.proto.Service.ScorerOrBuilder getScorersOrBuilder(
+            int index) {
+          if (scorersBuilder_ == null) {
+            return scorers_.get(index);  } else {
+            return scorersBuilder_.getMessageOrBuilder(index);
+          }
+        }
+        /**
+         * <pre>
+         * List of scorer entities (latest version for each scorer name).
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public java.util.List<? extends org.mlflow.api.proto.Service.ScorerOrBuilder> 
+             getScorersOrBuilderList() {
+          if (scorersBuilder_ != null) {
+            return scorersBuilder_.getMessageOrBuilderList();
+          } else {
+            return java.util.Collections.unmodifiableList(scorers_);
+          }
+        }
+        /**
+         * <pre>
+         * List of scorer entities (latest version for each scorer name).
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public org.mlflow.api.proto.Service.Scorer.Builder addScorersBuilder() {
+          return getScorersFieldBuilder().addBuilder(
+              org.mlflow.api.proto.Service.Scorer.getDefaultInstance());
+        }
+        /**
+         * <pre>
+         * List of scorer entities (latest version for each scorer name).
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public org.mlflow.api.proto.Service.Scorer.Builder addScorersBuilder(
+            int index) {
+          return getScorersFieldBuilder().addBuilder(
+              index, org.mlflow.api.proto.Service.Scorer.getDefaultInstance());
+        }
+        /**
+         * <pre>
+         * List of scorer entities (latest version for each scorer name).
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public java.util.List<org.mlflow.api.proto.Service.Scorer.Builder> 
+             getScorersBuilderList() {
+          return getScorersFieldBuilder().getBuilderList();
+        }
+        private com.google.protobuf.RepeatedFieldBuilderV3<
+            org.mlflow.api.proto.Service.Scorer, org.mlflow.api.proto.Service.Scorer.Builder, org.mlflow.api.proto.Service.ScorerOrBuilder> 
+            getScorersFieldBuilder() {
+          if (scorersBuilder_ == null) {
+            scorersBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+                org.mlflow.api.proto.Service.Scorer, org.mlflow.api.proto.Service.Scorer.Builder, org.mlflow.api.proto.Service.ScorerOrBuilder>(
+                    scorers_,
+                    ((bitField0_ & 0x00000001) != 0),
+                    getParentForChildren(),
+                    isClean());
+            scorers_ = null;
+          }
+          return scorersBuilder_;
+        }
+        @java.lang.Override
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.setUnknownFields(unknownFields);
+        }
+
+        @java.lang.Override
+        public final Builder mergeUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.mergeUnknownFields(unknownFields);
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:mlflow.ListScorers.Response)
+      }
+
+      // @@protoc_insertion_point(class_scope:mlflow.ListScorers.Response)
+      private static final org.mlflow.api.proto.Service.ListScorers.Response DEFAULT_INSTANCE;
+      static {
+        DEFAULT_INSTANCE = new org.mlflow.api.proto.Service.ListScorers.Response();
+      }
+
+      public static org.mlflow.api.proto.Service.ListScorers.Response getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+      }
+
+      @java.lang.Deprecated public static final com.google.protobuf.Parser<Response>
+          PARSER = new com.google.protobuf.AbstractParser<Response>() {
+        @java.lang.Override
+        public Response parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return new Response(input, extensionRegistry);
+        }
+      };
+
+      public static com.google.protobuf.Parser<Response> parser() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<Response> getParserForType() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.ListScorers.Response getDefaultInstanceForType() {
+        return DEFAULT_INSTANCE;
+      }
+
+    }
+
+    private int bitField0_;
+    public static final int EXPERIMENT_ID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object experimentId_;
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return Whether the experimentId field is set.
+     */
+    @java.lang.Override
+    public boolean hasExperimentId() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The experimentId.
+     */
+    @java.lang.Override
+    public java.lang.String getExperimentId() {
+      java.lang.Object ref = experimentId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          experimentId_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The bytes for experimentId.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getExperimentIdBytes() {
+      java.lang.Object ref = experimentId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        experimentId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (((bitField0_ & 0x00000001) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, experimentId_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, experimentId_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof org.mlflow.api.proto.Service.ListScorers)) {
+        return super.equals(obj);
+      }
+      org.mlflow.api.proto.Service.ListScorers other = (org.mlflow.api.proto.Service.ListScorers) obj;
+
+      if (hasExperimentId() != other.hasExperimentId()) return false;
+      if (hasExperimentId()) {
+        if (!getExperimentId()
+            .equals(other.getExperimentId())) return false;
+      }
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasExperimentId()) {
+        hash = (37 * hash) + EXPERIMENT_ID_FIELD_NUMBER;
+        hash = (53 * hash) + getExperimentId().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static org.mlflow.api.proto.Service.ListScorers parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.mlflow.api.proto.Service.ListScorers parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.ListScorers parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.mlflow.api.proto.Service.ListScorers parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.ListScorers parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.mlflow.api.proto.Service.ListScorers parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.ListScorers parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.mlflow.api.proto.Service.ListScorers parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.ListScorers parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static org.mlflow.api.proto.Service.ListScorers parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.ListScorers parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.mlflow.api.proto.Service.ListScorers parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(org.mlflow.api.proto.Service.ListScorers prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * List all scorers for an experiment.
+     * </pre>
+     *
+     * Protobuf type {@code mlflow.ListScorers}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:mlflow.ListScorers)
+        org.mlflow.api.proto.Service.ListScorersOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorers_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorers_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.mlflow.api.proto.Service.ListScorers.class, org.mlflow.api.proto.Service.ListScorers.Builder.class);
+      }
+
+      // Construct using org.mlflow.api.proto.Service.ListScorers.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        experimentId_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorers_descriptor;
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.ListScorers getDefaultInstanceForType() {
+        return org.mlflow.api.proto.Service.ListScorers.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.ListScorers build() {
+        org.mlflow.api.proto.Service.ListScorers result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.ListScorers buildPartial() {
+        org.mlflow.api.proto.Service.ListScorers result = new org.mlflow.api.proto.Service.ListScorers(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.experimentId_ = experimentId_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.mlflow.api.proto.Service.ListScorers) {
+          return mergeFrom((org.mlflow.api.proto.Service.ListScorers)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(org.mlflow.api.proto.Service.ListScorers other) {
+        if (other == org.mlflow.api.proto.Service.ListScorers.getDefaultInstance()) return this;
+        if (other.hasExperimentId()) {
+          bitField0_ |= 0x00000001;
+          experimentId_ = other.experimentId_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        org.mlflow.api.proto.Service.ListScorers parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (org.mlflow.api.proto.Service.ListScorers) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object experimentId_ = "";
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return Whether the experimentId field is set.
+       */
+      public boolean hasExperimentId() {
+        return ((bitField0_ & 0x00000001) != 0);
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return The experimentId.
+       */
+      public java.lang.String getExperimentId() {
+        java.lang.Object ref = experimentId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            experimentId_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return The bytes for experimentId.
+       */
+      public com.google.protobuf.ByteString
+          getExperimentIdBytes() {
+        java.lang.Object ref = experimentId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          experimentId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @param value The experimentId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setExperimentId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        experimentId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearExperimentId() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        experimentId_ = getDefaultInstance().getExperimentId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @param value The bytes for experimentId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setExperimentIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        experimentId_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:mlflow.ListScorers)
+    }
+
+    // @@protoc_insertion_point(class_scope:mlflow.ListScorers)
+    private static final org.mlflow.api.proto.Service.ListScorers DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new org.mlflow.api.proto.Service.ListScorers();
+    }
+
+    public static org.mlflow.api.proto.Service.ListScorers getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<ListScorers>
+        PARSER = new com.google.protobuf.AbstractParser<ListScorers>() {
+      @java.lang.Override
+      public ListScorers parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ListScorers(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ListScorers> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ListScorers> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public org.mlflow.api.proto.Service.ListScorers getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ListScorerVersionsOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:mlflow.ListScorerVersions)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return Whether the experimentId field is set.
+     */
+    boolean hasExperimentId();
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The experimentId.
+     */
+    java.lang.String getExperimentId();
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The bytes for experimentId.
+     */
+    com.google.protobuf.ByteString
+        getExperimentIdBytes();
+
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return Whether the name field is set.
+     */
+    boolean hasName();
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return The name.
+     */
+    java.lang.String getName();
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return The bytes for name.
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+  }
+  /**
+   * <pre>
+   * List all versions of a specific scorer for an experiment.
+   * </pre>
+   *
+   * Protobuf type {@code mlflow.ListScorerVersions}
+   */
+  public static final class ListScorerVersions extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:mlflow.ListScorerVersions)
+      ListScorerVersionsOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ListScorerVersions.newBuilder() to construct.
+    private ListScorerVersions(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ListScorerVersions() {
+      experimentId_ = "";
+      name_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ListScorerVersions();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ListScorerVersions(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              experimentId_ = bs;
+              break;
+            }
+            case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              name_ = bs;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorerVersions_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorerVersions_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              org.mlflow.api.proto.Service.ListScorerVersions.class, org.mlflow.api.proto.Service.ListScorerVersions.Builder.class);
+    }
+
+    public interface ResponseOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:mlflow.ListScorerVersions.Response)
+        com.google.protobuf.MessageOrBuilder {
+
+      /**
+       * <pre>
+       * List of scorer entities for all versions of the scorer.
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      java.util.List<org.mlflow.api.proto.Service.Scorer> 
+          getScorersList();
+      /**
+       * <pre>
+       * List of scorer entities for all versions of the scorer.
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      org.mlflow.api.proto.Service.Scorer getScorers(int index);
+      /**
+       * <pre>
+       * List of scorer entities for all versions of the scorer.
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      int getScorersCount();
+      /**
+       * <pre>
+       * List of scorer entities for all versions of the scorer.
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      java.util.List<? extends org.mlflow.api.proto.Service.ScorerOrBuilder> 
+          getScorersOrBuilderList();
+      /**
+       * <pre>
+       * List of scorer entities for all versions of the scorer.
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      org.mlflow.api.proto.Service.ScorerOrBuilder getScorersOrBuilder(
+          int index);
+    }
+    /**
+     * Protobuf type {@code mlflow.ListScorerVersions.Response}
+     */
+    public static final class Response extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:mlflow.ListScorerVersions.Response)
+        ResponseOrBuilder {
+    private static final long serialVersionUID = 0L;
+      // Use Response.newBuilder() to construct.
+      private Response(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        super(builder);
+      }
+      private Response() {
+        scorers_ = java.util.Collections.emptyList();
+      }
+
+      @java.lang.Override
+      @SuppressWarnings({"unused"})
+      protected java.lang.Object newInstance(
+          UnusedPrivateParameter unused) {
+        return new Response();
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+      getUnknownFields() {
+        return this.unknownFields;
+      }
+      private Response(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        int mutable_bitField0_ = 0;
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                  scorers_ = new java.util.ArrayList<org.mlflow.api.proto.Service.Scorer>();
+                  mutable_bitField0_ |= 0x00000001;
+                }
+                scorers_.add(
+                    input.readMessage(org.mlflow.api.proto.Service.Scorer.PARSER, extensionRegistry));
+                break;
+              }
+              default: {
+                if (!parseUnknownField(
+                    input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e).setUnfinishedMessage(this);
+        } finally {
+          if (((mutable_bitField0_ & 0x00000001) != 0)) {
+            scorers_ = java.util.Collections.unmodifiableList(scorers_);
+          }
+          this.unknownFields = unknownFields.build();
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorerVersions_Response_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorerVersions_Response_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.mlflow.api.proto.Service.ListScorerVersions.Response.class, org.mlflow.api.proto.Service.ListScorerVersions.Response.Builder.class);
+      }
+
+      public static final int SCORERS_FIELD_NUMBER = 1;
+      private java.util.List<org.mlflow.api.proto.Service.Scorer> scorers_;
+      /**
+       * <pre>
+       * List of scorer entities for all versions of the scorer.
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      @java.lang.Override
+      public java.util.List<org.mlflow.api.proto.Service.Scorer> getScorersList() {
+        return scorers_;
+      }
+      /**
+       * <pre>
+       * List of scorer entities for all versions of the scorer.
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      @java.lang.Override
+      public java.util.List<? extends org.mlflow.api.proto.Service.ScorerOrBuilder> 
+          getScorersOrBuilderList() {
+        return scorers_;
+      }
+      /**
+       * <pre>
+       * List of scorer entities for all versions of the scorer.
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      @java.lang.Override
+      public int getScorersCount() {
+        return scorers_.size();
+      }
+      /**
+       * <pre>
+       * List of scorer entities for all versions of the scorer.
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.Scorer getScorers(int index) {
+        return scorers_.get(index);
+      }
+      /**
+       * <pre>
+       * List of scorer entities for all versions of the scorer.
+       * </pre>
+       *
+       * <code>repeated .mlflow.Scorer scorers = 1;</code>
+       */
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.ScorerOrBuilder getScorersOrBuilder(
+          int index) {
+        return scorers_.get(index);
+      }
+
+      private byte memoizedIsInitialized = -1;
+      @java.lang.Override
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      @java.lang.Override
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        for (int i = 0; i < scorers_.size(); i++) {
+          output.writeMessage(1, scorers_.get(i));
+        }
+        unknownFields.writeTo(output);
+      }
+
+      @java.lang.Override
+      public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        for (int i = 0; i < scorers_.size(); i++) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeMessageSize(1, scorers_.get(i));
+        }
+        size += unknownFields.getSerializedSize();
+        memoizedSize = size;
+        return size;
+      }
+
+      @java.lang.Override
+      public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+         return true;
+        }
+        if (!(obj instanceof org.mlflow.api.proto.Service.ListScorerVersions.Response)) {
+          return super.equals(obj);
+        }
+        org.mlflow.api.proto.Service.ListScorerVersions.Response other = (org.mlflow.api.proto.Service.ListScorerVersions.Response) obj;
+
+        if (!getScorersList()
+            .equals(other.getScorersList())) return false;
+        if (!unknownFields.equals(other.unknownFields)) return false;
+        return true;
+      }
+
+      @java.lang.Override
+      public int hashCode() {
+        if (memoizedHashCode != 0) {
+          return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        if (getScorersCount() > 0) {
+          hash = (37 * hash) + SCORERS_FIELD_NUMBER;
+          hash = (53 * hash) + getScorersList().hashCode();
+        }
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+      }
+
+      public static org.mlflow.api.proto.Service.ListScorerVersions.Response parseFrom(
+          java.nio.ByteBuffer data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.mlflow.api.proto.Service.ListScorerVersions.Response parseFrom(
+          java.nio.ByteBuffer data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.ListScorerVersions.Response parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.mlflow.api.proto.Service.ListScorerVersions.Response parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.ListScorerVersions.Response parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.mlflow.api.proto.Service.ListScorerVersions.Response parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.ListScorerVersions.Response parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static org.mlflow.api.proto.Service.ListScorerVersions.Response parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.ListScorerVersions.Response parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input);
+      }
+      public static org.mlflow.api.proto.Service.ListScorerVersions.Response parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.ListScorerVersions.Response parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static org.mlflow.api.proto.Service.ListScorerVersions.Response parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+
+      @java.lang.Override
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+      }
+      public static Builder newBuilder(org.mlflow.api.proto.Service.ListScorerVersions.Response prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      }
+      @java.lang.Override
+      public Builder toBuilder() {
+        return this == DEFAULT_INSTANCE
+            ? new Builder() : new Builder().mergeFrom(this);
+      }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code mlflow.ListScorerVersions.Response}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:mlflow.ListScorerVersions.Response)
+          org.mlflow.api.proto.Service.ListScorerVersions.ResponseOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorerVersions_Response_descriptor;
+        }
+
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorerVersions_Response_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  org.mlflow.api.proto.Service.ListScorerVersions.Response.class, org.mlflow.api.proto.Service.ListScorerVersions.Response.Builder.class);
+        }
+
+        // Construct using org.mlflow.api.proto.Service.ListScorerVersions.Response.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessageV3
+                  .alwaysUseFieldBuilders) {
+            getScorersFieldBuilder();
+          }
+        }
+        @java.lang.Override
+        public Builder clear() {
+          super.clear();
+          if (scorersBuilder_ == null) {
+            scorers_ = java.util.Collections.emptyList();
+            bitField0_ = (bitField0_ & ~0x00000001);
+          } else {
+            scorersBuilder_.clear();
+          }
+          return this;
+        }
+
+        @java.lang.Override
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorerVersions_Response_descriptor;
+        }
+
+        @java.lang.Override
+        public org.mlflow.api.proto.Service.ListScorerVersions.Response getDefaultInstanceForType() {
+          return org.mlflow.api.proto.Service.ListScorerVersions.Response.getDefaultInstance();
+        }
+
+        @java.lang.Override
+        public org.mlflow.api.proto.Service.ListScorerVersions.Response build() {
+          org.mlflow.api.proto.Service.ListScorerVersions.Response result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        @java.lang.Override
+        public org.mlflow.api.proto.Service.ListScorerVersions.Response buildPartial() {
+          org.mlflow.api.proto.Service.ListScorerVersions.Response result = new org.mlflow.api.proto.Service.ListScorerVersions.Response(this);
+          int from_bitField0_ = bitField0_;
+          if (scorersBuilder_ == null) {
+            if (((bitField0_ & 0x00000001) != 0)) {
+              scorers_ = java.util.Collections.unmodifiableList(scorers_);
+              bitField0_ = (bitField0_ & ~0x00000001);
+            }
+            result.scorers_ = scorers_;
+          } else {
+            result.scorers_ = scorersBuilder_.build();
+          }
+          onBuilt();
+          return result;
+        }
+
+        @java.lang.Override
+        public Builder clone() {
+          return super.clone();
+        }
+        @java.lang.Override
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            java.lang.Object value) {
+          return super.setField(field, value);
+        }
+        @java.lang.Override
+        public Builder clearField(
+            com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return super.clearField(field);
+        }
+        @java.lang.Override
+        public Builder clearOneof(
+            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return super.clearOneof(oneof);
+        }
+        @java.lang.Override
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index, java.lang.Object value) {
+          return super.setRepeatedField(field, index, value);
+        }
+        @java.lang.Override
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            java.lang.Object value) {
+          return super.addRepeatedField(field, value);
+        }
+        @java.lang.Override
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof org.mlflow.api.proto.Service.ListScorerVersions.Response) {
+            return mergeFrom((org.mlflow.api.proto.Service.ListScorerVersions.Response)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(org.mlflow.api.proto.Service.ListScorerVersions.Response other) {
+          if (other == org.mlflow.api.proto.Service.ListScorerVersions.Response.getDefaultInstance()) return this;
+          if (scorersBuilder_ == null) {
+            if (!other.scorers_.isEmpty()) {
+              if (scorers_.isEmpty()) {
+                scorers_ = other.scorers_;
+                bitField0_ = (bitField0_ & ~0x00000001);
+              } else {
+                ensureScorersIsMutable();
+                scorers_.addAll(other.scorers_);
+              }
+              onChanged();
+            }
+          } else {
+            if (!other.scorers_.isEmpty()) {
+              if (scorersBuilder_.isEmpty()) {
+                scorersBuilder_.dispose();
+                scorersBuilder_ = null;
+                scorers_ = other.scorers_;
+                bitField0_ = (bitField0_ & ~0x00000001);
+                scorersBuilder_ = 
+                  com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                     getScorersFieldBuilder() : null;
+              } else {
+                scorersBuilder_.addAllMessages(other.scorers_);
+              }
+            }
+          }
+          this.mergeUnknownFields(other.unknownFields);
+          onChanged();
+          return this;
+        }
+
+        @java.lang.Override
+        public final boolean isInitialized() {
+          return true;
+        }
+
+        @java.lang.Override
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          org.mlflow.api.proto.Service.ListScorerVersions.Response parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (org.mlflow.api.proto.Service.ListScorerVersions.Response) e.getUnfinishedMessage();
+            throw e.unwrapIOException();
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+        private int bitField0_;
+
+        private java.util.List<org.mlflow.api.proto.Service.Scorer> scorers_ =
+          java.util.Collections.emptyList();
+        private void ensureScorersIsMutable() {
+          if (!((bitField0_ & 0x00000001) != 0)) {
+            scorers_ = new java.util.ArrayList<org.mlflow.api.proto.Service.Scorer>(scorers_);
+            bitField0_ |= 0x00000001;
+           }
+        }
+
+        private com.google.protobuf.RepeatedFieldBuilderV3<
+            org.mlflow.api.proto.Service.Scorer, org.mlflow.api.proto.Service.Scorer.Builder, org.mlflow.api.proto.Service.ScorerOrBuilder> scorersBuilder_;
+
+        /**
+         * <pre>
+         * List of scorer entities for all versions of the scorer.
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public java.util.List<org.mlflow.api.proto.Service.Scorer> getScorersList() {
+          if (scorersBuilder_ == null) {
+            return java.util.Collections.unmodifiableList(scorers_);
+          } else {
+            return scorersBuilder_.getMessageList();
+          }
+        }
+        /**
+         * <pre>
+         * List of scorer entities for all versions of the scorer.
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public int getScorersCount() {
+          if (scorersBuilder_ == null) {
+            return scorers_.size();
+          } else {
+            return scorersBuilder_.getCount();
+          }
+        }
+        /**
+         * <pre>
+         * List of scorer entities for all versions of the scorer.
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public org.mlflow.api.proto.Service.Scorer getScorers(int index) {
+          if (scorersBuilder_ == null) {
+            return scorers_.get(index);
+          } else {
+            return scorersBuilder_.getMessage(index);
+          }
+        }
+        /**
+         * <pre>
+         * List of scorer entities for all versions of the scorer.
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public Builder setScorers(
+            int index, org.mlflow.api.proto.Service.Scorer value) {
+          if (scorersBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            ensureScorersIsMutable();
+            scorers_.set(index, value);
+            onChanged();
+          } else {
+            scorersBuilder_.setMessage(index, value);
+          }
+          return this;
+        }
+        /**
+         * <pre>
+         * List of scorer entities for all versions of the scorer.
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public Builder setScorers(
+            int index, org.mlflow.api.proto.Service.Scorer.Builder builderForValue) {
+          if (scorersBuilder_ == null) {
+            ensureScorersIsMutable();
+            scorers_.set(index, builderForValue.build());
+            onChanged();
+          } else {
+            scorersBuilder_.setMessage(index, builderForValue.build());
+          }
+          return this;
+        }
+        /**
+         * <pre>
+         * List of scorer entities for all versions of the scorer.
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public Builder addScorers(org.mlflow.api.proto.Service.Scorer value) {
+          if (scorersBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            ensureScorersIsMutable();
+            scorers_.add(value);
+            onChanged();
+          } else {
+            scorersBuilder_.addMessage(value);
+          }
+          return this;
+        }
+        /**
+         * <pre>
+         * List of scorer entities for all versions of the scorer.
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public Builder addScorers(
+            int index, org.mlflow.api.proto.Service.Scorer value) {
+          if (scorersBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            ensureScorersIsMutable();
+            scorers_.add(index, value);
+            onChanged();
+          } else {
+            scorersBuilder_.addMessage(index, value);
+          }
+          return this;
+        }
+        /**
+         * <pre>
+         * List of scorer entities for all versions of the scorer.
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public Builder addScorers(
+            org.mlflow.api.proto.Service.Scorer.Builder builderForValue) {
+          if (scorersBuilder_ == null) {
+            ensureScorersIsMutable();
+            scorers_.add(builderForValue.build());
+            onChanged();
+          } else {
+            scorersBuilder_.addMessage(builderForValue.build());
+          }
+          return this;
+        }
+        /**
+         * <pre>
+         * List of scorer entities for all versions of the scorer.
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public Builder addScorers(
+            int index, org.mlflow.api.proto.Service.Scorer.Builder builderForValue) {
+          if (scorersBuilder_ == null) {
+            ensureScorersIsMutable();
+            scorers_.add(index, builderForValue.build());
+            onChanged();
+          } else {
+            scorersBuilder_.addMessage(index, builderForValue.build());
+          }
+          return this;
+        }
+        /**
+         * <pre>
+         * List of scorer entities for all versions of the scorer.
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public Builder addAllScorers(
+            java.lang.Iterable<? extends org.mlflow.api.proto.Service.Scorer> values) {
+          if (scorersBuilder_ == null) {
+            ensureScorersIsMutable();
+            com.google.protobuf.AbstractMessageLite.Builder.addAll(
+                values, scorers_);
+            onChanged();
+          } else {
+            scorersBuilder_.addAllMessages(values);
+          }
+          return this;
+        }
+        /**
+         * <pre>
+         * List of scorer entities for all versions of the scorer.
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public Builder clearScorers() {
+          if (scorersBuilder_ == null) {
+            scorers_ = java.util.Collections.emptyList();
+            bitField0_ = (bitField0_ & ~0x00000001);
+            onChanged();
+          } else {
+            scorersBuilder_.clear();
+          }
+          return this;
+        }
+        /**
+         * <pre>
+         * List of scorer entities for all versions of the scorer.
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public Builder removeScorers(int index) {
+          if (scorersBuilder_ == null) {
+            ensureScorersIsMutable();
+            scorers_.remove(index);
+            onChanged();
+          } else {
+            scorersBuilder_.remove(index);
+          }
+          return this;
+        }
+        /**
+         * <pre>
+         * List of scorer entities for all versions of the scorer.
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public org.mlflow.api.proto.Service.Scorer.Builder getScorersBuilder(
+            int index) {
+          return getScorersFieldBuilder().getBuilder(index);
+        }
+        /**
+         * <pre>
+         * List of scorer entities for all versions of the scorer.
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public org.mlflow.api.proto.Service.ScorerOrBuilder getScorersOrBuilder(
+            int index) {
+          if (scorersBuilder_ == null) {
+            return scorers_.get(index);  } else {
+            return scorersBuilder_.getMessageOrBuilder(index);
+          }
+        }
+        /**
+         * <pre>
+         * List of scorer entities for all versions of the scorer.
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public java.util.List<? extends org.mlflow.api.proto.Service.ScorerOrBuilder> 
+             getScorersOrBuilderList() {
+          if (scorersBuilder_ != null) {
+            return scorersBuilder_.getMessageOrBuilderList();
+          } else {
+            return java.util.Collections.unmodifiableList(scorers_);
+          }
+        }
+        /**
+         * <pre>
+         * List of scorer entities for all versions of the scorer.
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public org.mlflow.api.proto.Service.Scorer.Builder addScorersBuilder() {
+          return getScorersFieldBuilder().addBuilder(
+              org.mlflow.api.proto.Service.Scorer.getDefaultInstance());
+        }
+        /**
+         * <pre>
+         * List of scorer entities for all versions of the scorer.
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public org.mlflow.api.proto.Service.Scorer.Builder addScorersBuilder(
+            int index) {
+          return getScorersFieldBuilder().addBuilder(
+              index, org.mlflow.api.proto.Service.Scorer.getDefaultInstance());
+        }
+        /**
+         * <pre>
+         * List of scorer entities for all versions of the scorer.
+         * </pre>
+         *
+         * <code>repeated .mlflow.Scorer scorers = 1;</code>
+         */
+        public java.util.List<org.mlflow.api.proto.Service.Scorer.Builder> 
+             getScorersBuilderList() {
+          return getScorersFieldBuilder().getBuilderList();
+        }
+        private com.google.protobuf.RepeatedFieldBuilderV3<
+            org.mlflow.api.proto.Service.Scorer, org.mlflow.api.proto.Service.Scorer.Builder, org.mlflow.api.proto.Service.ScorerOrBuilder> 
+            getScorersFieldBuilder() {
+          if (scorersBuilder_ == null) {
+            scorersBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+                org.mlflow.api.proto.Service.Scorer, org.mlflow.api.proto.Service.Scorer.Builder, org.mlflow.api.proto.Service.ScorerOrBuilder>(
+                    scorers_,
+                    ((bitField0_ & 0x00000001) != 0),
+                    getParentForChildren(),
+                    isClean());
+            scorers_ = null;
+          }
+          return scorersBuilder_;
+        }
+        @java.lang.Override
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.setUnknownFields(unknownFields);
+        }
+
+        @java.lang.Override
+        public final Builder mergeUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.mergeUnknownFields(unknownFields);
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:mlflow.ListScorerVersions.Response)
+      }
+
+      // @@protoc_insertion_point(class_scope:mlflow.ListScorerVersions.Response)
+      private static final org.mlflow.api.proto.Service.ListScorerVersions.Response DEFAULT_INSTANCE;
+      static {
+        DEFAULT_INSTANCE = new org.mlflow.api.proto.Service.ListScorerVersions.Response();
+      }
+
+      public static org.mlflow.api.proto.Service.ListScorerVersions.Response getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+      }
+
+      @java.lang.Deprecated public static final com.google.protobuf.Parser<Response>
+          PARSER = new com.google.protobuf.AbstractParser<Response>() {
+        @java.lang.Override
+        public Response parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return new Response(input, extensionRegistry);
+        }
+      };
+
+      public static com.google.protobuf.Parser<Response> parser() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<Response> getParserForType() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.ListScorerVersions.Response getDefaultInstanceForType() {
+        return DEFAULT_INSTANCE;
+      }
+
+    }
+
+    private int bitField0_;
+    public static final int EXPERIMENT_ID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object experimentId_;
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return Whether the experimentId field is set.
+     */
+    @java.lang.Override
+    public boolean hasExperimentId() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The experimentId.
+     */
+    @java.lang.Override
+    public java.lang.String getExperimentId() {
+      java.lang.Object ref = experimentId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          experimentId_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The bytes for experimentId.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getExperimentIdBytes() {
+      java.lang.Object ref = experimentId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        experimentId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int NAME_FIELD_NUMBER = 2;
+    private volatile java.lang.Object name_;
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return Whether the name field is set.
+     */
+    @java.lang.Override
+    public boolean hasName() {
+      return ((bitField0_ & 0x00000002) != 0);
+    }
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return The name.
+     */
+    @java.lang.Override
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          name_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return The bytes for name.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (((bitField0_ & 0x00000001) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, experimentId_);
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, name_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, experimentId_);
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, name_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof org.mlflow.api.proto.Service.ListScorerVersions)) {
+        return super.equals(obj);
+      }
+      org.mlflow.api.proto.Service.ListScorerVersions other = (org.mlflow.api.proto.Service.ListScorerVersions) obj;
+
+      if (hasExperimentId() != other.hasExperimentId()) return false;
+      if (hasExperimentId()) {
+        if (!getExperimentId()
+            .equals(other.getExperimentId())) return false;
+      }
+      if (hasName() != other.hasName()) return false;
+      if (hasName()) {
+        if (!getName()
+            .equals(other.getName())) return false;
+      }
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasExperimentId()) {
+        hash = (37 * hash) + EXPERIMENT_ID_FIELD_NUMBER;
+        hash = (53 * hash) + getExperimentId().hashCode();
+      }
+      if (hasName()) {
+        hash = (37 * hash) + NAME_FIELD_NUMBER;
+        hash = (53 * hash) + getName().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static org.mlflow.api.proto.Service.ListScorerVersions parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.mlflow.api.proto.Service.ListScorerVersions parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.ListScorerVersions parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.mlflow.api.proto.Service.ListScorerVersions parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.ListScorerVersions parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.mlflow.api.proto.Service.ListScorerVersions parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.ListScorerVersions parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.mlflow.api.proto.Service.ListScorerVersions parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.ListScorerVersions parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static org.mlflow.api.proto.Service.ListScorerVersions parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.ListScorerVersions parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.mlflow.api.proto.Service.ListScorerVersions parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(org.mlflow.api.proto.Service.ListScorerVersions prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * List all versions of a specific scorer for an experiment.
+     * </pre>
+     *
+     * Protobuf type {@code mlflow.ListScorerVersions}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:mlflow.ListScorerVersions)
+        org.mlflow.api.proto.Service.ListScorerVersionsOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorerVersions_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorerVersions_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.mlflow.api.proto.Service.ListScorerVersions.class, org.mlflow.api.proto.Service.ListScorerVersions.Builder.class);
+      }
+
+      // Construct using org.mlflow.api.proto.Service.ListScorerVersions.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        experimentId_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        name_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_ListScorerVersions_descriptor;
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.ListScorerVersions getDefaultInstanceForType() {
+        return org.mlflow.api.proto.Service.ListScorerVersions.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.ListScorerVersions build() {
+        org.mlflow.api.proto.Service.ListScorerVersions result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.ListScorerVersions buildPartial() {
+        org.mlflow.api.proto.Service.ListScorerVersions result = new org.mlflow.api.proto.Service.ListScorerVersions(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.experimentId_ = experimentId_;
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.name_ = name_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.mlflow.api.proto.Service.ListScorerVersions) {
+          return mergeFrom((org.mlflow.api.proto.Service.ListScorerVersions)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(org.mlflow.api.proto.Service.ListScorerVersions other) {
+        if (other == org.mlflow.api.proto.Service.ListScorerVersions.getDefaultInstance()) return this;
+        if (other.hasExperimentId()) {
+          bitField0_ |= 0x00000001;
+          experimentId_ = other.experimentId_;
+          onChanged();
+        }
+        if (other.hasName()) {
+          bitField0_ |= 0x00000002;
+          name_ = other.name_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        org.mlflow.api.proto.Service.ListScorerVersions parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (org.mlflow.api.proto.Service.ListScorerVersions) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object experimentId_ = "";
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return Whether the experimentId field is set.
+       */
+      public boolean hasExperimentId() {
+        return ((bitField0_ & 0x00000001) != 0);
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return The experimentId.
+       */
+      public java.lang.String getExperimentId() {
+        java.lang.Object ref = experimentId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            experimentId_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return The bytes for experimentId.
+       */
+      public com.google.protobuf.ByteString
+          getExperimentIdBytes() {
+        java.lang.Object ref = experimentId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          experimentId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @param value The experimentId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setExperimentId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        experimentId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearExperimentId() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        experimentId_ = getDefaultInstance().getExperimentId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @param value The bytes for experimentId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setExperimentIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        experimentId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object name_ = "";
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @return Whether the name field is set.
+       */
+      public boolean hasName() {
+        return ((bitField0_ & 0x00000002) != 0);
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @return The name.
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            name_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @return The bytes for name.
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @param value The name to set.
+       * @return This builder for chaining.
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearName() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @param value The bytes for name to set.
+       * @return This builder for chaining.
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:mlflow.ListScorerVersions)
+    }
+
+    // @@protoc_insertion_point(class_scope:mlflow.ListScorerVersions)
+    private static final org.mlflow.api.proto.Service.ListScorerVersions DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new org.mlflow.api.proto.Service.ListScorerVersions();
+    }
+
+    public static org.mlflow.api.proto.Service.ListScorerVersions getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<ListScorerVersions>
+        PARSER = new com.google.protobuf.AbstractParser<ListScorerVersions>() {
+      @java.lang.Override
+      public ListScorerVersions parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ListScorerVersions(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ListScorerVersions> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ListScorerVersions> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public org.mlflow.api.proto.Service.ListScorerVersions getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface GetScorerOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:mlflow.GetScorer)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return Whether the experimentId field is set.
+     */
+    boolean hasExperimentId();
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The experimentId.
+     */
+    java.lang.String getExperimentId();
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The bytes for experimentId.
+     */
+    com.google.protobuf.ByteString
+        getExperimentIdBytes();
+
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return Whether the name field is set.
+     */
+    boolean hasName();
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return The name.
+     */
+    java.lang.String getName();
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return The bytes for name.
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+
+    /**
+     * <pre>
+     * The scorer version. If not specified, returns the scorer with maximum version.
+     * </pre>
+     *
+     * <code>optional int32 version = 3;</code>
+     * @return Whether the version field is set.
+     */
+    boolean hasVersion();
+    /**
+     * <pre>
+     * The scorer version. If not specified, returns the scorer with maximum version.
+     * </pre>
+     *
+     * <code>optional int32 version = 3;</code>
+     * @return The version.
+     */
+    int getVersion();
+  }
+  /**
+   * <pre>
+   * Get a specific scorer for an experiment.
+   * </pre>
+   *
+   * Protobuf type {@code mlflow.GetScorer}
+   */
+  public static final class GetScorer extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:mlflow.GetScorer)
+      GetScorerOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use GetScorer.newBuilder() to construct.
+    private GetScorer(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private GetScorer() {
+      experimentId_ = "";
+      name_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new GetScorer();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private GetScorer(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              experimentId_ = bs;
+              break;
+            }
+            case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              name_ = bs;
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              version_ = input.readInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.mlflow.api.proto.Service.internal_static_mlflow_GetScorer_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.mlflow.api.proto.Service.internal_static_mlflow_GetScorer_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              org.mlflow.api.proto.Service.GetScorer.class, org.mlflow.api.proto.Service.GetScorer.Builder.class);
+    }
+
+    public interface ResponseOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:mlflow.GetScorer.Response)
+        com.google.protobuf.MessageOrBuilder {
+
+      /**
+       * <pre>
+       * The scorer entity.
+       * </pre>
+       *
+       * <code>optional .mlflow.Scorer scorer = 1;</code>
+       * @return Whether the scorer field is set.
+       */
+      boolean hasScorer();
+      /**
+       * <pre>
+       * The scorer entity.
+       * </pre>
+       *
+       * <code>optional .mlflow.Scorer scorer = 1;</code>
+       * @return The scorer.
+       */
+      org.mlflow.api.proto.Service.Scorer getScorer();
+      /**
+       * <pre>
+       * The scorer entity.
+       * </pre>
+       *
+       * <code>optional .mlflow.Scorer scorer = 1;</code>
+       */
+      org.mlflow.api.proto.Service.ScorerOrBuilder getScorerOrBuilder();
+    }
+    /**
+     * Protobuf type {@code mlflow.GetScorer.Response}
+     */
+    public static final class Response extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:mlflow.GetScorer.Response)
+        ResponseOrBuilder {
+    private static final long serialVersionUID = 0L;
+      // Use Response.newBuilder() to construct.
+      private Response(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        super(builder);
+      }
+      private Response() {
+      }
+
+      @java.lang.Override
+      @SuppressWarnings({"unused"})
+      protected java.lang.Object newInstance(
+          UnusedPrivateParameter unused) {
+        return new Response();
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+      getUnknownFields() {
+        return this.unknownFields;
+      }
+      private Response(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        int mutable_bitField0_ = 0;
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                org.mlflow.api.proto.Service.Scorer.Builder subBuilder = null;
+                if (((bitField0_ & 0x00000001) != 0)) {
+                  subBuilder = scorer_.toBuilder();
+                }
+                scorer_ = input.readMessage(org.mlflow.api.proto.Service.Scorer.PARSER, extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(scorer_);
+                  scorer_ = subBuilder.buildPartial();
+                }
+                bitField0_ |= 0x00000001;
+                break;
+              }
+              default: {
+                if (!parseUnknownField(
+                    input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e).setUnfinishedMessage(this);
+        } finally {
+          this.unknownFields = unknownFields.build();
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_GetScorer_Response_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_GetScorer_Response_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.mlflow.api.proto.Service.GetScorer.Response.class, org.mlflow.api.proto.Service.GetScorer.Response.Builder.class);
+      }
+
+      private int bitField0_;
+      public static final int SCORER_FIELD_NUMBER = 1;
+      private org.mlflow.api.proto.Service.Scorer scorer_;
+      /**
+       * <pre>
+       * The scorer entity.
+       * </pre>
+       *
+       * <code>optional .mlflow.Scorer scorer = 1;</code>
+       * @return Whether the scorer field is set.
+       */
+      @java.lang.Override
+      public boolean hasScorer() {
+        return ((bitField0_ & 0x00000001) != 0);
+      }
+      /**
+       * <pre>
+       * The scorer entity.
+       * </pre>
+       *
+       * <code>optional .mlflow.Scorer scorer = 1;</code>
+       * @return The scorer.
+       */
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.Scorer getScorer() {
+        return scorer_ == null ? org.mlflow.api.proto.Service.Scorer.getDefaultInstance() : scorer_;
+      }
+      /**
+       * <pre>
+       * The scorer entity.
+       * </pre>
+       *
+       * <code>optional .mlflow.Scorer scorer = 1;</code>
+       */
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.ScorerOrBuilder getScorerOrBuilder() {
+        return scorer_ == null ? org.mlflow.api.proto.Service.Scorer.getDefaultInstance() : scorer_;
+      }
+
+      private byte memoizedIsInitialized = -1;
+      @java.lang.Override
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      @java.lang.Override
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        if (((bitField0_ & 0x00000001) != 0)) {
+          output.writeMessage(1, getScorer());
+        }
+        unknownFields.writeTo(output);
+      }
+
+      @java.lang.Override
+      public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (((bitField0_ & 0x00000001) != 0)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeMessageSize(1, getScorer());
+        }
+        size += unknownFields.getSerializedSize();
+        memoizedSize = size;
+        return size;
+      }
+
+      @java.lang.Override
+      public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+         return true;
+        }
+        if (!(obj instanceof org.mlflow.api.proto.Service.GetScorer.Response)) {
+          return super.equals(obj);
+        }
+        org.mlflow.api.proto.Service.GetScorer.Response other = (org.mlflow.api.proto.Service.GetScorer.Response) obj;
+
+        if (hasScorer() != other.hasScorer()) return false;
+        if (hasScorer()) {
+          if (!getScorer()
+              .equals(other.getScorer())) return false;
+        }
+        if (!unknownFields.equals(other.unknownFields)) return false;
+        return true;
+      }
+
+      @java.lang.Override
+      public int hashCode() {
+        if (memoizedHashCode != 0) {
+          return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        if (hasScorer()) {
+          hash = (37 * hash) + SCORER_FIELD_NUMBER;
+          hash = (53 * hash) + getScorer().hashCode();
+        }
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+      }
+
+      public static org.mlflow.api.proto.Service.GetScorer.Response parseFrom(
+          java.nio.ByteBuffer data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.mlflow.api.proto.Service.GetScorer.Response parseFrom(
+          java.nio.ByteBuffer data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.GetScorer.Response parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.mlflow.api.proto.Service.GetScorer.Response parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.GetScorer.Response parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.mlflow.api.proto.Service.GetScorer.Response parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.GetScorer.Response parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static org.mlflow.api.proto.Service.GetScorer.Response parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.GetScorer.Response parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input);
+      }
+      public static org.mlflow.api.proto.Service.GetScorer.Response parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.GetScorer.Response parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static org.mlflow.api.proto.Service.GetScorer.Response parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+
+      @java.lang.Override
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+      }
+      public static Builder newBuilder(org.mlflow.api.proto.Service.GetScorer.Response prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      }
+      @java.lang.Override
+      public Builder toBuilder() {
+        return this == DEFAULT_INSTANCE
+            ? new Builder() : new Builder().mergeFrom(this);
+      }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code mlflow.GetScorer.Response}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:mlflow.GetScorer.Response)
+          org.mlflow.api.proto.Service.GetScorer.ResponseOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return org.mlflow.api.proto.Service.internal_static_mlflow_GetScorer_Response_descriptor;
+        }
+
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return org.mlflow.api.proto.Service.internal_static_mlflow_GetScorer_Response_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  org.mlflow.api.proto.Service.GetScorer.Response.class, org.mlflow.api.proto.Service.GetScorer.Response.Builder.class);
+        }
+
+        // Construct using org.mlflow.api.proto.Service.GetScorer.Response.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessageV3
+                  .alwaysUseFieldBuilders) {
+            getScorerFieldBuilder();
+          }
+        }
+        @java.lang.Override
+        public Builder clear() {
+          super.clear();
+          if (scorerBuilder_ == null) {
+            scorer_ = null;
+          } else {
+            scorerBuilder_.clear();
+          }
+          bitField0_ = (bitField0_ & ~0x00000001);
+          return this;
+        }
+
+        @java.lang.Override
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return org.mlflow.api.proto.Service.internal_static_mlflow_GetScorer_Response_descriptor;
+        }
+
+        @java.lang.Override
+        public org.mlflow.api.proto.Service.GetScorer.Response getDefaultInstanceForType() {
+          return org.mlflow.api.proto.Service.GetScorer.Response.getDefaultInstance();
+        }
+
+        @java.lang.Override
+        public org.mlflow.api.proto.Service.GetScorer.Response build() {
+          org.mlflow.api.proto.Service.GetScorer.Response result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        @java.lang.Override
+        public org.mlflow.api.proto.Service.GetScorer.Response buildPartial() {
+          org.mlflow.api.proto.Service.GetScorer.Response result = new org.mlflow.api.proto.Service.GetScorer.Response(this);
+          int from_bitField0_ = bitField0_;
+          int to_bitField0_ = 0;
+          if (((from_bitField0_ & 0x00000001) != 0)) {
+            if (scorerBuilder_ == null) {
+              result.scorer_ = scorer_;
+            } else {
+              result.scorer_ = scorerBuilder_.build();
+            }
+            to_bitField0_ |= 0x00000001;
+          }
+          result.bitField0_ = to_bitField0_;
+          onBuilt();
+          return result;
+        }
+
+        @java.lang.Override
+        public Builder clone() {
+          return super.clone();
+        }
+        @java.lang.Override
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            java.lang.Object value) {
+          return super.setField(field, value);
+        }
+        @java.lang.Override
+        public Builder clearField(
+            com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return super.clearField(field);
+        }
+        @java.lang.Override
+        public Builder clearOneof(
+            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return super.clearOneof(oneof);
+        }
+        @java.lang.Override
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index, java.lang.Object value) {
+          return super.setRepeatedField(field, index, value);
+        }
+        @java.lang.Override
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            java.lang.Object value) {
+          return super.addRepeatedField(field, value);
+        }
+        @java.lang.Override
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof org.mlflow.api.proto.Service.GetScorer.Response) {
+            return mergeFrom((org.mlflow.api.proto.Service.GetScorer.Response)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(org.mlflow.api.proto.Service.GetScorer.Response other) {
+          if (other == org.mlflow.api.proto.Service.GetScorer.Response.getDefaultInstance()) return this;
+          if (other.hasScorer()) {
+            mergeScorer(other.getScorer());
+          }
+          this.mergeUnknownFields(other.unknownFields);
+          onChanged();
+          return this;
+        }
+
+        @java.lang.Override
+        public final boolean isInitialized() {
+          return true;
+        }
+
+        @java.lang.Override
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          org.mlflow.api.proto.Service.GetScorer.Response parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (org.mlflow.api.proto.Service.GetScorer.Response) e.getUnfinishedMessage();
+            throw e.unwrapIOException();
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+        private int bitField0_;
+
+        private org.mlflow.api.proto.Service.Scorer scorer_;
+        private com.google.protobuf.SingleFieldBuilderV3<
+            org.mlflow.api.proto.Service.Scorer, org.mlflow.api.proto.Service.Scorer.Builder, org.mlflow.api.proto.Service.ScorerOrBuilder> scorerBuilder_;
+        /**
+         * <pre>
+         * The scorer entity.
+         * </pre>
+         *
+         * <code>optional .mlflow.Scorer scorer = 1;</code>
+         * @return Whether the scorer field is set.
+         */
+        public boolean hasScorer() {
+          return ((bitField0_ & 0x00000001) != 0);
+        }
+        /**
+         * <pre>
+         * The scorer entity.
+         * </pre>
+         *
+         * <code>optional .mlflow.Scorer scorer = 1;</code>
+         * @return The scorer.
+         */
+        public org.mlflow.api.proto.Service.Scorer getScorer() {
+          if (scorerBuilder_ == null) {
+            return scorer_ == null ? org.mlflow.api.proto.Service.Scorer.getDefaultInstance() : scorer_;
+          } else {
+            return scorerBuilder_.getMessage();
+          }
+        }
+        /**
+         * <pre>
+         * The scorer entity.
+         * </pre>
+         *
+         * <code>optional .mlflow.Scorer scorer = 1;</code>
+         */
+        public Builder setScorer(org.mlflow.api.proto.Service.Scorer value) {
+          if (scorerBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            scorer_ = value;
+            onChanged();
+          } else {
+            scorerBuilder_.setMessage(value);
+          }
+          bitField0_ |= 0x00000001;
+          return this;
+        }
+        /**
+         * <pre>
+         * The scorer entity.
+         * </pre>
+         *
+         * <code>optional .mlflow.Scorer scorer = 1;</code>
+         */
+        public Builder setScorer(
+            org.mlflow.api.proto.Service.Scorer.Builder builderForValue) {
+          if (scorerBuilder_ == null) {
+            scorer_ = builderForValue.build();
+            onChanged();
+          } else {
+            scorerBuilder_.setMessage(builderForValue.build());
+          }
+          bitField0_ |= 0x00000001;
+          return this;
+        }
+        /**
+         * <pre>
+         * The scorer entity.
+         * </pre>
+         *
+         * <code>optional .mlflow.Scorer scorer = 1;</code>
+         */
+        public Builder mergeScorer(org.mlflow.api.proto.Service.Scorer value) {
+          if (scorerBuilder_ == null) {
+            if (((bitField0_ & 0x00000001) != 0) &&
+                scorer_ != null &&
+                scorer_ != org.mlflow.api.proto.Service.Scorer.getDefaultInstance()) {
+              scorer_ =
+                org.mlflow.api.proto.Service.Scorer.newBuilder(scorer_).mergeFrom(value).buildPartial();
+            } else {
+              scorer_ = value;
+            }
+            onChanged();
+          } else {
+            scorerBuilder_.mergeFrom(value);
+          }
+          bitField0_ |= 0x00000001;
+          return this;
+        }
+        /**
+         * <pre>
+         * The scorer entity.
+         * </pre>
+         *
+         * <code>optional .mlflow.Scorer scorer = 1;</code>
+         */
+        public Builder clearScorer() {
+          if (scorerBuilder_ == null) {
+            scorer_ = null;
+            onChanged();
+          } else {
+            scorerBuilder_.clear();
+          }
+          bitField0_ = (bitField0_ & ~0x00000001);
+          return this;
+        }
+        /**
+         * <pre>
+         * The scorer entity.
+         * </pre>
+         *
+         * <code>optional .mlflow.Scorer scorer = 1;</code>
+         */
+        public org.mlflow.api.proto.Service.Scorer.Builder getScorerBuilder() {
+          bitField0_ |= 0x00000001;
+          onChanged();
+          return getScorerFieldBuilder().getBuilder();
+        }
+        /**
+         * <pre>
+         * The scorer entity.
+         * </pre>
+         *
+         * <code>optional .mlflow.Scorer scorer = 1;</code>
+         */
+        public org.mlflow.api.proto.Service.ScorerOrBuilder getScorerOrBuilder() {
+          if (scorerBuilder_ != null) {
+            return scorerBuilder_.getMessageOrBuilder();
+          } else {
+            return scorer_ == null ?
+                org.mlflow.api.proto.Service.Scorer.getDefaultInstance() : scorer_;
+          }
+        }
+        /**
+         * <pre>
+         * The scorer entity.
+         * </pre>
+         *
+         * <code>optional .mlflow.Scorer scorer = 1;</code>
+         */
+        private com.google.protobuf.SingleFieldBuilderV3<
+            org.mlflow.api.proto.Service.Scorer, org.mlflow.api.proto.Service.Scorer.Builder, org.mlflow.api.proto.Service.ScorerOrBuilder> 
+            getScorerFieldBuilder() {
+          if (scorerBuilder_ == null) {
+            scorerBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+                org.mlflow.api.proto.Service.Scorer, org.mlflow.api.proto.Service.Scorer.Builder, org.mlflow.api.proto.Service.ScorerOrBuilder>(
+                    getScorer(),
+                    getParentForChildren(),
+                    isClean());
+            scorer_ = null;
+          }
+          return scorerBuilder_;
+        }
+        @java.lang.Override
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.setUnknownFields(unknownFields);
+        }
+
+        @java.lang.Override
+        public final Builder mergeUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.mergeUnknownFields(unknownFields);
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:mlflow.GetScorer.Response)
+      }
+
+      // @@protoc_insertion_point(class_scope:mlflow.GetScorer.Response)
+      private static final org.mlflow.api.proto.Service.GetScorer.Response DEFAULT_INSTANCE;
+      static {
+        DEFAULT_INSTANCE = new org.mlflow.api.proto.Service.GetScorer.Response();
+      }
+
+      public static org.mlflow.api.proto.Service.GetScorer.Response getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+      }
+
+      @java.lang.Deprecated public static final com.google.protobuf.Parser<Response>
+          PARSER = new com.google.protobuf.AbstractParser<Response>() {
+        @java.lang.Override
+        public Response parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return new Response(input, extensionRegistry);
+        }
+      };
+
+      public static com.google.protobuf.Parser<Response> parser() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<Response> getParserForType() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.GetScorer.Response getDefaultInstanceForType() {
+        return DEFAULT_INSTANCE;
+      }
+
+    }
+
+    private int bitField0_;
+    public static final int EXPERIMENT_ID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object experimentId_;
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return Whether the experimentId field is set.
+     */
+    @java.lang.Override
+    public boolean hasExperimentId() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The experimentId.
+     */
+    @java.lang.Override
+    public java.lang.String getExperimentId() {
+      java.lang.Object ref = experimentId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          experimentId_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The bytes for experimentId.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getExperimentIdBytes() {
+      java.lang.Object ref = experimentId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        experimentId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int NAME_FIELD_NUMBER = 2;
+    private volatile java.lang.Object name_;
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return Whether the name field is set.
+     */
+    @java.lang.Override
+    public boolean hasName() {
+      return ((bitField0_ & 0x00000002) != 0);
+    }
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return The name.
+     */
+    @java.lang.Override
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          name_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return The bytes for name.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int VERSION_FIELD_NUMBER = 3;
+    private int version_;
+    /**
+     * <pre>
+     * The scorer version. If not specified, returns the scorer with maximum version.
+     * </pre>
+     *
+     * <code>optional int32 version = 3;</code>
+     * @return Whether the version field is set.
+     */
+    @java.lang.Override
+    public boolean hasVersion() {
+      return ((bitField0_ & 0x00000004) != 0);
+    }
+    /**
+     * <pre>
+     * The scorer version. If not specified, returns the scorer with maximum version.
+     * </pre>
+     *
+     * <code>optional int32 version = 3;</code>
+     * @return The version.
+     */
+    @java.lang.Override
+    public int getVersion() {
+      return version_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (((bitField0_ & 0x00000001) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, experimentId_);
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, name_);
+      }
+      if (((bitField0_ & 0x00000004) != 0)) {
+        output.writeInt32(3, version_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, experimentId_);
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, name_);
+      }
+      if (((bitField0_ & 0x00000004) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, version_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof org.mlflow.api.proto.Service.GetScorer)) {
+        return super.equals(obj);
+      }
+      org.mlflow.api.proto.Service.GetScorer other = (org.mlflow.api.proto.Service.GetScorer) obj;
+
+      if (hasExperimentId() != other.hasExperimentId()) return false;
+      if (hasExperimentId()) {
+        if (!getExperimentId()
+            .equals(other.getExperimentId())) return false;
+      }
+      if (hasName() != other.hasName()) return false;
+      if (hasName()) {
+        if (!getName()
+            .equals(other.getName())) return false;
+      }
+      if (hasVersion() != other.hasVersion()) return false;
+      if (hasVersion()) {
+        if (getVersion()
+            != other.getVersion()) return false;
+      }
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasExperimentId()) {
+        hash = (37 * hash) + EXPERIMENT_ID_FIELD_NUMBER;
+        hash = (53 * hash) + getExperimentId().hashCode();
+      }
+      if (hasName()) {
+        hash = (37 * hash) + NAME_FIELD_NUMBER;
+        hash = (53 * hash) + getName().hashCode();
+      }
+      if (hasVersion()) {
+        hash = (37 * hash) + VERSION_FIELD_NUMBER;
+        hash = (53 * hash) + getVersion();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static org.mlflow.api.proto.Service.GetScorer parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.mlflow.api.proto.Service.GetScorer parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.GetScorer parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.mlflow.api.proto.Service.GetScorer parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.GetScorer parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.mlflow.api.proto.Service.GetScorer parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.GetScorer parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.mlflow.api.proto.Service.GetScorer parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.GetScorer parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static org.mlflow.api.proto.Service.GetScorer parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.GetScorer parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.mlflow.api.proto.Service.GetScorer parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(org.mlflow.api.proto.Service.GetScorer prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * Get a specific scorer for an experiment.
+     * </pre>
+     *
+     * Protobuf type {@code mlflow.GetScorer}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:mlflow.GetScorer)
+        org.mlflow.api.proto.Service.GetScorerOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_GetScorer_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_GetScorer_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.mlflow.api.proto.Service.GetScorer.class, org.mlflow.api.proto.Service.GetScorer.Builder.class);
+      }
+
+      // Construct using org.mlflow.api.proto.Service.GetScorer.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        experimentId_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        name_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        version_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_GetScorer_descriptor;
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.GetScorer getDefaultInstanceForType() {
+        return org.mlflow.api.proto.Service.GetScorer.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.GetScorer build() {
+        org.mlflow.api.proto.Service.GetScorer result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.GetScorer buildPartial() {
+        org.mlflow.api.proto.Service.GetScorer result = new org.mlflow.api.proto.Service.GetScorer(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.experimentId_ = experimentId_;
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.name_ = name_;
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.version_ = version_;
+          to_bitField0_ |= 0x00000004;
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.mlflow.api.proto.Service.GetScorer) {
+          return mergeFrom((org.mlflow.api.proto.Service.GetScorer)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(org.mlflow.api.proto.Service.GetScorer other) {
+        if (other == org.mlflow.api.proto.Service.GetScorer.getDefaultInstance()) return this;
+        if (other.hasExperimentId()) {
+          bitField0_ |= 0x00000001;
+          experimentId_ = other.experimentId_;
+          onChanged();
+        }
+        if (other.hasName()) {
+          bitField0_ |= 0x00000002;
+          name_ = other.name_;
+          onChanged();
+        }
+        if (other.hasVersion()) {
+          setVersion(other.getVersion());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        org.mlflow.api.proto.Service.GetScorer parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (org.mlflow.api.proto.Service.GetScorer) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object experimentId_ = "";
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return Whether the experimentId field is set.
+       */
+      public boolean hasExperimentId() {
+        return ((bitField0_ & 0x00000001) != 0);
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return The experimentId.
+       */
+      public java.lang.String getExperimentId() {
+        java.lang.Object ref = experimentId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            experimentId_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return The bytes for experimentId.
+       */
+      public com.google.protobuf.ByteString
+          getExperimentIdBytes() {
+        java.lang.Object ref = experimentId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          experimentId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @param value The experimentId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setExperimentId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        experimentId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearExperimentId() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        experimentId_ = getDefaultInstance().getExperimentId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @param value The bytes for experimentId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setExperimentIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        experimentId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object name_ = "";
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @return Whether the name field is set.
+       */
+      public boolean hasName() {
+        return ((bitField0_ & 0x00000002) != 0);
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @return The name.
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            name_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @return The bytes for name.
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @param value The name to set.
+       * @return This builder for chaining.
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearName() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @param value The bytes for name to set.
+       * @return This builder for chaining.
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        name_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int version_ ;
+      /**
+       * <pre>
+       * The scorer version. If not specified, returns the scorer with maximum version.
+       * </pre>
+       *
+       * <code>optional int32 version = 3;</code>
+       * @return Whether the version field is set.
+       */
+      @java.lang.Override
+      public boolean hasVersion() {
+        return ((bitField0_ & 0x00000004) != 0);
+      }
+      /**
+       * <pre>
+       * The scorer version. If not specified, returns the scorer with maximum version.
+       * </pre>
+       *
+       * <code>optional int32 version = 3;</code>
+       * @return The version.
+       */
+      @java.lang.Override
+      public int getVersion() {
+        return version_;
+      }
+      /**
+       * <pre>
+       * The scorer version. If not specified, returns the scorer with maximum version.
+       * </pre>
+       *
+       * <code>optional int32 version = 3;</code>
+       * @param value The version to set.
+       * @return This builder for chaining.
+       */
+      public Builder setVersion(int value) {
+        bitField0_ |= 0x00000004;
+        version_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The scorer version. If not specified, returns the scorer with maximum version.
+       * </pre>
+       *
+       * <code>optional int32 version = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearVersion() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        version_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:mlflow.GetScorer)
+    }
+
+    // @@protoc_insertion_point(class_scope:mlflow.GetScorer)
+    private static final org.mlflow.api.proto.Service.GetScorer DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new org.mlflow.api.proto.Service.GetScorer();
+    }
+
+    public static org.mlflow.api.proto.Service.GetScorer getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<GetScorer>
+        PARSER = new com.google.protobuf.AbstractParser<GetScorer>() {
+      @java.lang.Override
+      public GetScorer parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetScorer(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<GetScorer> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetScorer> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public org.mlflow.api.proto.Service.GetScorer getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface DeleteScorerOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:mlflow.DeleteScorer)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return Whether the experimentId field is set.
+     */
+    boolean hasExperimentId();
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The experimentId.
+     */
+    java.lang.String getExperimentId();
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The bytes for experimentId.
+     */
+    com.google.protobuf.ByteString
+        getExperimentIdBytes();
+
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return Whether the name field is set.
+     */
+    boolean hasName();
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return The name.
+     */
+    java.lang.String getName();
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return The bytes for name.
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+
+    /**
+     * <pre>
+     * The scorer version to delete. If not specified, deletes all versions.
+     * </pre>
+     *
+     * <code>optional int32 version = 3;</code>
+     * @return Whether the version field is set.
+     */
+    boolean hasVersion();
+    /**
+     * <pre>
+     * The scorer version to delete. If not specified, deletes all versions.
+     * </pre>
+     *
+     * <code>optional int32 version = 3;</code>
+     * @return The version.
+     */
+    int getVersion();
+  }
+  /**
+   * <pre>
+   * Delete a scorer for an experiment.
+   * </pre>
+   *
+   * Protobuf type {@code mlflow.DeleteScorer}
+   */
+  public static final class DeleteScorer extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:mlflow.DeleteScorer)
+      DeleteScorerOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use DeleteScorer.newBuilder() to construct.
+    private DeleteScorer(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private DeleteScorer() {
+      experimentId_ = "";
+      name_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new DeleteScorer();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private DeleteScorer(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              experimentId_ = bs;
+              break;
+            }
+            case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              name_ = bs;
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              version_ = input.readInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.mlflow.api.proto.Service.internal_static_mlflow_DeleteScorer_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.mlflow.api.proto.Service.internal_static_mlflow_DeleteScorer_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              org.mlflow.api.proto.Service.DeleteScorer.class, org.mlflow.api.proto.Service.DeleteScorer.Builder.class);
+    }
+
+    public interface ResponseOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:mlflow.DeleteScorer.Response)
+        com.google.protobuf.MessageOrBuilder {
+    }
+    /**
+     * <pre>
+     * Empty response.
+     * </pre>
+     *
+     * Protobuf type {@code mlflow.DeleteScorer.Response}
+     */
+    public static final class Response extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:mlflow.DeleteScorer.Response)
+        ResponseOrBuilder {
+    private static final long serialVersionUID = 0L;
+      // Use Response.newBuilder() to construct.
+      private Response(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        super(builder);
+      }
+      private Response() {
+      }
+
+      @java.lang.Override
+      @SuppressWarnings({"unused"})
+      protected java.lang.Object newInstance(
+          UnusedPrivateParameter unused) {
+        return new Response();
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+      getUnknownFields() {
+        return this.unknownFields;
+      }
+      private Response(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              default: {
+                if (!parseUnknownField(
+                    input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e).setUnfinishedMessage(this);
+        } finally {
+          this.unknownFields = unknownFields.build();
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_DeleteScorer_Response_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_DeleteScorer_Response_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.mlflow.api.proto.Service.DeleteScorer.Response.class, org.mlflow.api.proto.Service.DeleteScorer.Response.Builder.class);
+      }
+
+      private byte memoizedIsInitialized = -1;
+      @java.lang.Override
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      @java.lang.Override
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        unknownFields.writeTo(output);
+      }
+
+      @java.lang.Override
+      public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        size += unknownFields.getSerializedSize();
+        memoizedSize = size;
+        return size;
+      }
+
+      @java.lang.Override
+      public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+         return true;
+        }
+        if (!(obj instanceof org.mlflow.api.proto.Service.DeleteScorer.Response)) {
+          return super.equals(obj);
+        }
+        org.mlflow.api.proto.Service.DeleteScorer.Response other = (org.mlflow.api.proto.Service.DeleteScorer.Response) obj;
+
+        if (!unknownFields.equals(other.unknownFields)) return false;
+        return true;
+      }
+
+      @java.lang.Override
+      public int hashCode() {
+        if (memoizedHashCode != 0) {
+          return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+      }
+
+      public static org.mlflow.api.proto.Service.DeleteScorer.Response parseFrom(
+          java.nio.ByteBuffer data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.mlflow.api.proto.Service.DeleteScorer.Response parseFrom(
+          java.nio.ByteBuffer data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.DeleteScorer.Response parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.mlflow.api.proto.Service.DeleteScorer.Response parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.DeleteScorer.Response parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.mlflow.api.proto.Service.DeleteScorer.Response parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.DeleteScorer.Response parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static org.mlflow.api.proto.Service.DeleteScorer.Response parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.DeleteScorer.Response parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input);
+      }
+      public static org.mlflow.api.proto.Service.DeleteScorer.Response parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static org.mlflow.api.proto.Service.DeleteScorer.Response parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static org.mlflow.api.proto.Service.DeleteScorer.Response parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+
+      @java.lang.Override
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+      }
+      public static Builder newBuilder(org.mlflow.api.proto.Service.DeleteScorer.Response prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      }
+      @java.lang.Override
+      public Builder toBuilder() {
+        return this == DEFAULT_INSTANCE
+            ? new Builder() : new Builder().mergeFrom(this);
+      }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * <pre>
+       * Empty response.
+       * </pre>
+       *
+       * Protobuf type {@code mlflow.DeleteScorer.Response}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:mlflow.DeleteScorer.Response)
+          org.mlflow.api.proto.Service.DeleteScorer.ResponseOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return org.mlflow.api.proto.Service.internal_static_mlflow_DeleteScorer_Response_descriptor;
+        }
+
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return org.mlflow.api.proto.Service.internal_static_mlflow_DeleteScorer_Response_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  org.mlflow.api.proto.Service.DeleteScorer.Response.class, org.mlflow.api.proto.Service.DeleteScorer.Response.Builder.class);
+        }
+
+        // Construct using org.mlflow.api.proto.Service.DeleteScorer.Response.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessageV3
+                  .alwaysUseFieldBuilders) {
+          }
+        }
+        @java.lang.Override
+        public Builder clear() {
+          super.clear();
+          return this;
+        }
+
+        @java.lang.Override
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return org.mlflow.api.proto.Service.internal_static_mlflow_DeleteScorer_Response_descriptor;
+        }
+
+        @java.lang.Override
+        public org.mlflow.api.proto.Service.DeleteScorer.Response getDefaultInstanceForType() {
+          return org.mlflow.api.proto.Service.DeleteScorer.Response.getDefaultInstance();
+        }
+
+        @java.lang.Override
+        public org.mlflow.api.proto.Service.DeleteScorer.Response build() {
+          org.mlflow.api.proto.Service.DeleteScorer.Response result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        @java.lang.Override
+        public org.mlflow.api.proto.Service.DeleteScorer.Response buildPartial() {
+          org.mlflow.api.proto.Service.DeleteScorer.Response result = new org.mlflow.api.proto.Service.DeleteScorer.Response(this);
+          onBuilt();
+          return result;
+        }
+
+        @java.lang.Override
+        public Builder clone() {
+          return super.clone();
+        }
+        @java.lang.Override
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            java.lang.Object value) {
+          return super.setField(field, value);
+        }
+        @java.lang.Override
+        public Builder clearField(
+            com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return super.clearField(field);
+        }
+        @java.lang.Override
+        public Builder clearOneof(
+            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return super.clearOneof(oneof);
+        }
+        @java.lang.Override
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index, java.lang.Object value) {
+          return super.setRepeatedField(field, index, value);
+        }
+        @java.lang.Override
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            java.lang.Object value) {
+          return super.addRepeatedField(field, value);
+        }
+        @java.lang.Override
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof org.mlflow.api.proto.Service.DeleteScorer.Response) {
+            return mergeFrom((org.mlflow.api.proto.Service.DeleteScorer.Response)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(org.mlflow.api.proto.Service.DeleteScorer.Response other) {
+          if (other == org.mlflow.api.proto.Service.DeleteScorer.Response.getDefaultInstance()) return this;
+          this.mergeUnknownFields(other.unknownFields);
+          onChanged();
+          return this;
+        }
+
+        @java.lang.Override
+        public final boolean isInitialized() {
+          return true;
+        }
+
+        @java.lang.Override
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          org.mlflow.api.proto.Service.DeleteScorer.Response parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (org.mlflow.api.proto.Service.DeleteScorer.Response) e.getUnfinishedMessage();
+            throw e.unwrapIOException();
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+        @java.lang.Override
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.setUnknownFields(unknownFields);
+        }
+
+        @java.lang.Override
+        public final Builder mergeUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.mergeUnknownFields(unknownFields);
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:mlflow.DeleteScorer.Response)
+      }
+
+      // @@protoc_insertion_point(class_scope:mlflow.DeleteScorer.Response)
+      private static final org.mlflow.api.proto.Service.DeleteScorer.Response DEFAULT_INSTANCE;
+      static {
+        DEFAULT_INSTANCE = new org.mlflow.api.proto.Service.DeleteScorer.Response();
+      }
+
+      public static org.mlflow.api.proto.Service.DeleteScorer.Response getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+      }
+
+      @java.lang.Deprecated public static final com.google.protobuf.Parser<Response>
+          PARSER = new com.google.protobuf.AbstractParser<Response>() {
+        @java.lang.Override
+        public Response parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return new Response(input, extensionRegistry);
+        }
+      };
+
+      public static com.google.protobuf.Parser<Response> parser() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<Response> getParserForType() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.DeleteScorer.Response getDefaultInstanceForType() {
+        return DEFAULT_INSTANCE;
+      }
+
+    }
+
+    private int bitField0_;
+    public static final int EXPERIMENT_ID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object experimentId_;
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return Whether the experimentId field is set.
+     */
+    @java.lang.Override
+    public boolean hasExperimentId() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The experimentId.
+     */
+    @java.lang.Override
+    public java.lang.String getExperimentId() {
+      java.lang.Object ref = experimentId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          experimentId_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional string experiment_id = 1;</code>
+     * @return The bytes for experimentId.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getExperimentIdBytes() {
+      java.lang.Object ref = experimentId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        experimentId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int NAME_FIELD_NUMBER = 2;
+    private volatile java.lang.Object name_;
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return Whether the name field is set.
+     */
+    @java.lang.Override
+    public boolean hasName() {
+      return ((bitField0_ & 0x00000002) != 0);
+    }
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return The name.
+     */
+    @java.lang.Override
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          name_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string name = 2;</code>
+     * @return The bytes for name.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int VERSION_FIELD_NUMBER = 3;
+    private int version_;
+    /**
+     * <pre>
+     * The scorer version to delete. If not specified, deletes all versions.
+     * </pre>
+     *
+     * <code>optional int32 version = 3;</code>
+     * @return Whether the version field is set.
+     */
+    @java.lang.Override
+    public boolean hasVersion() {
+      return ((bitField0_ & 0x00000004) != 0);
+    }
+    /**
+     * <pre>
+     * The scorer version to delete. If not specified, deletes all versions.
+     * </pre>
+     *
+     * <code>optional int32 version = 3;</code>
+     * @return The version.
+     */
+    @java.lang.Override
+    public int getVersion() {
+      return version_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (((bitField0_ & 0x00000001) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, experimentId_);
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, name_);
+      }
+      if (((bitField0_ & 0x00000004) != 0)) {
+        output.writeInt32(3, version_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, experimentId_);
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, name_);
+      }
+      if (((bitField0_ & 0x00000004) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, version_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof org.mlflow.api.proto.Service.DeleteScorer)) {
+        return super.equals(obj);
+      }
+      org.mlflow.api.proto.Service.DeleteScorer other = (org.mlflow.api.proto.Service.DeleteScorer) obj;
+
+      if (hasExperimentId() != other.hasExperimentId()) return false;
+      if (hasExperimentId()) {
+        if (!getExperimentId()
+            .equals(other.getExperimentId())) return false;
+      }
+      if (hasName() != other.hasName()) return false;
+      if (hasName()) {
+        if (!getName()
+            .equals(other.getName())) return false;
+      }
+      if (hasVersion() != other.hasVersion()) return false;
+      if (hasVersion()) {
+        if (getVersion()
+            != other.getVersion()) return false;
+      }
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasExperimentId()) {
+        hash = (37 * hash) + EXPERIMENT_ID_FIELD_NUMBER;
+        hash = (53 * hash) + getExperimentId().hashCode();
+      }
+      if (hasName()) {
+        hash = (37 * hash) + NAME_FIELD_NUMBER;
+        hash = (53 * hash) + getName().hashCode();
+      }
+      if (hasVersion()) {
+        hash = (37 * hash) + VERSION_FIELD_NUMBER;
+        hash = (53 * hash) + getVersion();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static org.mlflow.api.proto.Service.DeleteScorer parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.mlflow.api.proto.Service.DeleteScorer parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.DeleteScorer parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.mlflow.api.proto.Service.DeleteScorer parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.DeleteScorer parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.mlflow.api.proto.Service.DeleteScorer parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.DeleteScorer parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.mlflow.api.proto.Service.DeleteScorer parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.DeleteScorer parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static org.mlflow.api.proto.Service.DeleteScorer parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.DeleteScorer parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.mlflow.api.proto.Service.DeleteScorer parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(org.mlflow.api.proto.Service.DeleteScorer prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * Delete a scorer for an experiment.
+     * </pre>
+     *
+     * Protobuf type {@code mlflow.DeleteScorer}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:mlflow.DeleteScorer)
+        org.mlflow.api.proto.Service.DeleteScorerOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_DeleteScorer_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_DeleteScorer_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.mlflow.api.proto.Service.DeleteScorer.class, org.mlflow.api.proto.Service.DeleteScorer.Builder.class);
+      }
+
+      // Construct using org.mlflow.api.proto.Service.DeleteScorer.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        experimentId_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        name_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        version_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_DeleteScorer_descriptor;
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.DeleteScorer getDefaultInstanceForType() {
+        return org.mlflow.api.proto.Service.DeleteScorer.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.DeleteScorer build() {
+        org.mlflow.api.proto.Service.DeleteScorer result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.DeleteScorer buildPartial() {
+        org.mlflow.api.proto.Service.DeleteScorer result = new org.mlflow.api.proto.Service.DeleteScorer(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.experimentId_ = experimentId_;
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.name_ = name_;
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.version_ = version_;
+          to_bitField0_ |= 0x00000004;
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.mlflow.api.proto.Service.DeleteScorer) {
+          return mergeFrom((org.mlflow.api.proto.Service.DeleteScorer)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(org.mlflow.api.proto.Service.DeleteScorer other) {
+        if (other == org.mlflow.api.proto.Service.DeleteScorer.getDefaultInstance()) return this;
+        if (other.hasExperimentId()) {
+          bitField0_ |= 0x00000001;
+          experimentId_ = other.experimentId_;
+          onChanged();
+        }
+        if (other.hasName()) {
+          bitField0_ |= 0x00000002;
+          name_ = other.name_;
+          onChanged();
+        }
+        if (other.hasVersion()) {
+          setVersion(other.getVersion());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        org.mlflow.api.proto.Service.DeleteScorer parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (org.mlflow.api.proto.Service.DeleteScorer) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object experimentId_ = "";
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return Whether the experimentId field is set.
+       */
+      public boolean hasExperimentId() {
+        return ((bitField0_ & 0x00000001) != 0);
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return The experimentId.
+       */
+      public java.lang.String getExperimentId() {
+        java.lang.Object ref = experimentId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            experimentId_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return The bytes for experimentId.
+       */
+      public com.google.protobuf.ByteString
+          getExperimentIdBytes() {
+        java.lang.Object ref = experimentId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          experimentId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @param value The experimentId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setExperimentId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        experimentId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearExperimentId() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        experimentId_ = getDefaultInstance().getExperimentId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional string experiment_id = 1;</code>
+       * @param value The bytes for experimentId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setExperimentIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        experimentId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object name_ = "";
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @return Whether the name field is set.
+       */
+      public boolean hasName() {
+        return ((bitField0_ & 0x00000002) != 0);
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @return The name.
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            name_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @return The bytes for name.
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @param value The name to set.
+       * @return This builder for chaining.
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearName() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string name = 2;</code>
+       * @param value The bytes for name to set.
+       * @return This builder for chaining.
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        name_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int version_ ;
+      /**
+       * <pre>
+       * The scorer version to delete. If not specified, deletes all versions.
+       * </pre>
+       *
+       * <code>optional int32 version = 3;</code>
+       * @return Whether the version field is set.
+       */
+      @java.lang.Override
+      public boolean hasVersion() {
+        return ((bitField0_ & 0x00000004) != 0);
+      }
+      /**
+       * <pre>
+       * The scorer version to delete. If not specified, deletes all versions.
+       * </pre>
+       *
+       * <code>optional int32 version = 3;</code>
+       * @return The version.
+       */
+      @java.lang.Override
+      public int getVersion() {
+        return version_;
+      }
+      /**
+       * <pre>
+       * The scorer version to delete. If not specified, deletes all versions.
+       * </pre>
+       *
+       * <code>optional int32 version = 3;</code>
+       * @param value The version to set.
+       * @return This builder for chaining.
+       */
+      public Builder setVersion(int value) {
+        bitField0_ |= 0x00000004;
+        version_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The scorer version to delete. If not specified, deletes all versions.
+       * </pre>
+       *
+       * <code>optional int32 version = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearVersion() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        version_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:mlflow.DeleteScorer)
+    }
+
+    // @@protoc_insertion_point(class_scope:mlflow.DeleteScorer)
+    private static final org.mlflow.api.proto.Service.DeleteScorer DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new org.mlflow.api.proto.Service.DeleteScorer();
+    }
+
+    public static org.mlflow.api.proto.Service.DeleteScorer getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<DeleteScorer>
+        PARSER = new com.google.protobuf.AbstractParser<DeleteScorer>() {
+      @java.lang.Override
+      public DeleteScorer parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new DeleteScorer(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<DeleteScorer> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<DeleteScorer> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public org.mlflow.api.proto.Service.DeleteScorer getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ScorerOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:mlflow.Scorer)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional int32 experiment_id = 1;</code>
+     * @return Whether the experimentId field is set.
+     */
+    boolean hasExperimentId();
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional int32 experiment_id = 1;</code>
+     * @return The experimentId.
+     */
+    int getExperimentId();
+
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string scorer_name = 2;</code>
+     * @return Whether the scorerName field is set.
+     */
+    boolean hasScorerName();
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string scorer_name = 2;</code>
+     * @return The scorerName.
+     */
+    java.lang.String getScorerName();
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string scorer_name = 2;</code>
+     * @return The bytes for scorerName.
+     */
+    com.google.protobuf.ByteString
+        getScorerNameBytes();
+
+    /**
+     * <pre>
+     * The scorer version.
+     * </pre>
+     *
+     * <code>optional int32 scorer_version = 3;</code>
+     * @return Whether the scorerVersion field is set.
+     */
+    boolean hasScorerVersion();
+    /**
+     * <pre>
+     * The scorer version.
+     * </pre>
+     *
+     * <code>optional int32 scorer_version = 3;</code>
+     * @return The scorerVersion.
+     */
+    int getScorerVersion();
+
+    /**
+     * <pre>
+     * The serialized scorer string.
+     * </pre>
+     *
+     * <code>optional string serialized_scorer = 4;</code>
+     * @return Whether the serializedScorer field is set.
+     */
+    boolean hasSerializedScorer();
+    /**
+     * <pre>
+     * The serialized scorer string.
+     * </pre>
+     *
+     * <code>optional string serialized_scorer = 4;</code>
+     * @return The serializedScorer.
+     */
+    java.lang.String getSerializedScorer();
+    /**
+     * <pre>
+     * The serialized scorer string.
+     * </pre>
+     *
+     * <code>optional string serialized_scorer = 4;</code>
+     * @return The bytes for serializedScorer.
+     */
+    com.google.protobuf.ByteString
+        getSerializedScorerBytes();
+
+    /**
+     * <pre>
+     * The creation time of the scorer version (in milliseconds since epoch).
+     * </pre>
+     *
+     * <code>optional int64 creation_time = 5;</code>
+     * @return Whether the creationTime field is set.
+     */
+    boolean hasCreationTime();
+    /**
+     * <pre>
+     * The creation time of the scorer version (in milliseconds since epoch).
+     * </pre>
+     *
+     * <code>optional int64 creation_time = 5;</code>
+     * @return The creationTime.
+     */
+    long getCreationTime();
+  }
+  /**
+   * <pre>
+   * Scorer entity representing a scorer in the database.
+   * </pre>
+   *
+   * Protobuf type {@code mlflow.Scorer}
+   */
+  public static final class Scorer extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:mlflow.Scorer)
+      ScorerOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Scorer.newBuilder() to construct.
+    private Scorer(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Scorer() {
+      scorerName_ = "";
+      serializedScorer_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Scorer();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Scorer(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+              bitField0_ |= 0x00000001;
+              experimentId_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              scorerName_ = bs;
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              scorerVersion_ = input.readInt32();
+              break;
+            }
+            case 34: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000008;
+              serializedScorer_ = bs;
+              break;
+            }
+            case 40: {
+              bitField0_ |= 0x00000010;
+              creationTime_ = input.readInt64();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.mlflow.api.proto.Service.internal_static_mlflow_Scorer_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.mlflow.api.proto.Service.internal_static_mlflow_Scorer_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              org.mlflow.api.proto.Service.Scorer.class, org.mlflow.api.proto.Service.Scorer.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int EXPERIMENT_ID_FIELD_NUMBER = 1;
+    private int experimentId_;
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional int32 experiment_id = 1;</code>
+     * @return Whether the experimentId field is set.
+     */
+    @java.lang.Override
+    public boolean hasExperimentId() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+    /**
+     * <pre>
+     * The experiment ID.
+     * </pre>
+     *
+     * <code>optional int32 experiment_id = 1;</code>
+     * @return The experimentId.
+     */
+    @java.lang.Override
+    public int getExperimentId() {
+      return experimentId_;
+    }
+
+    public static final int SCORER_NAME_FIELD_NUMBER = 2;
+    private volatile java.lang.Object scorerName_;
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string scorer_name = 2;</code>
+     * @return Whether the scorerName field is set.
+     */
+    @java.lang.Override
+    public boolean hasScorerName() {
+      return ((bitField0_ & 0x00000002) != 0);
+    }
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string scorer_name = 2;</code>
+     * @return The scorerName.
+     */
+    @java.lang.Override
+    public java.lang.String getScorerName() {
+      java.lang.Object ref = scorerName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          scorerName_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * The scorer name.
+     * </pre>
+     *
+     * <code>optional string scorer_name = 2;</code>
+     * @return The bytes for scorerName.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getScorerNameBytes() {
+      java.lang.Object ref = scorerName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        scorerName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int SCORER_VERSION_FIELD_NUMBER = 3;
+    private int scorerVersion_;
+    /**
+     * <pre>
+     * The scorer version.
+     * </pre>
+     *
+     * <code>optional int32 scorer_version = 3;</code>
+     * @return Whether the scorerVersion field is set.
+     */
+    @java.lang.Override
+    public boolean hasScorerVersion() {
+      return ((bitField0_ & 0x00000004) != 0);
+    }
+    /**
+     * <pre>
+     * The scorer version.
+     * </pre>
+     *
+     * <code>optional int32 scorer_version = 3;</code>
+     * @return The scorerVersion.
+     */
+    @java.lang.Override
+    public int getScorerVersion() {
+      return scorerVersion_;
+    }
+
+    public static final int SERIALIZED_SCORER_FIELD_NUMBER = 4;
+    private volatile java.lang.Object serializedScorer_;
+    /**
+     * <pre>
+     * The serialized scorer string.
+     * </pre>
+     *
+     * <code>optional string serialized_scorer = 4;</code>
+     * @return Whether the serializedScorer field is set.
+     */
+    @java.lang.Override
+    public boolean hasSerializedScorer() {
+      return ((bitField0_ & 0x00000008) != 0);
+    }
+    /**
+     * <pre>
+     * The serialized scorer string.
+     * </pre>
+     *
+     * <code>optional string serialized_scorer = 4;</code>
+     * @return The serializedScorer.
+     */
+    @java.lang.Override
+    public java.lang.String getSerializedScorer() {
+      java.lang.Object ref = serializedScorer_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          serializedScorer_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * The serialized scorer string.
+     * </pre>
+     *
+     * <code>optional string serialized_scorer = 4;</code>
+     * @return The bytes for serializedScorer.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getSerializedScorerBytes() {
+      java.lang.Object ref = serializedScorer_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        serializedScorer_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int CREATION_TIME_FIELD_NUMBER = 5;
+    private long creationTime_;
+    /**
+     * <pre>
+     * The creation time of the scorer version (in milliseconds since epoch).
+     * </pre>
+     *
+     * <code>optional int64 creation_time = 5;</code>
+     * @return Whether the creationTime field is set.
+     */
+    @java.lang.Override
+    public boolean hasCreationTime() {
+      return ((bitField0_ & 0x00000010) != 0);
+    }
+    /**
+     * <pre>
+     * The creation time of the scorer version (in milliseconds since epoch).
+     * </pre>
+     *
+     * <code>optional int64 creation_time = 5;</code>
+     * @return The creationTime.
+     */
+    @java.lang.Override
+    public long getCreationTime() {
+      return creationTime_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (((bitField0_ & 0x00000001) != 0)) {
+        output.writeInt32(1, experimentId_);
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, scorerName_);
+      }
+      if (((bitField0_ & 0x00000004) != 0)) {
+        output.writeInt32(3, scorerVersion_);
+      }
+      if (((bitField0_ & 0x00000008) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, serializedScorer_);
+      }
+      if (((bitField0_ & 0x00000010) != 0)) {
+        output.writeInt64(5, creationTime_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, experimentId_);
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, scorerName_);
+      }
+      if (((bitField0_ & 0x00000004) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, scorerVersion_);
+      }
+      if (((bitField0_ & 0x00000008) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, serializedScorer_);
+      }
+      if (((bitField0_ & 0x00000010) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(5, creationTime_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof org.mlflow.api.proto.Service.Scorer)) {
+        return super.equals(obj);
+      }
+      org.mlflow.api.proto.Service.Scorer other = (org.mlflow.api.proto.Service.Scorer) obj;
+
+      if (hasExperimentId() != other.hasExperimentId()) return false;
+      if (hasExperimentId()) {
+        if (getExperimentId()
+            != other.getExperimentId()) return false;
+      }
+      if (hasScorerName() != other.hasScorerName()) return false;
+      if (hasScorerName()) {
+        if (!getScorerName()
+            .equals(other.getScorerName())) return false;
+      }
+      if (hasScorerVersion() != other.hasScorerVersion()) return false;
+      if (hasScorerVersion()) {
+        if (getScorerVersion()
+            != other.getScorerVersion()) return false;
+      }
+      if (hasSerializedScorer() != other.hasSerializedScorer()) return false;
+      if (hasSerializedScorer()) {
+        if (!getSerializedScorer()
+            .equals(other.getSerializedScorer())) return false;
+      }
+      if (hasCreationTime() != other.hasCreationTime()) return false;
+      if (hasCreationTime()) {
+        if (getCreationTime()
+            != other.getCreationTime()) return false;
+      }
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasExperimentId()) {
+        hash = (37 * hash) + EXPERIMENT_ID_FIELD_NUMBER;
+        hash = (53 * hash) + getExperimentId();
+      }
+      if (hasScorerName()) {
+        hash = (37 * hash) + SCORER_NAME_FIELD_NUMBER;
+        hash = (53 * hash) + getScorerName().hashCode();
+      }
+      if (hasScorerVersion()) {
+        hash = (37 * hash) + SCORER_VERSION_FIELD_NUMBER;
+        hash = (53 * hash) + getScorerVersion();
+      }
+      if (hasSerializedScorer()) {
+        hash = (37 * hash) + SERIALIZED_SCORER_FIELD_NUMBER;
+        hash = (53 * hash) + getSerializedScorer().hashCode();
+      }
+      if (hasCreationTime()) {
+        hash = (37 * hash) + CREATION_TIME_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+            getCreationTime());
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static org.mlflow.api.proto.Service.Scorer parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.mlflow.api.proto.Service.Scorer parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.Scorer parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.mlflow.api.proto.Service.Scorer parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.Scorer parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.mlflow.api.proto.Service.Scorer parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.Scorer parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.mlflow.api.proto.Service.Scorer parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.Scorer parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static org.mlflow.api.proto.Service.Scorer parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.mlflow.api.proto.Service.Scorer parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.mlflow.api.proto.Service.Scorer parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(org.mlflow.api.proto.Service.Scorer prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * Scorer entity representing a scorer in the database.
+     * </pre>
+     *
+     * Protobuf type {@code mlflow.Scorer}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:mlflow.Scorer)
+        org.mlflow.api.proto.Service.ScorerOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_Scorer_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_Scorer_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.mlflow.api.proto.Service.Scorer.class, org.mlflow.api.proto.Service.Scorer.Builder.class);
+      }
+
+      // Construct using org.mlflow.api.proto.Service.Scorer.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        experimentId_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        scorerName_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        scorerVersion_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        serializedScorer_ = "";
+        bitField0_ = (bitField0_ & ~0x00000008);
+        creationTime_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000010);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.mlflow.api.proto.Service.internal_static_mlflow_Scorer_descriptor;
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.Scorer getDefaultInstanceForType() {
+        return org.mlflow.api.proto.Service.Scorer.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.Scorer build() {
+        org.mlflow.api.proto.Service.Scorer result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public org.mlflow.api.proto.Service.Scorer buildPartial() {
+        org.mlflow.api.proto.Service.Scorer result = new org.mlflow.api.proto.Service.Scorer(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.experimentId_ = experimentId_;
+          to_bitField0_ |= 0x00000001;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.scorerName_ = scorerName_;
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.scorerVersion_ = scorerVersion_;
+          to_bitField0_ |= 0x00000004;
+        }
+        if (((from_bitField0_ & 0x00000008) != 0)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.serializedScorer_ = serializedScorer_;
+        if (((from_bitField0_ & 0x00000010) != 0)) {
+          result.creationTime_ = creationTime_;
+          to_bitField0_ |= 0x00000010;
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.mlflow.api.proto.Service.Scorer) {
+          return mergeFrom((org.mlflow.api.proto.Service.Scorer)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(org.mlflow.api.proto.Service.Scorer other) {
+        if (other == org.mlflow.api.proto.Service.Scorer.getDefaultInstance()) return this;
+        if (other.hasExperimentId()) {
+          setExperimentId(other.getExperimentId());
+        }
+        if (other.hasScorerName()) {
+          bitField0_ |= 0x00000002;
+          scorerName_ = other.scorerName_;
+          onChanged();
+        }
+        if (other.hasScorerVersion()) {
+          setScorerVersion(other.getScorerVersion());
+        }
+        if (other.hasSerializedScorer()) {
+          bitField0_ |= 0x00000008;
+          serializedScorer_ = other.serializedScorer_;
+          onChanged();
+        }
+        if (other.hasCreationTime()) {
+          setCreationTime(other.getCreationTime());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        org.mlflow.api.proto.Service.Scorer parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (org.mlflow.api.proto.Service.Scorer) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private int experimentId_ ;
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional int32 experiment_id = 1;</code>
+       * @return Whether the experimentId field is set.
+       */
+      @java.lang.Override
+      public boolean hasExperimentId() {
+        return ((bitField0_ & 0x00000001) != 0);
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional int32 experiment_id = 1;</code>
+       * @return The experimentId.
+       */
+      @java.lang.Override
+      public int getExperimentId() {
+        return experimentId_;
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional int32 experiment_id = 1;</code>
+       * @param value The experimentId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setExperimentId(int value) {
+        bitField0_ |= 0x00000001;
+        experimentId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The experiment ID.
+       * </pre>
+       *
+       * <code>optional int32 experiment_id = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearExperimentId() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        experimentId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object scorerName_ = "";
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string scorer_name = 2;</code>
+       * @return Whether the scorerName field is set.
+       */
+      public boolean hasScorerName() {
+        return ((bitField0_ & 0x00000002) != 0);
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string scorer_name = 2;</code>
+       * @return The scorerName.
+       */
+      public java.lang.String getScorerName() {
+        java.lang.Object ref = scorerName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            scorerName_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string scorer_name = 2;</code>
+       * @return The bytes for scorerName.
+       */
+      public com.google.protobuf.ByteString
+          getScorerNameBytes() {
+        java.lang.Object ref = scorerName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          scorerName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string scorer_name = 2;</code>
+       * @param value The scorerName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setScorerName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        scorerName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string scorer_name = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearScorerName() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        scorerName_ = getDefaultInstance().getScorerName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The scorer name.
+       * </pre>
+       *
+       * <code>optional string scorer_name = 2;</code>
+       * @param value The bytes for scorerName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setScorerNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        scorerName_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int scorerVersion_ ;
+      /**
+       * <pre>
+       * The scorer version.
+       * </pre>
+       *
+       * <code>optional int32 scorer_version = 3;</code>
+       * @return Whether the scorerVersion field is set.
+       */
+      @java.lang.Override
+      public boolean hasScorerVersion() {
+        return ((bitField0_ & 0x00000004) != 0);
+      }
+      /**
+       * <pre>
+       * The scorer version.
+       * </pre>
+       *
+       * <code>optional int32 scorer_version = 3;</code>
+       * @return The scorerVersion.
+       */
+      @java.lang.Override
+      public int getScorerVersion() {
+        return scorerVersion_;
+      }
+      /**
+       * <pre>
+       * The scorer version.
+       * </pre>
+       *
+       * <code>optional int32 scorer_version = 3;</code>
+       * @param value The scorerVersion to set.
+       * @return This builder for chaining.
+       */
+      public Builder setScorerVersion(int value) {
+        bitField0_ |= 0x00000004;
+        scorerVersion_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The scorer version.
+       * </pre>
+       *
+       * <code>optional int32 scorer_version = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearScorerVersion() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        scorerVersion_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object serializedScorer_ = "";
+      /**
+       * <pre>
+       * The serialized scorer string.
+       * </pre>
+       *
+       * <code>optional string serialized_scorer = 4;</code>
+       * @return Whether the serializedScorer field is set.
+       */
+      public boolean hasSerializedScorer() {
+        return ((bitField0_ & 0x00000008) != 0);
+      }
+      /**
+       * <pre>
+       * The serialized scorer string.
+       * </pre>
+       *
+       * <code>optional string serialized_scorer = 4;</code>
+       * @return The serializedScorer.
+       */
+      public java.lang.String getSerializedScorer() {
+        java.lang.Object ref = serializedScorer_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            serializedScorer_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The serialized scorer string.
+       * </pre>
+       *
+       * <code>optional string serialized_scorer = 4;</code>
+       * @return The bytes for serializedScorer.
+       */
+      public com.google.protobuf.ByteString
+          getSerializedScorerBytes() {
+        java.lang.Object ref = serializedScorer_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          serializedScorer_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The serialized scorer string.
+       * </pre>
+       *
+       * <code>optional string serialized_scorer = 4;</code>
+       * @param value The serializedScorer to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSerializedScorer(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        serializedScorer_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The serialized scorer string.
+       * </pre>
+       *
+       * <code>optional string serialized_scorer = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearSerializedScorer() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        serializedScorer_ = getDefaultInstance().getSerializedScorer();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The serialized scorer string.
+       * </pre>
+       *
+       * <code>optional string serialized_scorer = 4;</code>
+       * @param value The bytes for serializedScorer to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSerializedScorerBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        serializedScorer_ = value;
+        onChanged();
+        return this;
+      }
+
+      private long creationTime_ ;
+      /**
+       * <pre>
+       * The creation time of the scorer version (in milliseconds since epoch).
+       * </pre>
+       *
+       * <code>optional int64 creation_time = 5;</code>
+       * @return Whether the creationTime field is set.
+       */
+      @java.lang.Override
+      public boolean hasCreationTime() {
+        return ((bitField0_ & 0x00000010) != 0);
+      }
+      /**
+       * <pre>
+       * The creation time of the scorer version (in milliseconds since epoch).
+       * </pre>
+       *
+       * <code>optional int64 creation_time = 5;</code>
+       * @return The creationTime.
+       */
+      @java.lang.Override
+      public long getCreationTime() {
+        return creationTime_;
+      }
+      /**
+       * <pre>
+       * The creation time of the scorer version (in milliseconds since epoch).
+       * </pre>
+       *
+       * <code>optional int64 creation_time = 5;</code>
+       * @param value The creationTime to set.
+       * @return This builder for chaining.
+       */
+      public Builder setCreationTime(long value) {
+        bitField0_ |= 0x00000010;
+        creationTime_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The creation time of the scorer version (in milliseconds since epoch).
+       * </pre>
+       *
+       * <code>optional int64 creation_time = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearCreationTime() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        creationTime_ = 0L;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:mlflow.Scorer)
+    }
+
+    // @@protoc_insertion_point(class_scope:mlflow.Scorer)
+    private static final org.mlflow.api.proto.Service.Scorer DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new org.mlflow.api.proto.Service.Scorer();
+    }
+
+    public static org.mlflow.api.proto.Service.Scorer getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<Scorer>
+        PARSER = new com.google.protobuf.AbstractParser<Scorer>() {
+      @java.lang.Override
+      public Scorer parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Scorer(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Scorer> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Scorer> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public org.mlflow.api.proto.Service.Scorer getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_mlflow_Metric_descriptor;
   private static final 
@@ -150940,6 +160431,61 @@ public final class Service {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_mlflow_SearchTracesV3_Response_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_mlflow_RegisterScorer_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_mlflow_RegisterScorer_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_mlflow_RegisterScorer_Response_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_mlflow_RegisterScorer_Response_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_mlflow_ListScorers_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_mlflow_ListScorers_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_mlflow_ListScorers_Response_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_mlflow_ListScorers_Response_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_mlflow_ListScorerVersions_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_mlflow_ListScorerVersions_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_mlflow_ListScorerVersions_Response_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_mlflow_ListScorerVersions_Response_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_mlflow_GetScorer_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_mlflow_GetScorer_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_mlflow_GetScorer_Response_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_mlflow_GetScorer_Response_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_mlflow_DeleteScorer_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_mlflow_DeleteScorer_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_mlflow_DeleteScorer_Response_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_mlflow_DeleteScorer_Response_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_mlflow_Scorer_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_mlflow_Scorer_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -151302,226 +160848,264 @@ public final class Service {
       "\030\005 \001(\t\032H\n\010Response\022#\n\006traces\030\001 \003(\0132\023.mlf" +
       "low.TraceInfoV3\022\027\n\017next_page_token\030\002 \001(\t" +
       ":+\342?(\n&com.databricks.rpc.RPC[$this.Resp" +
-      "onse]*6\n\010ViewType\022\017\n\013ACTIVE_ONLY\020\001\022\020\n\014DE" +
-      "LETED_ONLY\020\002\022\007\n\003ALL\020\003*I\n\nSourceType\022\014\n\010N" +
-      "OTEBOOK\020\001\022\007\n\003JOB\020\002\022\013\n\007PROJECT\020\003\022\t\n\005LOCAL" +
-      "\020\004\022\014\n\007UNKNOWN\020\350\007*M\n\tRunStatus\022\013\n\007RUNNING" +
-      "\020\001\022\r\n\tSCHEDULED\020\002\022\014\n\010FINISHED\020\003\022\n\n\006FAILE" +
-      "D\020\004\022\n\n\006KILLED\020\005*O\n\013TraceStatus\022\034\n\030TRACE_" +
-      "STATUS_UNSPECIFIED\020\000\022\006\n\002OK\020\001\022\t\n\005ERROR\020\002\022" +
-      "\017\n\013IN_PROGRESS\020\003*\212\001\n\021LoggedModelStatus\022#" +
-      "\n\037LOGGED_MODEL_STATUS_UNSPECIFIED\020\000\022\030\n\024L" +
-      "OGGED_MODEL_PENDING\020\001\022\026\n\022LOGGED_MODEL_RE" +
-      "ADY\020\002\022\036\n\032LOGGED_MODEL_UPLOAD_FAILED\020\0032\210A" +
-      "\n\rMlflowService\022\246\001\n\023getExperimentByName\022" +
-      "\033.mlflow.GetExperimentByName\032$.mlflow.Ge" +
-      "tExperimentByName.Response\"L\362\206\031H\n,\n\003GET\022" +
-      "\037/mlflow/experiments/get-by-name\032\004\010\002\020\000\020\001" +
-      "*\026Get Experiment By Name\022\224\001\n\020createExper" +
-      "iment\022\030.mlflow.CreateExperiment\032!.mlflow" +
-      ".CreateExperiment.Response\"C\362\206\031?\n(\n\004POST" +
-      "\022\032/mlflow/experiments/create\032\004\010\002\020\000\020\001*\021Cr" +
-      "eate Experiment\022\301\001\n\021searchExperiments\022\031." +
-      "mlflow.SearchExperiments\032\".mlflow.Search" +
-      "Experiments.Response\"m\362\206\031i\n(\n\004POST\022\032/mlf" +
-      "low/experiments/search\032\004\010\002\020\000\n\'\n\003GET\022\032/ml" +
-      "flow/experiments/search\032\004\010\002\020\000\020\001*\022Search " +
-      "Experiments\022\210\001\n\rgetExperiment\022\025.mlflow.G" +
-      "etExperiment\032\036.mlflow.GetExperiment.Resp" +
-      "onse\"@\362\206\0318\n$\n\003GET\022\027/mlflow/experiments/g" +
-      "et\032\004\010\002\020\000\020\001*\016Get Experiment\272\214\031\000\022\224\001\n\020delet" +
-      "eExperiment\022\030.mlflow.DeleteExperiment\032!." +
-      "mlflow.DeleteExperiment.Response\"C\362\206\031?\n(" +
-      "\n\004POST\022\032/mlflow/experiments/delete\032\004\010\002\020\000" +
-      "\020\001*\021Delete Experiment\022\231\001\n\021restoreExperim" +
-      "ent\022\031.mlflow.RestoreExperiment\032\".mlflow." +
-      "RestoreExperiment.Response\"E\362\206\031A\n)\n\004POST" +
-      "\022\033/mlflow/experiments/restore\032\004\010\002\020\000\020\001*\022R" +
-      "estore Experiment\022\224\001\n\020updateExperiment\022\030" +
-      ".mlflow.UpdateExperiment\032!.mlflow.Update" +
-      "Experiment.Response\"C\362\206\031?\n(\n\004POST\022\032/mlfl" +
-      "ow/experiments/update\032\004\010\002\020\000\020\001*\021Update Ex" +
-      "periment\022q\n\tcreateRun\022\021.mlflow.CreateRun" +
-      "\032\032.mlflow.CreateRun.Response\"5\362\206\0311\n!\n\004PO" +
-      "ST\022\023/mlflow/runs/create\032\004\010\002\020\000\020\001*\nCreate " +
-      "Run\022q\n\tupdateRun\022\021.mlflow.UpdateRun\032\032.ml" +
-      "flow.UpdateRun.Response\"5\362\206\0311\n!\n\004POST\022\023/" +
-      "mlflow/runs/update\032\004\010\002\020\000\020\001*\nUpdate Run\022q" +
-      "\n\tdeleteRun\022\021.mlflow.DeleteRun\032\032.mlflow." +
-      "DeleteRun.Response\"5\362\206\0311\n!\n\004POST\022\023/mlflo",
-      "w/runs/delete\032\004\010\002\020\000\020\001*\nDelete Run\022v\n\nres" +
-      "toreRun\022\022.mlflow.RestoreRun\032\033.mlflow.Res" +
-      "toreRun.Response\"7\362\206\0313\n\"\n\004POST\022\024/mlflow/" +
-      "runs/restore\032\004\010\002\020\000\020\001*\013Restore Run\022u\n\tlog" +
-      "Metric\022\021.mlflow.LogMetric\032\032.mlflow.LogMe" +
-      "tric.Response\"9\362\206\0315\n%\n\004POST\022\027/mlflow/run" +
-      "s/log-metric\032\004\010\002\020\000\020\001*\nLog Metric\022t\n\010logP" +
-      "aram\022\020.mlflow.LogParam\032\031.mlflow.LogParam" +
-      ".Response\";\362\206\0317\n(\n\004POST\022\032/mlflow/runs/lo" +
-      "g-parameter\032\004\010\002\020\000\020\001*\tLog Param\022\241\001\n\020setEx" +
-      "perimentTag\022\030.mlflow.SetExperimentTag\032!." +
-      "mlflow.SetExperimentTag.Response\"P\362\206\031L\n4" +
-      "\n\004POST\022&/mlflow/experiments/set-experime" +
-      "nt-tag\032\004\010\002\020\000\020\001*\022Set Experiment Tag\022\260\001\n\023d" +
-      "eleteExperimentTag\022\033.mlflow.DeleteExperi" +
-      "mentTag\032$.mlflow.DeleteExperimentTag.Res" +
-      "ponse\"V\362\206\031R\n7\n\004POST\022)/mlflow/experiments" +
-      "/delete-experiment-tag\032\004\010\002\020\000\020\001*\025Delete E" +
-      "xperiment Tag\022f\n\006setTag\022\016.mlflow.SetTag\032" +
-      "\027.mlflow.SetTag.Response\"3\362\206\031/\n\"\n\004POST\022\024" +
-      "/mlflow/runs/set-tag\032\004\010\002\020\000\020\001*\007Set Tag\022\210\001" +
-      "\n\013setTraceTag\022\023.mlflow.SetTraceTag\032\034.mlf" +
-      "low.SetTraceTag.Response\"F\362\206\031B\n/\n\005PATCH\022" +
-      " /mlflow/traces/{request_id}/tags\032\004\010\002\020\000\020" +
-      "\003*\rSet Trace Tag\022\217\001\n\rsetTraceTagV3\022\025.mlf" +
-      "low.SetTraceTagV3\032\036.mlflow.SetTraceTagV3" +
-      ".Response\"G\362\206\031C\n-\n\005PATCH\022\036/mlflow/traces" +
-      "/{trace_id}/tags\032\004\010\003\020\000\020\003*\020Set Trace Tag " +
-      "V3\022\225\001\n\016deleteTraceTag\022\026.mlflow.DeleteTra" +
-      "ceTag\032\037.mlflow.DeleteTraceTag.Response\"J" +
-      "\362\206\031F\n0\n\006DELETE\022 /mlflow/traces/{request_" +
-      "id}/tags\032\004\010\002\020\000\020\003*\020Delete Trace Tag\022\234\001\n\020d" +
-      "eleteTraceTagV3\022\030.mlflow.DeleteTraceTagV" +
-      "3\032!.mlflow.DeleteTraceTagV3.Response\"K\362\206" +
-      "\031G\n.\n\006DELETE\022\036/mlflow/traces/{trace_id}/" +
-      "tags\032\004\010\003\020\000\020\003*\023Delete Trace Tag V3\022u\n\tdel" +
-      "eteTag\022\021.mlflow.DeleteTag\032\032.mlflow.Delet" +
-      "eTag.Response\"9\362\206\0315\n%\n\004POST\022\027/mlflow/run" +
-      "s/delete-tag\032\004\010\002\020\000\020\001*\nDelete Tag\022e\n\006getR" +
-      "un\022\016.mlflow.GetRun\032\027.mlflow.GetRun.Respo" +
-      "nse\"2\362\206\031*\n\035\n\003GET\022\020/mlflow/runs/get\032\004\010\002\020\000" +
-      "\020\001*\007Get Run\272\214\031\000\022y\n\nsearchRuns\022\022.mlflow.S" +
-      "earchRuns\032\033.mlflow.SearchRuns.Response\":" +
-      "\362\206\0312\n!\n\004POST\022\023/mlflow/runs/search\032\004\010\002\020\000\020" +
-      "\001*\013Search Runs\272\214\031\000\022\207\001\n\rlistArtifacts\022\025.m" +
-      "lflow.ListArtifacts\032\036.mlflow.ListArtifac" +
-      "ts.Response\"?\362\206\0317\n#\n\003GET\022\026/mlflow/artifa" +
-      "cts/list\032\004\010\002\020\000\020\001*\016List Artifacts\272\214\031\000\022\225\001\n" +
-      "\020getMetricHistory\022\030.mlflow.GetMetricHist" +
-      "ory\032!.mlflow.GetMetricHistory.Response\"D" +
-      "\362\206\031@\n(\n\003GET\022\033/mlflow/metrics/get-history" +
-      "\032\004\010\002\020\000\020\001*\022Get Metric History\022\267\001\n\034getMetr" +
-      "icHistoryBulkInterval\022$.mlflow.GetMetric" +
-      "HistoryBulkInterval\032-.mlflow.GetMetricHi" +
-      "storyBulkInterval.Response\"B\362\206\031:\n6\n\003GET\022" +
-      ")/mlflow/metrics/get-history-bulk-interv" +
-      "al\032\004\010\002\020\013\020\003\272\214\031\000\022p\n\010logBatch\022\020.mlflow.LogB" +
-      "atch\032\031.mlflow.LogBatch.Response\"7\362\206\0313\n$\n" +
-      "\004POST\022\026/mlflow/runs/log-batch\032\004\010\002\020\000\020\001*\tL" +
-      "og Batch\022p\n\010logModel\022\020.mlflow.LogModel\032\031" +
-      ".mlflow.LogModel.Response\"7\362\206\0313\n$\n\004POST\022" +
-      "\026/mlflow/runs/log-model\032\004\010\002\020\000\020\001*\tLog Mod" +
-      "el\022u\n\tlogInputs\022\021.mlflow.LogInputs\032\032.mlf" +
-      "low.LogInputs.Response\"9\362\206\0315\n%\n\004POST\022\027/m" +
-      "lflow/runs/log-inputs\032\004\010\002\020\000\020\001*\nLog Input" +
-      "s\022v\n\nlogOutputs\022\022.mlflow.LogOutputs\032\033.ml" +
-      "flow.LogOutputs.Response\"7\362\206\0313\n\"\n\004POST\022\024" +
-      "/mlflow/runs/outputs\032\004\010\002\020\000\020\003*\013Log Output" +
-      "s\022\207\001\n\016searchDatasets\022\026.mlflow.SearchData" +
-      "sets\032\037.mlflow.SearchDatasets.Response\"<\362" +
-      "\206\0314\n0\n\004POST\022\"mlflow/experiments/search-d" +
-      "atasets\032\004\010\002\020\000\020\003\272\214\031\000\022p\n\nstartTrace\022\022.mlfl" +
-      "ow.StartTrace\032\033.mlflow.StartTrace.Respon" +
-      "se\"1\362\206\031-\n\034\n\004POST\022\016/mlflow/traces\032\004\010\002\020\000\020\003" +
-      "*\013Start Trace\022v\n\010endTrace\022\020.mlflow.EndTr" +
-      "ace\032\031.mlflow.EndTrace.Response\"=\362\206\0319\n*\n\005" +
-      "PATCH\022\033/mlflow/traces/{request_id}\032\004\010\002\020\000" +
-      "\020\003*\tEnd Trace\022\211\001\n\014getTraceInfo\022\024.mlflow." +
-      "GetTraceInfo\032\035.mlflow.GetTraceInfo.Respo" +
-      "nse\"D\362\206\031@\n-\n\003GET\022 /mlflow/traces/{reques" +
-      "t_id}/info\032\004\010\002\020\000\020\003*\rGet TraceInfo\022\213\001\n\016ge" +
-      "tTraceInfoV3\022\026.mlflow.GetTraceInfoV3\032\037.m" +
-      "lflow.GetTraceInfoV3.Response\"@\362\206\031<\n&\n\003G" +
-      "ET\022\031/mlflow/traces/{trace_id}\032\004\010\003\020\000\020\003*\020G" +
-      "et TraceInfo v3\022w\n\014searchTraces\022\024.mlflow" +
-      ".SearchTraces\032\035.mlflow.SearchTraces.Resp" +
-      "onse\"2\362\206\031.\n\033\n\003GET\022\016/mlflow/traces\032\004\010\002\020\000\020" +
-      "\003*\rSearch Traces\022\210\001\n\016searchTracesV3\022\026.ml" +
-      "flow.SearchTracesV3\032\037.mlflow.SearchTrace" +
-      "sV3.Response\"=\362\206\0319\n#\n\004POST\022\025/mlflow/trac" +
-      "es/search\032\004\010\003\020\000\020\003*\020Search Traces V3\022i\n\014s" +
-      "tartTraceV3\022\024.mlflow.StartTraceV3\032\035.mlfl" +
-      "ow.StartTraceV3.Response\"$\362\206\031 \n\034\n\004POST\022\016" +
-      "/mlflow/traces\032\004\010\003\020\000\020\003\022\222\001\n\017linkTracesToR" +
-      "un\022\027.mlflow.LinkTracesToRun\032 .mlflow.Lin" +
-      "kTracesToRun.Response\"D\362\206\031@\n(\n\004POST\022\032/ml" +
-      "flow/traces/link-to-run\032\004\010\002\020\000\020\003*\022Link Tr" +
-      "aces to Run\022\242\001\n\031searchUnifiedTraceHandle" +
-      "r\022\033.mlflow.SearchUnifiedTraces\032$.mlflow." +
-      "SearchUnifiedTraces.Response\"B\362\206\031>\n#\n\003GE" +
-      "T\022\026/mlflow/unified-traces\032\004\010\002\020\000\020\003*\025Searc" +
-      "h Unified Traces\022\257\001\n\025getOnlineTraceDetai" +
-      "ls\022\035.mlflow.GetOnlineTraceDetails\032&.mlfl" +
-      "ow.GetOnlineTraceDetails.Response\"O\362\206\031K\n" +
-      "-\n\003GET\022 /mlflow/get-online-trace-details" +
-      "\032\004\010\002\020\000\020\003*\030Get Online Trace Details\022\206\001\n\014d" +
-      "eleteTraces\022\024.mlflow.DeleteTraces\032\035.mlfl" +
-      "ow.DeleteTraces.Response\"A\362\206\031=\n*\n\004POST\022\034" +
-      "/mlflow/traces/delete-traces\032\004\010\002\020\000\020\003*\rDe" +
-      "lete Traces\022\217\001\n\016deleteTracesV3\022\026.mlflow." +
-      "DeleteTracesV3\032\037.mlflow.DeleteTracesV3.R" +
-      "esponse\"D\362\206\031@\n*\n\004POST\022\034/mlflow/traces/de" +
-      "lete-traces\032\004\010\003\020\000\020\003*\020Delete Traces V3\022\224\001" +
-      "\n\021createLoggedModel\022\031.mlflow.CreateLogge" +
-      "dModel\032\".mlflow.CreateLoggedModel.Respon" +
-      "se\"@\362\206\031<\n#\n\004POST\022\025/mlflow/logged-models\032" +
-      "\004\010\002\020\000\020\003*\023Create Logged Model\022\250\001\n\023finaliz" +
-      "eLoggedModel\022\033.mlflow.FinalizeLoggedMode" +
-      "l\032$.mlflow.FinalizeLoggedModel.Response\"" +
-      "N\362\206\031J\n/\n\005PATCH\022 /mlflow/logged-models/{m" +
-      "odel_id}\032\004\010\002\020\000\020\003*\025Finalize Logged Model\022" +
-      "\222\001\n\016getLoggedModel\022\026.mlflow.GetLoggedMod" +
-      "el\032\037.mlflow.GetLoggedModel.Response\"G\362\206\031" +
-      "C\n-\n\003GET\022 /mlflow/logged-models/{model_i" +
-      "d}\032\004\010\002\020\000\020\003*\020Get Logged Model\022\243\001\n\021deleteL" +
-      "oggedModel\022\031.mlflow.DeleteLoggedModel\032\"." +
-      "mlflow.DeleteLoggedModel.Response\"O\362\206\031K\n" +
-      "0\n\006DELETE\022 /mlflow/logged-models/{model_" +
-      "id}\032\004\010\002\020\000\020\003*\025Delete a Logged Model\022\236\001\n\022s" +
-      "earchLoggedModels\022\032.mlflow.SearchLoggedM" +
-      "odels\032#.mlflow.SearchLoggedModels.Respon" +
-      "se\"G\362\206\031C\n*\n\004POST\022\034/mlflow/logged-models/" +
-      "search\032\004\010\002\020\000\020\003*\023Search LoggedModels\022\251\001\n\022" +
-      "setLoggedModelTags\022\032.mlflow.SetLoggedMod" +
-      "elTags\032#.mlflow.SetLoggedModelTags.Respo" +
-      "nse\"R\362\206\031N\n4\n\005PATCH\022%/mlflow/logged-model" +
-      "s/{model_id}/tags\032\004\010\002\020\000\020\003*\024Set Logged Mo" +
-      "del Tag\022\275\001\n\024deleteLoggedModelTag\022\034.mlflo" +
-      "w.DeleteLoggedModelTag\032%.mlflow.DeleteLo" +
-      "ggedModelTag.Response\"`\362\206\031\\\n?\n\006DELETE\022//" +
-      "mlflow/logged-models/{model_id}/tags/{ta" +
-      "g_key}\032\004\010\002\020\000\020\003*\027Delete Logged Model Tag\022" +
-      "\326\001\n\030listLoggedModelArtifacts\022 .mlflow.Li" +
-      "stLoggedModelArtifacts\032).mlflow.ListLogg" +
-      "edModelArtifacts.Response\"m\362\206\031i\nC\n\003GET\0226" +
-      "/mlflow/logged-models/{model_id}/artifac" +
-      "ts/directories\032\004\010\002\020\000\020\003* List Artifacts f" +
-      "or Logged Models\022\301\001\n\024LogLoggedModelParam" +
-      "s\022#.mlflow.LogLoggedModelParamsRequest\032," +
-      ".mlflow.LogLoggedModelParamsRequest.Resp" +
-      "onse\"V\362\206\031R\n5\n\004POST\022\'/mlflow/logged-model" +
-      "s/{model_id}/params\032\004\010\002\020\000\020\003*\027Log Logged " +
-      "Model Params\022\260\001\n\rGetAssessment\022\034.mlflow." +
-      "GetAssessmentRequest\032%.mlflow.GetAssessm" +
-      "entRequest.Response\"Z\362\206\031V\nB\n\003GET\0225/mlflo" +
-      "w/traces/{trace_id}/assessments/{assessm" +
-      "ent_id}\032\004\010\003\020\000\020\003*\016Get Assessment\022\337\001\n\020crea" +
-      "teAssessment\022\030.mlflow.CreateAssessment\032!" +
-      ".mlflow.CreateAssessment.Response\"\215\001\362\206\031\210" +
-      "\001\n>\n\004POST\0220/mlflow/traces/{assessment.tr" +
-      "ace_id}/assessments\032\004\010\003\020\000\020\003\030\350\007\030\356\007\030\014\030\001*:C" +
-      "reate an assessment of a trace or a span" +
-      " within the trace\022\320\001\n\020updateAssessment\022\030" +
-      ".mlflow.UpdateAssessment\032!.mlflow.Update" +
-      "Assessment.Response\"\177\362\206\031{\nD\n\005PATCH\0225/mlf" +
-      "low/traces/{trace_id}/assessments/{asses" +
-      "sment_id}\032\004\010\003\020\000\020\003\030\350\007\030\356\007\030\001*)Update an exi" +
-      "sting assessment on a trace.\022\261\001\n\020deleteA" +
-      "ssessment\022\030.mlflow.DeleteAssessment\032!.ml" +
-      "flow.DeleteAssessment.Response\"`\362\206\031\\\nE\n\006" +
-      "DELETE\0225/mlflow/traces/{trace_id}/assess" +
-      "ments/{assessment_id}\032\004\010\003\020\000\020\003*\021Delete As" +
-      "sessmentB\036\n\024org.mlflow.api.proto\220\001\001\342?\002\020\001"
+      "onse]\"\232\001\n\016RegisterScorer\022\025\n\rexperiment_i" +
+      "d\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\031\n\021serialized_scor" +
+      "er\030\003 \001(\t\032\033\n\010Response\022\017\n\007version\030\001 \001(\005:+\342" +
+      "?(\n&com.databricks.rpc.RPC[$this.Respons" +
+      "e]\"~\n\013ListScorers\022\025\n\rexperiment_id\030\001 \001(\t" +
+      "\032+\n\010Response\022\037\n\007scorers\030\001 \003(\0132\016.mlflow.S" +
+      "corer:+\342?(\n&com.databricks.rpc.RPC[$this" +
+      ".Response]\"\223\001\n\022ListScorerVersions\022\025\n\rexp" +
+      "eriment_id\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\032+\n\010Respon" +
+      "se\022\037\n\007scorers\030\001 \003(\0132\016.mlflow.Scorer:+\342?(" +
+      "\n&com.databricks.rpc.RPC[$this.Response]" +
+      "\"\232\001\n\tGetScorer\022\025\n\rexperiment_id\030\001 \001(\t\022\014\n" +
+      "\004name\030\002 \001(\t\022\017\n\007version\030\003 \001(\005\032*\n\010Response" +
+      "\022\036\n\006scorer\030\001 \001(\0132\016.mlflow.Scorer:+\342?(\n&c" +
+      "om.databricks.rpc.RPC[$this.Response]\"}\n" +
+      "\014DeleteScorer\022\025\n\rexperiment_id\030\001 \001(\t\022\014\n\004" +
+      "name\030\002 \001(\t\022\017\n\007version\030\003 \001(\005\032\n\n\010Response:" +
+      "+\342?(\n&com.databricks.rpc.RPC[$this.Respo" +
+      "nse]\"~\n\006Scorer\022\025\n\rexperiment_id\030\001 \001(\005\022\023\n" +
+      "\013scorer_name\030\002 \001(\t\022\026\n\016scorer_version\030\003 \001" +
+      "(\005\022\031\n\021serialized_scorer\030\004 \001(\t\022\025\n\rcreatio" +
+      "n_time\030\005 \001(\003*6\n\010ViewType\022\017\n\013ACTIVE_ONLY\020" +
+      "\001\022\020\n\014DELETED_ONLY\020\002\022\007\n\003ALL\020\003*I\n\nSourceTy" +
+      "pe\022\014\n\010NOTEBOOK\020\001\022\007\n\003JOB\020\002\022\013\n\007PROJECT\020\003\022\t" +
+      "\n\005LOCAL\020\004\022\014\n\007UNKNOWN\020\350\007*M\n\tRunStatus\022\013\n\007" +
+      "RUNNING\020\001\022\r\n\tSCHEDULED\020\002\022\014\n\010FINISHED\020\003\022\n" +
+      "\n\006FAILED\020\004\022\n\n\006KILLED\020\005*O\n\013TraceStatus\022\034\n" +
+      "\030TRACE_STATUS_UNSPECIFIED\020\000\022\006\n\002OK\020\001\022\t\n\005E" +
+      "RROR\020\002\022\017\n\013IN_PROGRESS\020\003*\212\001\n\021LoggedModelS" +
+      "tatus\022#\n\037LOGGED_MODEL_STATUS_UNSPECIFIED" +
+      "\020\000\022\030\n\024LOGGED_MODEL_PENDING\020\001\022\026\n\022LOGGED_M" +
+      "ODEL_READY\020\002\022\036\n\032LOGGED_MODEL_UPLOAD_FAIL" +
+      "ED\020\0032\244F\n\rMlflowService\022\246\001\n\023getExperiment" +
+      "ByName\022\033.mlflow.GetExperimentByName\032$.ml" +
+      "flow.GetExperimentByName.Response\"L\362\206\031H\n" +
+      ",\n\003GET\022\037/mlflow/experiments/get-by-name\032" +
+      "\004\010\002\020\000\020\001*\026Get Experiment By Name\022\224\001\n\020crea" +
+      "teExperiment\022\030.mlflow.CreateExperiment\032!" +
+      ".mlflow.CreateExperiment.Response\"C\362\206\031?\n" +
+      "(\n\004POST\022\032/mlflow/experiments/create\032\004\010\002\020" +
+      "\000\020\001*\021Create Experiment\022\301\001\n\021searchExperim" +
+      "ents\022\031.mlflow.SearchExperiments\032\".mlflow" +
+      ".SearchExperiments.Response\"m\362\206\031i\n(\n\004POS" +
+      "T\022\032/mlflow/experiments/search\032\004\010\002\020\000\n\'\n\003G" +
+      "ET\022\032/mlflow/experiments/search\032\004\010\002\020\000\020\001*\022" +
+      "Search Experiments\022\210\001\n\rgetExperiment\022\025.m" +
+      "lflow.GetExperiment\032\036.mlflow.GetExperime",
+      "nt.Response\"@\362\206\0318\n$\n\003GET\022\027/mlflow/experi" +
+      "ments/get\032\004\010\002\020\000\020\001*\016Get Experiment\272\214\031\000\022\224\001" +
+      "\n\020deleteExperiment\022\030.mlflow.DeleteExperi" +
+      "ment\032!.mlflow.DeleteExperiment.Response\"" +
+      "C\362\206\031?\n(\n\004POST\022\032/mlflow/experiments/delet" +
+      "e\032\004\010\002\020\000\020\001*\021Delete Experiment\022\231\001\n\021restore" +
+      "Experiment\022\031.mlflow.RestoreExperiment\032\"." +
+      "mlflow.RestoreExperiment.Response\"E\362\206\031A\n" +
+      ")\n\004POST\022\033/mlflow/experiments/restore\032\004\010\002" +
+      "\020\000\020\001*\022Restore Experiment\022\224\001\n\020updateExper" +
+      "iment\022\030.mlflow.UpdateExperiment\032!.mlflow" +
+      ".UpdateExperiment.Response\"C\362\206\031?\n(\n\004POST" +
+      "\022\032/mlflow/experiments/update\032\004\010\002\020\000\020\001*\021Up" +
+      "date Experiment\022q\n\tcreateRun\022\021.mlflow.Cr" +
+      "eateRun\032\032.mlflow.CreateRun.Response\"5\362\206\031" +
+      "1\n!\n\004POST\022\023/mlflow/runs/create\032\004\010\002\020\000\020\001*\n" +
+      "Create Run\022q\n\tupdateRun\022\021.mlflow.UpdateR" +
+      "un\032\032.mlflow.UpdateRun.Response\"5\362\206\0311\n!\n\004" +
+      "POST\022\023/mlflow/runs/update\032\004\010\002\020\000\020\001*\nUpdat" +
+      "e Run\022q\n\tdeleteRun\022\021.mlflow.DeleteRun\032\032." +
+      "mlflow.DeleteRun.Response\"5\362\206\0311\n!\n\004POST\022" +
+      "\023/mlflow/runs/delete\032\004\010\002\020\000\020\001*\nDelete Run" +
+      "\022v\n\nrestoreRun\022\022.mlflow.RestoreRun\032\033.mlf" +
+      "low.RestoreRun.Response\"7\362\206\0313\n\"\n\004POST\022\024/" +
+      "mlflow/runs/restore\032\004\010\002\020\000\020\001*\013Restore Run" +
+      "\022u\n\tlogMetric\022\021.mlflow.LogMetric\032\032.mlflo" +
+      "w.LogMetric.Response\"9\362\206\0315\n%\n\004POST\022\027/mlf" +
+      "low/runs/log-metric\032\004\010\002\020\000\020\001*\nLog Metric\022" +
+      "t\n\010logParam\022\020.mlflow.LogParam\032\031.mlflow.L" +
+      "ogParam.Response\";\362\206\0317\n(\n\004POST\022\032/mlflow/" +
+      "runs/log-parameter\032\004\010\002\020\000\020\001*\tLog Param\022\241\001" +
+      "\n\020setExperimentTag\022\030.mlflow.SetExperimen" +
+      "tTag\032!.mlflow.SetExperimentTag.Response\"" +
+      "P\362\206\031L\n4\n\004POST\022&/mlflow/experiments/set-e" +
+      "xperiment-tag\032\004\010\002\020\000\020\001*\022Set Experiment Ta" +
+      "g\022\260\001\n\023deleteExperimentTag\022\033.mlflow.Delet" +
+      "eExperimentTag\032$.mlflow.DeleteExperiment" +
+      "Tag.Response\"V\362\206\031R\n7\n\004POST\022)/mlflow/expe" +
+      "riments/delete-experiment-tag\032\004\010\002\020\000\020\001*\025D" +
+      "elete Experiment Tag\022f\n\006setTag\022\016.mlflow." +
+      "SetTag\032\027.mlflow.SetTag.Response\"3\362\206\031/\n\"\n" +
+      "\004POST\022\024/mlflow/runs/set-tag\032\004\010\002\020\000\020\001*\007Set" +
+      " Tag\022\210\001\n\013setTraceTag\022\023.mlflow.SetTraceTa" +
+      "g\032\034.mlflow.SetTraceTag.Response\"F\362\206\031B\n/\n" +
+      "\005PATCH\022 /mlflow/traces/{request_id}/tags" +
+      "\032\004\010\002\020\000\020\003*\rSet Trace Tag\022\217\001\n\rsetTraceTagV" +
+      "3\022\025.mlflow.SetTraceTagV3\032\036.mlflow.SetTra" +
+      "ceTagV3.Response\"G\362\206\031C\n-\n\005PATCH\022\036/mlflow" +
+      "/traces/{trace_id}/tags\032\004\010\003\020\000\020\003*\020Set Tra" +
+      "ce Tag V3\022\225\001\n\016deleteTraceTag\022\026.mlflow.De" +
+      "leteTraceTag\032\037.mlflow.DeleteTraceTag.Res" +
+      "ponse\"J\362\206\031F\n0\n\006DELETE\022 /mlflow/traces/{r" +
+      "equest_id}/tags\032\004\010\002\020\000\020\003*\020Delete Trace Ta" +
+      "g\022\234\001\n\020deleteTraceTagV3\022\030.mlflow.DeleteTr" +
+      "aceTagV3\032!.mlflow.DeleteTraceTagV3.Respo" +
+      "nse\"K\362\206\031G\n.\n\006DELETE\022\036/mlflow/traces/{tra" +
+      "ce_id}/tags\032\004\010\003\020\000\020\003*\023Delete Trace Tag V3" +
+      "\022u\n\tdeleteTag\022\021.mlflow.DeleteTag\032\032.mlflo" +
+      "w.DeleteTag.Response\"9\362\206\0315\n%\n\004POST\022\027/mlf" +
+      "low/runs/delete-tag\032\004\010\002\020\000\020\001*\nDelete Tag\022" +
+      "e\n\006getRun\022\016.mlflow.GetRun\032\027.mlflow.GetRu" +
+      "n.Response\"2\362\206\031*\n\035\n\003GET\022\020/mlflow/runs/ge" +
+      "t\032\004\010\002\020\000\020\001*\007Get Run\272\214\031\000\022y\n\nsearchRuns\022\022.m" +
+      "lflow.SearchRuns\032\033.mlflow.SearchRuns.Res" +
+      "ponse\":\362\206\0312\n!\n\004POST\022\023/mlflow/runs/search" +
+      "\032\004\010\002\020\000\020\001*\013Search Runs\272\214\031\000\022\207\001\n\rlistArtifa" +
+      "cts\022\025.mlflow.ListArtifacts\032\036.mlflow.List" +
+      "Artifacts.Response\"?\362\206\0317\n#\n\003GET\022\026/mlflow" +
+      "/artifacts/list\032\004\010\002\020\000\020\001*\016List Artifacts\272" +
+      "\214\031\000\022\225\001\n\020getMetricHistory\022\030.mlflow.GetMet" +
+      "ricHistory\032!.mlflow.GetMetricHistory.Res" +
+      "ponse\"D\362\206\031@\n(\n\003GET\022\033/mlflow/metrics/get-" +
+      "history\032\004\010\002\020\000\020\001*\022Get Metric History\022\267\001\n\034" +
+      "getMetricHistoryBulkInterval\022$.mlflow.Ge" +
+      "tMetricHistoryBulkInterval\032-.mlflow.GetM" +
+      "etricHistoryBulkInterval.Response\"B\362\206\031:\n" +
+      "6\n\003GET\022)/mlflow/metrics/get-history-bulk" +
+      "-interval\032\004\010\002\020\013\020\003\272\214\031\000\022p\n\010logBatch\022\020.mlfl" +
+      "ow.LogBatch\032\031.mlflow.LogBatch.Response\"7" +
+      "\362\206\0313\n$\n\004POST\022\026/mlflow/runs/log-batch\032\004\010\002" +
+      "\020\000\020\001*\tLog Batch\022p\n\010logModel\022\020.mlflow.Log" +
+      "Model\032\031.mlflow.LogModel.Response\"7\362\206\0313\n$" +
+      "\n\004POST\022\026/mlflow/runs/log-model\032\004\010\002\020\000\020\001*\t" +
+      "Log Model\022u\n\tlogInputs\022\021.mlflow.LogInput" +
+      "s\032\032.mlflow.LogInputs.Response\"9\362\206\0315\n%\n\004P" +
+      "OST\022\027/mlflow/runs/log-inputs\032\004\010\002\020\000\020\001*\nLo" +
+      "g Inputs\022v\n\nlogOutputs\022\022.mlflow.LogOutpu" +
+      "ts\032\033.mlflow.LogOutputs.Response\"7\362\206\0313\n\"\n" +
+      "\004POST\022\024/mlflow/runs/outputs\032\004\010\002\020\000\020\003*\013Log" +
+      " Outputs\022\207\001\n\016searchDatasets\022\026.mlflow.Sea" +
+      "rchDatasets\032\037.mlflow.SearchDatasets.Resp" +
+      "onse\"<\362\206\0314\n0\n\004POST\022\"mlflow/experiments/s" +
+      "earch-datasets\032\004\010\002\020\000\020\003\272\214\031\000\022p\n\nstartTrace" +
+      "\022\022.mlflow.StartTrace\032\033.mlflow.StartTrace" +
+      ".Response\"1\362\206\031-\n\034\n\004POST\022\016/mlflow/traces\032" +
+      "\004\010\002\020\000\020\003*\013Start Trace\022v\n\010endTrace\022\020.mlflo" +
+      "w.EndTrace\032\031.mlflow.EndTrace.Response\"=\362" +
+      "\206\0319\n*\n\005PATCH\022\033/mlflow/traces/{request_id" +
+      "}\032\004\010\002\020\000\020\003*\tEnd Trace\022\211\001\n\014getTraceInfo\022\024." +
+      "mlflow.GetTraceInfo\032\035.mlflow.GetTraceInf" +
+      "o.Response\"D\362\206\031@\n-\n\003GET\022 /mlflow/traces/" +
+      "{request_id}/info\032\004\010\002\020\000\020\003*\rGet TraceInfo" +
+      "\022\213\001\n\016getTraceInfoV3\022\026.mlflow.GetTraceInf" +
+      "oV3\032\037.mlflow.GetTraceInfoV3.Response\"@\362\206" +
+      "\031<\n&\n\003GET\022\031/mlflow/traces/{trace_id}\032\004\010\003" +
+      "\020\000\020\003*\020Get TraceInfo v3\022w\n\014searchTraces\022\024" +
+      ".mlflow.SearchTraces\032\035.mlflow.SearchTrac" +
+      "es.Response\"2\362\206\031.\n\033\n\003GET\022\016/mlflow/traces" +
+      "\032\004\010\002\020\000\020\003*\rSearch Traces\022\210\001\n\016searchTraces" +
+      "V3\022\026.mlflow.SearchTracesV3\032\037.mlflow.Sear" +
+      "chTracesV3.Response\"=\362\206\0319\n#\n\004POST\022\025/mlfl" +
+      "ow/traces/search\032\004\010\003\020\000\020\003*\020Search Traces " +
+      "V3\022i\n\014startTraceV3\022\024.mlflow.StartTraceV3" +
+      "\032\035.mlflow.StartTraceV3.Response\"$\362\206\031 \n\034\n" +
+      "\004POST\022\016/mlflow/traces\032\004\010\003\020\000\020\003\022\222\001\n\017linkTr" +
+      "acesToRun\022\027.mlflow.LinkTracesToRun\032 .mlf" +
+      "low.LinkTracesToRun.Response\"D\362\206\031@\n(\n\004PO" +
+      "ST\022\032/mlflow/traces/link-to-run\032\004\010\002\020\000\020\003*\022" +
+      "Link Traces to Run\022\242\001\n\031searchUnifiedTrac" +
+      "eHandler\022\033.mlflow.SearchUnifiedTraces\032$." +
+      "mlflow.SearchUnifiedTraces.Response\"B\362\206\031" +
+      ">\n#\n\003GET\022\026/mlflow/unified-traces\032\004\010\002\020\000\020\003" +
+      "*\025Search Unified Traces\022\257\001\n\025getOnlineTra" +
+      "ceDetails\022\035.mlflow.GetOnlineTraceDetails" +
+      "\032&.mlflow.GetOnlineTraceDetails.Response" +
+      "\"O\362\206\031K\n-\n\003GET\022 /mlflow/get-online-trace-" +
+      "details\032\004\010\002\020\000\020\003*\030Get Online Trace Detail" +
+      "s\022\206\001\n\014deleteTraces\022\024.mlflow.DeleteTraces" +
+      "\032\035.mlflow.DeleteTraces.Response\"A\362\206\031=\n*\n" +
+      "\004POST\022\034/mlflow/traces/delete-traces\032\004\010\002\020" +
+      "\000\020\003*\rDelete Traces\022\217\001\n\016deleteTracesV3\022\026." +
+      "mlflow.DeleteTracesV3\032\037.mlflow.DeleteTra" +
+      "cesV3.Response\"D\362\206\031@\n*\n\004POST\022\034/mlflow/tr" +
+      "aces/delete-traces\032\004\010\003\020\000\020\003*\020Delete Trace" +
+      "s V3\022\224\001\n\021createLoggedModel\022\031.mlflow.Crea" +
+      "teLoggedModel\032\".mlflow.CreateLoggedModel" +
+      ".Response\"@\362\206\031<\n#\n\004POST\022\025/mlflow/logged-" +
+      "models\032\004\010\002\020\000\020\003*\023Create Logged Model\022\250\001\n\023" +
+      "finalizeLoggedModel\022\033.mlflow.FinalizeLog" +
+      "gedModel\032$.mlflow.FinalizeLoggedModel.Re" +
+      "sponse\"N\362\206\031J\n/\n\005PATCH\022 /mlflow/logged-mo" +
+      "dels/{model_id}\032\004\010\002\020\000\020\003*\025Finalize Logged" +
+      " Model\022\222\001\n\016getLoggedModel\022\026.mlflow.GetLo" +
+      "ggedModel\032\037.mlflow.GetLoggedModel.Respon" +
+      "se\"G\362\206\031C\n-\n\003GET\022 /mlflow/logged-models/{" +
+      "model_id}\032\004\010\002\020\000\020\003*\020Get Logged Model\022\243\001\n\021" +
+      "deleteLoggedModel\022\031.mlflow.DeleteLoggedM" +
+      "odel\032\".mlflow.DeleteLoggedModel.Response" +
+      "\"O\362\206\031K\n0\n\006DELETE\022 /mlflow/logged-models/" +
+      "{model_id}\032\004\010\002\020\000\020\003*\025Delete a Logged Mode" +
+      "l\022\236\001\n\022searchLoggedModels\022\032.mlflow.Search" +
+      "LoggedModels\032#.mlflow.SearchLoggedModels" +
+      ".Response\"G\362\206\031C\n*\n\004POST\022\034/mlflow/logged-" +
+      "models/search\032\004\010\002\020\000\020\003*\023Search LoggedMode" +
+      "ls\022\251\001\n\022setLoggedModelTags\022\032.mlflow.SetLo" +
+      "ggedModelTags\032#.mlflow.SetLoggedModelTag" +
+      "s.Response\"R\362\206\031N\n4\n\005PATCH\022%/mlflow/logge" +
+      "d-models/{model_id}/tags\032\004\010\002\020\000\020\003*\024Set Lo" +
+      "gged Model Tag\022\275\001\n\024deleteLoggedModelTag\022" +
+      "\034.mlflow.DeleteLoggedModelTag\032%.mlflow.D" +
+      "eleteLoggedModelTag.Response\"`\362\206\031\\\n?\n\006DE" +
+      "LETE\022//mlflow/logged-models/{model_id}/t" +
+      "ags/{tag_key}\032\004\010\002\020\000\020\003*\027Delete Logged Mod" +
+      "el Tag\022\326\001\n\030listLoggedModelArtifacts\022 .ml" +
+      "flow.ListLoggedModelArtifacts\032).mlflow.L" +
+      "istLoggedModelArtifacts.Response\"m\362\206\031i\nC" +
+      "\n\003GET\0226/mlflow/logged-models/{model_id}/" +
+      "artifacts/directories\032\004\010\002\020\000\020\003* List Arti" +
+      "facts for Logged Models\022\301\001\n\024LogLoggedMod" +
+      "elParams\022#.mlflow.LogLoggedModelParamsRe" +
+      "quest\032,.mlflow.LogLoggedModelParamsReque" +
+      "st.Response\"V\362\206\031R\n5\n\004POST\022\'/mlflow/logge" +
+      "d-models/{model_id}/params\032\004\010\002\020\000\020\003*\027Log " +
+      "Logged Model Params\022\260\001\n\rGetAssessment\022\034." +
+      "mlflow.GetAssessmentRequest\032%.mlflow.Get" +
+      "AssessmentRequest.Response\"Z\362\206\031V\nB\n\003GET\022" +
+      "5/mlflow/traces/{trace_id}/assessments/{" +
+      "assessment_id}\032\004\010\003\020\000\020\003*\016Get Assessment\022\337" +
+      "\001\n\020createAssessment\022\030.mlflow.CreateAsses" +
+      "sment\032!.mlflow.CreateAssessment.Response" +
+      "\"\215\001\362\206\031\210\001\n>\n\004POST\0220/mlflow/traces/{assess" +
+      "ment.trace_id}/assessments\032\004\010\003\020\000\020\003\030\350\007\030\356\007" +
+      "\030\014\030\001*:Create an assessment of a trace or" +
+      " a span within the trace\022\320\001\n\020updateAsses" +
+      "sment\022\030.mlflow.UpdateAssessment\032!.mlflow" +
+      ".UpdateAssessment.Response\"\177\362\206\031{\nD\n\005PATC" +
+      "H\0225/mlflow/traces/{trace_id}/assessments" +
+      "/{assessment_id}\032\004\010\003\020\000\020\003\030\350\007\030\356\007\030\001*)Update" +
+      " an existing assessment on a trace.\022\261\001\n\020" +
+      "deleteAssessment\022\030.mlflow.DeleteAssessme" +
+      "nt\032!.mlflow.DeleteAssessment.Response\"`\362" +
+      "\206\031\\\nE\n\006DELETE\0225/mlflow/traces/{trace_id}" +
+      "/assessments/{assessment_id}\032\004\010\003\020\000\020\003*\021De" +
+      "lete Assessment\022\212\001\n\016registerScorer\022\026.mlf" +
+      "low.RegisterScorer\032\037.mlflow.RegisterScor" +
+      "er.Response\"?\362\206\031;\n&\n\004POST\022\030/mlflow/score" +
+      "rs/register\032\004\010\002\020\000\020\001*\017Register Scorer\022y\n\013" +
+      "listScorers\022\023.mlflow.ListScorers\032\034.mlflo" +
+      "w.ListScorers.Response\"7\362\206\0313\n!\n\003GET\022\024/ml" +
+      "flow/scorers/list\032\004\010\002\020\000\020\001*\014List Scorers\022" +
+      "\232\001\n\022listScorerVersions\022\032.mlflow.ListScor" +
+      "erVersions\032#.mlflow.ListScorerVersions.R" +
+      "esponse\"C\362\206\031?\n%\n\003GET\022\030/mlflow/scorers/ve" +
+      "rsions\032\004\010\002\020\000\020\001*\024List Scorer Versions\022p\n\t" +
+      "getScorer\022\021.mlflow.GetScorer\032\032.mlflow.Ge" +
+      "tScorer.Response\"4\362\206\0310\n \n\003GET\022\023/mlflow/s" +
+      "corers/get\032\004\010\002\020\000\020\001*\nGet Scorer\022\202\001\n\014delet" +
+      "eScorer\022\024.mlflow.DeleteScorer\032\035.mlflow.D" +
+      "eleteScorer.Response\"=\362\206\0319\n&\n\006DELETE\022\026/m" +
+      "lflow/scorers/delete\032\004\010\002\020\000\020\001*\rDelete Sco" +
+      "rerB\036\n\024org.mlflow.api.proto\220\001\001\342?\002\020\001"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -152421,6 +162005,72 @@ public final class Service {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_mlflow_SearchTracesV3_Response_descriptor,
         new java.lang.String[] { "Traces", "NextPageToken", });
+    internal_static_mlflow_RegisterScorer_descriptor =
+      getDescriptor().getMessageTypes().get(86);
+    internal_static_mlflow_RegisterScorer_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_mlflow_RegisterScorer_descriptor,
+        new java.lang.String[] { "ExperimentId", "Name", "SerializedScorer", });
+    internal_static_mlflow_RegisterScorer_Response_descriptor =
+      internal_static_mlflow_RegisterScorer_descriptor.getNestedTypes().get(0);
+    internal_static_mlflow_RegisterScorer_Response_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_mlflow_RegisterScorer_Response_descriptor,
+        new java.lang.String[] { "Version", });
+    internal_static_mlflow_ListScorers_descriptor =
+      getDescriptor().getMessageTypes().get(87);
+    internal_static_mlflow_ListScorers_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_mlflow_ListScorers_descriptor,
+        new java.lang.String[] { "ExperimentId", });
+    internal_static_mlflow_ListScorers_Response_descriptor =
+      internal_static_mlflow_ListScorers_descriptor.getNestedTypes().get(0);
+    internal_static_mlflow_ListScorers_Response_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_mlflow_ListScorers_Response_descriptor,
+        new java.lang.String[] { "Scorers", });
+    internal_static_mlflow_ListScorerVersions_descriptor =
+      getDescriptor().getMessageTypes().get(88);
+    internal_static_mlflow_ListScorerVersions_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_mlflow_ListScorerVersions_descriptor,
+        new java.lang.String[] { "ExperimentId", "Name", });
+    internal_static_mlflow_ListScorerVersions_Response_descriptor =
+      internal_static_mlflow_ListScorerVersions_descriptor.getNestedTypes().get(0);
+    internal_static_mlflow_ListScorerVersions_Response_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_mlflow_ListScorerVersions_Response_descriptor,
+        new java.lang.String[] { "Scorers", });
+    internal_static_mlflow_GetScorer_descriptor =
+      getDescriptor().getMessageTypes().get(89);
+    internal_static_mlflow_GetScorer_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_mlflow_GetScorer_descriptor,
+        new java.lang.String[] { "ExperimentId", "Name", "Version", });
+    internal_static_mlflow_GetScorer_Response_descriptor =
+      internal_static_mlflow_GetScorer_descriptor.getNestedTypes().get(0);
+    internal_static_mlflow_GetScorer_Response_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_mlflow_GetScorer_Response_descriptor,
+        new java.lang.String[] { "Scorer", });
+    internal_static_mlflow_DeleteScorer_descriptor =
+      getDescriptor().getMessageTypes().get(90);
+    internal_static_mlflow_DeleteScorer_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_mlflow_DeleteScorer_descriptor,
+        new java.lang.String[] { "ExperimentId", "Name", "Version", });
+    internal_static_mlflow_DeleteScorer_Response_descriptor =
+      internal_static_mlflow_DeleteScorer_descriptor.getNestedTypes().get(0);
+    internal_static_mlflow_DeleteScorer_Response_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_mlflow_DeleteScorer_Response_descriptor,
+        new java.lang.String[] { });
+    internal_static_mlflow_Scorer_descriptor =
+      getDescriptor().getMessageTypes().get(91);
+    internal_static_mlflow_Scorer_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_mlflow_Scorer_descriptor,
+        new java.lang.String[] { "ExperimentId", "ScorerName", "ScorerVersion", "SerializedScorer", "CreationTime", });
     com.google.protobuf.ExtensionRegistry registry =
         com.google.protobuf.ExtensionRegistry.newInstance();
     registry.add(com.databricks.api.proto.databricks.Databricks.graphql);
