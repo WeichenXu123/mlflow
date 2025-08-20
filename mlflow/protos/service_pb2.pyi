@@ -1381,6 +1381,88 @@ class Scorer(_message.Message):
     creation_time: int
     def __init__(self, experiment_id: _Optional[int] = ..., scorer_name: _Optional[str] = ..., scorer_version: _Optional[int] = ..., serialized_scorer: _Optional[str] = ..., creation_time: _Optional[int] = ...) -> None: ...
 
+class CreatePromptOptimizationJob(_message.Message):
+    __slots__ = ("dataset_url", "prompt_url", "scorer_names", "config")
+    class Response(_message.Message):
+        __slots__ = ("job_id",)
+        JOB_ID_FIELD_NUMBER: _ClassVar[int]
+        job_id: str
+        def __init__(self, job_id: _Optional[str] = ...) -> None: ...
+    DATASET_URL_FIELD_NUMBER: _ClassVar[int]
+    PROMPT_URL_FIELD_NUMBER: _ClassVar[int]
+    SCORER_NAMES_FIELD_NUMBER: _ClassVar[int]
+    CONFIG_FIELD_NUMBER: _ClassVar[int]
+    dataset_url: str
+    prompt_url: str
+    scorer_names: _containers.RepeatedScalarFieldContainer[str]
+    config: str
+    def __init__(self, dataset_url: _Optional[str] = ..., prompt_url: _Optional[str] = ..., scorer_names: _Optional[_Iterable[str]] = ..., config: _Optional[str] = ...) -> None: ...
+
+class GetPromptOptimizationJob(_message.Message):
+    __slots__ = ("job_id",)
+    class Response(_message.Message):
+        __slots__ = ("job",)
+        JOB_FIELD_NUMBER: _ClassVar[int]
+        job: PromptOptimizationJob
+        def __init__(self, job: _Optional[_Union[PromptOptimizationJob, _Mapping]] = ...) -> None: ...
+    JOB_ID_FIELD_NUMBER: _ClassVar[int]
+    job_id: str
+    def __init__(self, job_id: _Optional[str] = ...) -> None: ...
+
+class ListPromptOptimizationJobs(_message.Message):
+    __slots__ = ("max_results", "page_token", "filter_string")
+    class Response(_message.Message):
+        __slots__ = ("jobs", "next_page_token")
+        JOBS_FIELD_NUMBER: _ClassVar[int]
+        NEXT_PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
+        jobs: _containers.RepeatedCompositeFieldContainer[PromptOptimizationJob]
+        next_page_token: str
+        def __init__(self, jobs: _Optional[_Iterable[_Union[PromptOptimizationJob, _Mapping]]] = ..., next_page_token: _Optional[str] = ...) -> None: ...
+    MAX_RESULTS_FIELD_NUMBER: _ClassVar[int]
+    PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    FILTER_STRING_FIELD_NUMBER: _ClassVar[int]
+    max_results: int
+    page_token: str
+    filter_string: str
+    def __init__(self, max_results: _Optional[int] = ..., page_token: _Optional[str] = ..., filter_string: _Optional[str] = ...) -> None: ...
+
+class CancelPromptOptimizationJob(_message.Message):
+    __slots__ = ("job_id",)
+    class Response(_message.Message):
+        __slots__ = ()
+        def __init__(self) -> None: ...
+    JOB_ID_FIELD_NUMBER: _ClassVar[int]
+    job_id: str
+    def __init__(self, job_id: _Optional[str] = ...) -> None: ...
+
+class PromptOptimizationJob(_message.Message):
+    __slots__ = ("job_id", "dataset_url", "prompt_url", "scorer_names", "config", "status", "creation_time", "start_time", "end_time", "result", "error_message", "progress")
+    JOB_ID_FIELD_NUMBER: _ClassVar[int]
+    DATASET_URL_FIELD_NUMBER: _ClassVar[int]
+    PROMPT_URL_FIELD_NUMBER: _ClassVar[int]
+    SCORER_NAMES_FIELD_NUMBER: _ClassVar[int]
+    CONFIG_FIELD_NUMBER: _ClassVar[int]
+    STATUS_FIELD_NUMBER: _ClassVar[int]
+    CREATION_TIME_FIELD_NUMBER: _ClassVar[int]
+    START_TIME_FIELD_NUMBER: _ClassVar[int]
+    END_TIME_FIELD_NUMBER: _ClassVar[int]
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    ERROR_MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    PROGRESS_FIELD_NUMBER: _ClassVar[int]
+    job_id: str
+    dataset_url: str
+    prompt_url: str
+    scorer_names: _containers.RepeatedScalarFieldContainer[str]
+    config: str
+    status: str
+    creation_time: int
+    start_time: int
+    end_time: int
+    result: str
+    error_message: str
+    progress: float
+    def __init__(self, job_id: _Optional[str] = ..., dataset_url: _Optional[str] = ..., prompt_url: _Optional[str] = ..., scorer_names: _Optional[_Iterable[str]] = ..., config: _Optional[str] = ..., status: _Optional[str] = ..., creation_time: _Optional[int] = ..., start_time: _Optional[int] = ..., end_time: _Optional[int] = ..., result: _Optional[str] = ..., error_message: _Optional[str] = ..., progress: _Optional[float] = ...) -> None: ...
+
 class MlflowService(_service.service): ...
 
 class MlflowService_Stub(MlflowService): ...

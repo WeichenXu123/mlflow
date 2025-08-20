@@ -477,6 +477,10 @@ def _assert_array(x):
     assert isinstance(x, list)
 
 
+def _assert_list(x):
+    assert isinstance(x, list)
+
+
 def _assert_map_key_present(x):
     _assert_array(x)
     for entry in x:
@@ -514,6 +518,7 @@ _TYPE_VALIDATORS = {
     _assert_bool,
     _assert_floatlike,
     _assert_array,
+    _assert_list,
     _assert_item_type_string,
 }
 
@@ -3475,6 +3480,104 @@ def _delete_scorer():
         request_message.version if request_message.HasField("version") else None,
     )
     response_message = DeleteScorer.Response()
+    response = Response(mimetype="application/json")
+    response.set_data(message_to_json(response_message))
+    return response
+
+
+@catch_mlflow_exception
+@_disable_if_artifacts_only
+def _create_prompt_optimization_job():
+    request_message = _get_request_message(
+        CreatePromptOptimizationJob(),
+        schema={
+            "dataset_url": [_assert_required, _assert_string],
+            "prompt_url": [_assert_required, _assert_string],
+            "scorer_names": [_assert_required, _assert_list],
+            "config": [_assert_string],
+        },
+    )
+    
+    # Parse config if provided
+    config = {}
+    if request_message.HasField("config") and request_message.config:
+        try:
+            config = json.loads(request_message.config)
+        except json.JSONDecodeError:
+            raise MlflowException("Invalid JSON in config field", error_code=INVALID_PARAMETER_VALUE)
+    
+    job_id = _get_tracking_store().create_prompt_optimization_job(
+        request_message.dataset_url,
+        request_message.prompt_url,
+        list(request_message.scorer_names),
+        config,
+    )
+    
+    response_message = CreatePromptOptimizationJob.Response()
+    response_message.job_id = job_id
+    response = Response(mimetype="application/json")
+    response.set_data(message_to_json(response_message))
+    return response
+
+
+@catch_mlflow_exception
+@_disable_if_artifacts_only
+def _get_prompt_optimization_job():
+    request_message = _get_request_message(
+        GetPromptOptimizationJob(),
+        schema={"job_id": [_assert_required, _assert_string]},
+    )
+    
+    job = _get_tracking_store().get_prompt_optimization_job(request_message.job_id)
+    response_message = GetPromptOptimizationJob.Response()
+    response_message.job.CopyFrom(job.to_proto())
+    response = Response(mimetype="application/json")
+    response.set_data(message_to_json(response_message))
+    return response
+
+
+@catch_mlflow_exception
+@_disable_if_artifacts_only
+def _list_prompt_optimization_jobs():
+    request_message = _get_request_message(
+        ListPromptOptimizationJobs(),
+        schema={
+            "max_results": [_assert_intlike],
+            "page_token": [_assert_string],
+            "filter_string": [_assert_string],
+        },
+    )
+    
+    max_results = request_message.max_results if request_message.HasField("max_results") else 100
+    page_token = request_message.page_token if request_message.HasField("page_token") else None
+    filter_string = request_message.filter_string if request_message.HasField("filter_string") else None
+    
+    jobs = _get_tracking_store().list_prompt_optimization_jobs(
+        max_results=max_results,
+        page_token=page_token,
+        filter_string=filter_string,
+    )
+    
+    response_message = ListPromptOptimizationJobs.Response()
+    response_message.jobs.extend([job.to_proto() for job in jobs])
+    if hasattr(jobs, 'token') and jobs.token:
+        response_message.next_page_token = jobs.token
+    response = Response(mimetype="application/json")
+    response.set_data(message_to_json(response_message))
+    return response
+
+
+@catch_mlflow_exception
+@_disable_if_artifacts_only
+def _cancel_prompt_optimization_job():
+    request_message = _get_request_message(
+        CancelPromptOptimizationJob(),
+        schema={"job_id": [_assert_required, _assert_string],
+        },
+    )
+    
+    _get_tracking_store().cancel_prompt_optimization_job(request_message.job_id)
+    response_message = CancelPromptOptimizationJob.Response()
     response = Response(mimetype="application/json")
     response.set_data(message_to_json(response_message))
     return response
