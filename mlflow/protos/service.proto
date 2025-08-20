@@ -937,6 +937,60 @@ service MlflowService {
       rpc_doc_title: "Delete Scorer",
     };
   }
+
+  // Create a prompt optimization job.
+  rpc createPromptOptimizationJob (CreatePromptOptimizationJob) returns (CreatePromptOptimizationJob.Response) {
+    option (rpc) = {
+      endpoints: [{
+        method: "POST",
+        path: "/mlflow/optimize-prompts"
+        since {major: 3, minor: 0},
+      }],
+      visibility: PUBLIC,
+      rpc_doc_title: "Create Prompt Optimization Job",
+    };
+  }
+
+  // Get a prompt optimization job by ID.
+  rpc getPromptOptimizationJob (GetPromptOptimizationJob) returns (GetPromptOptimizationJob.Response) {
+    option (rpc) = {
+      endpoints: [{
+        method: "GET",
+        path: "/mlflow/optimize-prompts/{job_id}"
+        since {major: 3, minor: 0},
+      }],
+      visibility: PUBLIC,
+      rpc_doc_title: "Get Prompt Optimization Job",
+    };
+  }
+
+  // List all prompt optimization jobs.
+  rpc listPromptOptimizationJobs (ListPromptOptimizationJobs) returns (ListPromptOptimizationJobs.Response) {
+    option (rpc) = {
+      endpoints: [{
+        method: "GET",
+        path: "/mlflow/optimize-prompts"
+        since {major: 3, minor: 0},
+      }],
+      visibility: PUBLIC,
+      rpc_doc_title: "List Prompt Optimization Jobs",
+    };
+  }
+
+
+
+  // Cancel a prompt optimization job.
+  rpc cancelPromptOptimizationJob (CancelPromptOptimizationJob) returns (CancelPromptOptimizationJob.Response) {
+    option (rpc) = {
+      endpoints: [{
+        method: "POST",
+        path: "/mlflow/optimize-prompts/{job_id}/cancel"
+        since {major: 3, minor: 0},
+      }],
+      visibility: PUBLIC,
+      rpc_doc_title: "Cancel Prompt Optimization Job",
+    };
+  }
 }
 
 // View type for ListExperiments query.
@@ -2694,4 +2748,101 @@ message Scorer {
   optional string serialized_scorer = 4;
   // The creation time of the scorer version (in milliseconds since epoch).
   optional int64 creation_time = 5;
+}
+
+// =============================================================================
+// Prompt Optimization Job Management Messages
+// =============================================================================
+
+// Create a prompt optimization job.
+message CreatePromptOptimizationJob {
+  option (scalapb.message).extends = "com.databricks.rpc.RPC[$this.Response]";
+
+  // The dataset URL or path.
+  optional string dataset_url = 1;
+  // The prompt URL or path.
+  optional string prompt_url = 2;
+  // List of scorer names to use for evaluation.
+  repeated string scorer_names = 3;
+  // Configuration for the optimization job.
+  optional string config = 4;
+
+  message Response {
+    // The job ID of the created job.
+    optional string job_id = 1;
+  }
+}
+
+// Get a prompt optimization job by ID.
+message GetPromptOptimizationJob {
+  option (scalapb.message).extends = "com.databricks.rpc.RPC[$this.Response]";
+
+  // The job ID.
+  optional string job_id = 1;
+
+  message Response {
+    // The prompt optimization job.
+    optional PromptOptimizationJob job = 1;
+  }
+}
+
+// List all prompt optimization jobs.
+message ListPromptOptimizationJobs {
+  option (scalapb.message).extends = "com.databricks.rpc.RPC[$this.Response]";
+
+  // Maximum number of jobs to return.
+  optional int32 max_results = 1;
+  // Token for pagination.
+  optional string page_token = 2;
+  // Filter string for searching jobs.
+  optional string filter_string = 3;
+
+  message Response {
+    // List of prompt optimization jobs.
+    repeated PromptOptimizationJob jobs = 1;
+    // Token for the next page of results.
+    optional string next_page_token = 2;
+  }
+}
+
+
+
+// Cancel a prompt optimization job.
+message CancelPromptOptimizationJob {
+  option (scalapb.message).extends = "com.databricks.rpc.RPC[$this.Response]";
+
+  // The job ID.
+  optional string job_id = 1;
+
+  message Response {
+    // Empty response.
+  }
+}
+
+// Prompt optimization job entity.
+message PromptOptimizationJob {
+  // The job ID.
+  optional string job_id = 1;
+  // The dataset URL or path.
+  optional string dataset_url = 2;
+  // The prompt URL or path.
+  optional string prompt_url = 3;
+  // List of scorer names to use for evaluation.
+  repeated string scorer_names = 4;
+  // Configuration for the optimization job (JSON string).
+  optional string config = 5;
+  // The current status of the job.
+  optional string status = 6;
+  // The creation time (in milliseconds since epoch).
+  optional int64 creation_time = 7;
+  // The start time (in milliseconds since epoch).
+  optional int64 start_time = 8;
+  // The end time (in milliseconds since epoch).
+  optional int64 end_time = 9;
+  // The result data (JSON string).
+  optional string result = 10;
+  // The error message if the job failed.
+  optional string error_message = 11;
+  // The progress as a percentage (0.0 to 1.0).
+  optional float progress = 12;
 }

@@ -11,6 +11,7 @@ from mlflow.entities import (
     LoggedModelParameter,
     LoggedModelStatus,
     LoggedModelTag,
+    PromptOptimizationJob,
     ViewType,
 )
 from mlflow.entities.metric import MetricWithRunId
@@ -1011,5 +1012,72 @@ class AbstractStore:
 
         Raises:
             MlflowException: If scorer is not found.
+        """
+        raise NotImplementedError(self.__class__.__name__)
+
+    def create_prompt_optimization_job(
+        self,
+        dataset_url: str,
+        prompt_url: str,
+        scorer_names: list[str],
+        config: dict[str, Any],
+    ) -> str:
+        """
+        Create a prompt optimization job.
+
+        Args:
+            dataset_url: URL or path to the evaluation dataset.
+            prompt_url: URL or path to the original prompt.
+            scorer_names: List of scorer names to use for evaluation.
+            config: Configuration for the optimization job.
+
+        Returns:
+            The job ID of the created job.
+        """
+        raise NotImplementedError(self.__class__.__name__)
+
+    def get_prompt_optimization_job(self, job_id: str):
+        """
+        Get a prompt optimization job by ID.
+
+        Args:
+            job_id: The job ID.
+
+        Returns:
+            A PromptOptimizationJob entity object.
+
+        Raises:
+            MlflowException: If job is not found.
+        """
+        raise NotImplementedError(self.__class__.__name__)
+
+    def list_prompt_optimization_jobs(
+        self,
+        max_results: int = 100,
+        page_token: str = None,
+        filter_string: str = None,
+    ):
+        """
+        List all prompt optimization jobs.
+
+        Args:
+            max_results: Maximum number of jobs to return.
+            page_token: Token for pagination.
+            filter_string: Filter string for searching jobs.
+
+        Returns:
+            A PagedList of PromptOptimizationJob entities.
+        """
+        raise NotImplementedError(self.__class__.__name__)
+
+    def cancel_prompt_optimization_job(self, job_id: str) -> None:
+        """
+        Cancel a prompt optimization job.
+
+        Args:
+            job_id: The job ID.
+
+        Raises:
+            MlflowException: If job is not found.
         """
         raise NotImplementedError(self.__class__.__name__)

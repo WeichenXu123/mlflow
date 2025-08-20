@@ -26,6 +26,8 @@ from mlflow.entities import (
     FileInfo,
     Metric,
     Param,
+    PromptOptimizationJob,
+    PromptOptimizationJobStatus,
     RunTag,
     ViewType,
 )
@@ -91,9 +93,11 @@ from mlflow.protos.model_registry_pb2 import (
     UpdateRegisteredModel,
 )
 from mlflow.protos.service_pb2 import (
+    CancelPromptOptimizationJob,
     CreateAssessment,
     CreateExperiment,
     CreateLoggedModel,
+    CreatePromptOptimizationJob,
     CreateRun,
     DeleteAssessment,
     DeleteExperiment,
@@ -115,6 +119,7 @@ from mlflow.protos.service_pb2 import (
     GetLoggedModel,
     GetMetricHistory,
     GetMetricHistoryBulkInterval,
+    GetPromptOptimizationJob,
     GetRun,
     GetScorer,
     GetTraceInfo,
@@ -122,6 +127,7 @@ from mlflow.protos.service_pb2 import (
     LinkTracesToRun,
     ListArtifacts,
     ListLoggedModelArtifacts,
+    ListPromptOptimizationJobs,
     ListScorers,
     ListScorerVersions,
     LogBatch,
@@ -3651,4 +3657,9 @@ HANDLERS = {
     ListScorerVersions: _list_scorer_versions,
     GetScorer: _get_scorer,
     DeleteScorer: _delete_scorer,
+    # Prompt Optimization Job APIs
+    CreatePromptOptimizationJob: _create_prompt_optimization_job,
+    GetPromptOptimizationJob: _get_prompt_optimization_job,
+    ListPromptOptimizationJobs: _list_prompt_optimization_jobs,
+    CancelPromptOptimizationJob: _cancel_prompt_optimization_job,
 }
