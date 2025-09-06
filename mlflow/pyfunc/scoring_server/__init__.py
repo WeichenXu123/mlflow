@@ -601,4 +601,5 @@ def get_cmd(
     command_env[_SERVER_MODEL_PATH] = local_uri
     command_env[MLFLOW_SCORING_SERVER_REQUEST_TIMEOUT.name] = str(timeout)
 
+    print(f"scoring server environ variables: {command_env}")
     return command, command_env

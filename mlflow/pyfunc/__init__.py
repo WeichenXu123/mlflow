@@ -2815,7 +2815,7 @@ e.g., struct<a:int, b:array<int>>.
                 f"stdout logs:\n{stdout_data}\n"
                 f"stderr logs:\n{stderr_data}\n"
                 f"error: {repr(inner_e)}\n"
-                f"error stack: {traceback.format_exc()}"
+                f"error stack: {traceback.format_exc()}\n"
             )
 
     udf.metadata = model_metadata
