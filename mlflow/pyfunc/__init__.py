@@ -2583,8 +2583,7 @@ e.g., struct<a:int, b:array<int>>.
 
     tracking_uri = mlflow.get_tracking_uri()
 
-    @pandas_udf(result_type)
-    def udf(
+    def _udf_internal(
         # `pandas_udf` does not support modern type annotations
         iterator: Iterator[Tuple[Union[pandas.Series, pandas.DataFrame], ...]],  # noqa: UP006,UP007
     ) -> Iterator[result_type_hint]:
@@ -2781,6 +2780,43 @@ e.g., struct<a:int, b:array<int>>.
             finally:
                 if scoring_server_proc is not None:
                     os.kill(scoring_server_proc.pid, signal.SIGTERM)
+
+    @pandas_udf(result_type)
+    def udf(
+        # `pandas_udf` does not support modern type annotations
+        iterator: Iterator[Tuple[Union[pandas.Series, pandas.DataFrame], ...]],  # noqa: UP006,UP007
+    ) -> Iterator[result_type_hint]:
+        import os
+        import tempfile
+        import sys
+        tmp_dir = tempfile.mkdtemp()
+        stdout_dst = open(os.path.join(tmp_dir, "stdout.log"), "w")
+        stdout_dst_fd = stdout_dst.fileno()
+        stdout_fd = sys.stdout.fileno()
+        os.close(stdout_fd)
+        os.dup2(stdout_dst_fd, stdout_fd)
+        stderr_dst = open(os.path.join(tmp_dir, "stderr.log"), "w")
+        stderr_dst_fd = stderr_dst.fileno()
+        stderr_fd = sys.stderr.fileno()
+        os.close(stderr_fd)
+        os.dup2(stderr_dst_fd, stderr_fd)
+        try:
+            yield from _udf_internal(iterator)
+        except Exception as inner_e:
+            import traceback
+            stdout_dst.flush()
+            stderr_dst.flush()
+            with open(os.path.join(tmp_dir, "stdout.log"), "r") as fp:
+                stdout_data = fp.read()
+            with open(os.path.join(tmp_dir, "stderr.log"), "r") as fp:
+                stderr_data = fp.read()
+            raise RuntimeError(
+                f"spark_udf remote task failed.\n"
+                f"stdout logs:\n{stdout_data}\n"
+                f"stderr logs:\n{stderr_data}\n"
+                f"error: {repr(inner_e)}\n"
+                f"error stack: {traceback.format_exc()}"
+            )
 
     udf.metadata = model_metadata
 
