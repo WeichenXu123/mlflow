@@ -2800,6 +2800,9 @@ e.g., struct<a:int, b:array<int>>.
         stderr_fd = sys.stderr.fileno()
         os.close(stderr_fd)
         os.dup2(stderr_dst_fd, stderr_fd)
+
+        scoring_server_log_file = os.path.join(tmp_dir, "scoring_server.log")
+        os.environ["_MLFLOW_SCORING_SERVER_LOG_FILE"] = scoring_server_log_file
         try:
             yield from _udf_internal(iterator)
         except Exception as inner_e:
@@ -2810,12 +2813,18 @@ e.g., struct<a:int, b:array<int>>.
                 stdout_data = fp.read()
             with open(os.path.join(tmp_dir, "stderr.log"), "r") as fp:
                 stderr_data = fp.read()
+
+            scoring_server_log_data = ""
+            if os.path.exists(scoring_server_log_file):
+                with open(scoring_server_log_file, "r") as fp:
+                    scoring_server_log_data = fp.read()
             raise RuntimeError(
                 f"spark_udf remote task failed.\n"
                 f"stdout logs:\n{stdout_data}\n"
                 f"stderr logs:\n{stderr_data}\n"
                 f"error: {repr(inner_e)}\n"
                 f"error stack: {traceback.format_exc()}\n"
+                f"scoring server log: {scoring_server_log_data}\n"
             )
 
     udf.metadata = model_metadata

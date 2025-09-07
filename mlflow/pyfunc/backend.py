@@ -291,7 +291,9 @@ class PyFuncBackend(FlavorBackend):
             # child process of the bash process, then it cannot receive the signal sent by prctl.
             # TODO: For Windows, there's no equivalent things of Unix shell's exec. Windows also
             #  does not support prctl. We need to find an approach to address it.
-            command = "exec " + command
+            command = f"exec {command}"
+            if log_file := os.environ.get('_MLFLOW_SCORING_SERVER_LOG_FILE'):
+                command += f" >{log_file} 2>&1"
 
         if self._env_manager != em.LOCAL:
             return self.prepare_env(local_path).execute(
