@@ -595,7 +595,7 @@ def get_cmd(
     if nworkers:
         args.append(f"--workers {nworkers}")
 
-    command = f"uvicorn {' '.join(args)} mlflow.pyfunc.scoring_server.app:app"
+    command = f"uvicorn {' '.join(args)} mlflow.pyfunc.scoring_server.app:app --log-level info"
 
     command_env = os.environ.copy()
     command_env[_SERVER_MODEL_PATH] = local_uri
