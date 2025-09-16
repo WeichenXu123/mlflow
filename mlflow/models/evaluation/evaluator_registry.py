@@ -74,7 +74,8 @@ def register_evaluators(module):
 
     # Plugin evaluators
     module._model_evaluation_registry.register_entrypoints()
+    print("register_evaluators completes.")
 
 
 # Put it in post-importing hook to avoid circuit importing
-register_post_import_hook(register_evaluators, __name__, overwrite=True)
+# register_post_import_hook(register_evaluators, __name__, overwrite=True)

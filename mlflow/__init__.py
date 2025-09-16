@@ -322,6 +322,8 @@ if not IS_TRACING_SDK_ONLY:
     from mlflow.utils.async_logging.run_operations import RunOperations  # noqa: F401
     from mlflow.utils.credentials import login
     from mlflow.utils.doctor import doctor
+    import mlflow.models.evaluation.evaluator_registry
+    mlflow.models.evaluation.evaluator_registry.register_evaluators(mlflow.models.evaluation.evaluator_registry)
 
     __all__ += [
         "ActiveRun",
@@ -405,6 +407,7 @@ if not IS_TRACING_SDK_ONLY:
         "set_logged_model_tags",
         "delete_logged_model_tag",
     ]
+
 
 
 # `mlflow.gateway` depends on optional dependencies such as pydantic, psutil, and has version
