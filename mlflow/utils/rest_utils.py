@@ -200,7 +200,8 @@ def extract_all_api_info_for_service(service, path_prefix):
 
 
 def call_endpoint(host_creds, endpoint, method, json_body, response_proto, extra_headers=None):
-    raise RuntimeError(f"DBG: call endpoint: endpoint={endpoint}, method={method}, json_body={json_body}")
+    with open("/tmp/dbg.txt", "a") as f:
+        f.write(f"DBG: call endpoint: endpoint={endpoint}, method={method}, json_body={json_body}\n")
     # Convert json string to json dictionary, to pass to requests
     if json_body:
         json_body = json.loads(json_body)
