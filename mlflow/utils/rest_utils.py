@@ -202,6 +202,9 @@ def extract_all_api_info_for_service(service, path_prefix):
 def call_endpoint(host_creds, endpoint, method, json_body, response_proto, extra_headers=None):
     with open("/tmp/dbg.txt", "a") as f:
         f.write(f"DBG: call endpoint: endpoint={endpoint}, method={method}, json_body={json_body}\n")
+        if endpoint == "/api/2.0/mlflow/artifacts/list":
+            import traceback
+            f.write("\n".join(traceback.format_stack()) + "\n")
     # Convert json string to json dictionary, to pass to requests
     if json_body:
         json_body = json.loads(json_body)
