@@ -6,6 +6,7 @@ Create Date: 2025-02-06 22:05:35.542613
 
 import sqlalchemy as sa
 from alembic import op
+from sqlalchemy import orm
 
 # revision identifiers, used by Alembic.
 revision = "400f98739977"
@@ -39,82 +40,84 @@ def upgrade():
         ),
         sa.PrimaryKeyConstraint("model_id", name="logged_models_pk"),
     )
-    op.create_table(
-        "logged_model_metrics",
-        sa.Column("model_id", sa.String(length=36), nullable=False),
-        sa.Column("metric_name", sa.String(length=500), nullable=False),
-        sa.Column("metric_timestamp_ms", sa.BigInteger(), nullable=False),
-        sa.Column("metric_step", sa.BigInteger(), nullable=False),
-        sa.Column("metric_value", sa.Float(precision=53), nullable=True),
-        sa.Column("experiment_id", sa.Integer(), nullable=False),
-        sa.Column("run_id", sa.String(length=32), nullable=False),
-        sa.Column("dataset_uuid", sa.String(length=36), nullable=True),
-        sa.Column("dataset_name", sa.String(length=500), nullable=True),
-        sa.Column("dataset_digest", sa.String(length=36), nullable=True),
-        sa.ForeignKeyConstraint(
-            ["experiment_id"],
-            ["experiments.experiment_id"],
-            name="fk_logged_model_metrics_experiment_id",
-        ),
-        sa.ForeignKeyConstraint(
-            ["model_id"],
-            ["logged_models.model_id"],
-            name="fk_logged_model_metrics_model_id",
-            ondelete="CASCADE",
-        ),
-        sa.ForeignKeyConstraint(
-            ["run_id"], ["runs.run_uuid"], name="fk_logged_model_metrics_run_id", ondelete="CASCADE"
-        ),
-        sa.PrimaryKeyConstraint(
-            "model_id",
-            "metric_name",
-            "metric_timestamp_ms",
-            "metric_step",
-            "run_id",
-            name="logged_model_metrics_pk",
-        ),
-    )
-    with op.batch_alter_table("logged_model_metrics", schema=None) as batch_op:
-        batch_op.create_index("index_logged_model_metrics_model_id", ["model_id"], unique=False)
 
-    op.create_table(
-        "logged_model_params",
-        sa.Column("model_id", sa.String(length=36), nullable=False),
-        sa.Column("experiment_id", sa.Integer(), nullable=False),
-        sa.Column("param_key", sa.String(length=255), nullable=False),
-        sa.Column("param_value", sa.Text(), nullable=False),
-        sa.ForeignKeyConstraint(
-            ["experiment_id"],
-            ["experiments.experiment_id"],
-            name="fk_logged_model_params_experiment_id",
-        ),
-        sa.ForeignKeyConstraint(
-            ["model_id"],
-            ["logged_models.model_id"],
-            name="fk_logged_model_params_model_id",
-            ondelete="CASCADE",
-        ),
-        sa.PrimaryKeyConstraint("model_id", "param_key", name="logged_model_params_pk"),
-    )
-    op.create_table(
-        "logged_model_tags",
-        sa.Column("model_id", sa.String(length=36), nullable=False),
-        sa.Column("experiment_id", sa.Integer(), nullable=False),
-        sa.Column("tag_key", sa.String(length=255), nullable=False),
-        sa.Column("tag_value", sa.Text(), nullable=False),
-        sa.ForeignKeyConstraint(
-            ["experiment_id"],
-            ["experiments.experiment_id"],
-            name="fk_logged_model_tags_experiment_id",
-        ),
-        sa.ForeignKeyConstraint(
-            ["model_id"],
-            ["logged_models.model_id"],
-            name="fk_logged_model_tags_model_id",
-            ondelete="CASCADE",
-        ),
-        sa.PrimaryKeyConstraint("model_id", "tag_key", name="logged_model_tags_pk"),
-    )
+    with op.get_context().autocommit_block():
+        op.create_table(
+            "logged_model_metrics",
+            sa.Column("model_id", sa.String(length=36), nullable=False),
+            sa.Column("metric_name", sa.String(length=500), nullable=False),
+            sa.Column("metric_timestamp_ms", sa.BigInteger(), nullable=False),
+            sa.Column("metric_step", sa.BigInteger(), nullable=False),
+            sa.Column("metric_value", sa.Float(precision=53), nullable=True),
+            sa.Column("experiment_id", sa.Integer(), nullable=False),
+            sa.Column("run_id", sa.String(length=32), nullable=False),
+            sa.Column("dataset_uuid", sa.String(length=36), nullable=True),
+            sa.Column("dataset_name", sa.String(length=500), nullable=True),
+            sa.Column("dataset_digest", sa.String(length=36), nullable=True),
+            sa.ForeignKeyConstraint(
+                ["experiment_id"],
+                ["experiments.experiment_id"],
+                name="fk_logged_model_metrics_experiment_id",
+            ),
+            sa.ForeignKeyConstraint(
+                ["model_id"],
+                ["logged_models.model_id"],
+                name="fk_logged_model_metrics_model_id",
+                ondelete="CASCADE",
+            ),
+            sa.ForeignKeyConstraint(
+                ["run_id"], ["runs.run_uuid"], name="fk_logged_model_metrics_run_id", ondelete="CASCADE"
+            ),
+            sa.PrimaryKeyConstraint(
+                "model_id",
+                "metric_name",
+                "metric_timestamp_ms",
+                "metric_step",
+                "run_id",
+                name="logged_model_metrics_pk",
+            ),
+        )
+        with op.batch_alter_table("logged_model_metrics", schema=None) as batch_op:
+            batch_op.create_index("index_logged_model_metrics_model_id", ["model_id"], unique=False)
+
+        op.create_table(
+            "logged_model_params",
+            sa.Column("model_id", sa.String(length=36), nullable=False),
+            sa.Column("experiment_id", sa.Integer(), nullable=False),
+            sa.Column("param_key", sa.String(length=255), nullable=False),
+            sa.Column("param_value", sa.Text(), nullable=False),
+            sa.ForeignKeyConstraint(
+                ["experiment_id"],
+                ["experiments.experiment_id"],
+                name="fk_logged_model_params_experiment_id",
+            ),
+            sa.ForeignKeyConstraint(
+                ["model_id"],
+                ["logged_models.model_id"],
+                name="fk_logged_model_params_model_id",
+                ondelete="CASCADE",
+            ),
+            sa.PrimaryKeyConstraint("model_id", "param_key", name="logged_model_params_pk"),
+        )
+        op.create_table(
+            "logged_model_tags",
+            sa.Column("model_id", sa.String(length=36), nullable=False),
+            sa.Column("experiment_id", sa.Integer(), nullable=False),
+            sa.Column("tag_key", sa.String(length=255), nullable=False),
+            sa.Column("tag_value", sa.Text(), nullable=False),
+            sa.ForeignKeyConstraint(
+                ["experiment_id"],
+                ["experiments.experiment_id"],
+                name="fk_logged_model_tags_experiment_id",
+            ),
+            sa.ForeignKeyConstraint(
+                ["model_id"],
+                ["logged_models.model_id"],
+                name="fk_logged_model_tags_model_id",
+                ondelete="CASCADE",
+            ),
+            sa.PrimaryKeyConstraint("model_id", "tag_key", name="logged_model_tags_pk"),
+        )
 
 
 def downgrade():
