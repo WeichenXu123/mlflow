@@ -476,6 +476,10 @@ class MlflowClient:
             lifecycle_stage: active
             status: RUNNING
         """
+        import traceback
+        print(f"DBG: creating run: {run_name}\n")
+        traceback.print_stack()
+        print("==============================\n")
         return self._tracking_client.create_run(experiment_id, start_time, tags, run_name)
 
     ##### Prompt Registry #####
