@@ -477,8 +477,8 @@ class MlflowClient:
             status: RUNNING
         """
         import traceback
-        with open("/tmp/dbg1.out", "w") as f:
-            trace = traceback.format_stack()
+        with open("/tmp/dbg1.out", "a") as f:
+            trace = ''.jion(traceback.format_stack())
             f.write(f"DBG: creating run: {run_name}\n{trace}\n================\n")
         return self._tracking_client.create_run(experiment_id, start_time, tags, run_name)
 
