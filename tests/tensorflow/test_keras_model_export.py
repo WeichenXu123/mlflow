@@ -20,6 +20,7 @@ import mlflow
 import mlflow.pyfunc.scoring_server as pyfunc_scoring_server
 from mlflow import pyfunc
 from mlflow.deployments import PredictionsResponse
+from mlflow.exceptions import MlflowException
 from mlflow.models import Model, ModelSignature
 from mlflow.models.utils import _read_example, load_serving_example
 from mlflow.store.artifact.s3_artifact_repo import S3ArtifactRepository
@@ -729,3 +730,25 @@ def test_model_log_with_signature_inference(tf_keras_model, data, model_signatur
 
     mlflow_model = Model.load(model_info.model_uri)
     assert mlflow_model.signature == model_signature
+
+
+@pytest.mark.parametrize("allow", ["true", "false"])
+def test_load_model_with_custom_objects_respects_pickle_deserialization_env_var(
+    custom_model, custom_layer, model_path, monkeypatch, allow
+):
+    mlflow.tensorflow.save_model(
+        custom_model, path=model_path, custom_objects={"MyDense": custom_layer}
+    )
+    monkeypatch.setenv("MLFLOW_ALLOW_PICKLE_DESERIALIZATION", allow)
+    with (
+        mock.patch("mlflow.tensorflow.is_in_databricks_runtime", return_value=False),
+        mock.patch(
+            "mlflow.tensorflow.is_in_databricks_model_serving_environment", return_value=False
+        ),
+    ):
+        if allow == "false":
+            with pytest.raises(MlflowException, match="MLFLOW_ALLOW_PICKLE_DESERIALIZATION"):
+                mlflow.tensorflow.load_model(model_path)
+        else:
+            loaded = mlflow.tensorflow.load_model(model_path)
+            assert loaded is not None

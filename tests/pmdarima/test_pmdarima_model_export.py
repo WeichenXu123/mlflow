@@ -476,3 +476,23 @@ def test_model_log_with_signature_inference(auto_arima_model):
             ]
         ),
     )
+
+
+@pytest.mark.parametrize("allow", ["true", "false"])
+def test_load_model_respects_pickle_deserialization_env_var(
+    auto_arima_model, model_path, monkeypatch, allow
+):
+    mlflow.pmdarima.save_model(pmdarima_model=auto_arima_model, path=model_path)
+    monkeypatch.setenv("MLFLOW_ALLOW_PICKLE_DESERIALIZATION", allow)
+    with (
+        mock.patch("mlflow.pmdarima.is_in_databricks_runtime", return_value=False),
+        mock.patch(
+            "mlflow.pmdarima.is_in_databricks_model_serving_environment", return_value=False
+        ),
+    ):
+        if allow == "false":
+            with pytest.raises(MlflowException, match="MLFLOW_ALLOW_PICKLE_DESERIALIZATION"):
+                mlflow.pmdarima.load_model(model_uri=model_path)
+        else:
+            loaded = mlflow.pmdarima.load_model(model_uri=model_path)
+            np.testing.assert_array_equal(auto_arima_model.predict(10), loaded.predict(10))

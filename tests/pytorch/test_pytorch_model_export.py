@@ -1084,6 +1084,28 @@ def test_log_state_dict(sequential_model, data):
     )
 
 
+@pytest.mark.parametrize("scripted_model", [False])
+@pytest.mark.parametrize("allow", ["true", "false"])
+def test_load_state_dict_respects_pickle_deserialization_env_var(
+    sequential_model, model_path, monkeypatch, allow
+):
+    state_dict = sequential_model.state_dict()
+    mlflow.pytorch.save_state_dict(state_dict, model_path)
+    monkeypatch.setenv("MLFLOW_ALLOW_PICKLE_DESERIALIZATION", allow)
+    with (
+        mock.patch("mlflow.pytorch.is_in_databricks_runtime", return_value=False),
+        mock.patch(
+            "mlflow.pytorch.is_in_databricks_model_serving_environment", return_value=False
+        ),
+    ):
+        if allow == "false":
+            with pytest.raises(MlflowException, match="MLFLOW_ALLOW_PICKLE_DESERIALIZATION"):
+                mlflow.pytorch.load_state_dict(model_path)
+        else:
+            loaded_state_dict = mlflow.pytorch.load_state_dict(model_path)
+            assert state_dict_equal(loaded_state_dict, state_dict)
+
+
 @pytest.mark.parametrize("scripted_model", [True, False])
 def test_log_model_with_code_paths(sequential_model):
     artifact_path = "model"

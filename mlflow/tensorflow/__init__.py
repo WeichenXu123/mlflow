@@ -26,6 +26,7 @@ from mlflow.data.code_dataset_source import CodeDatasetSource
 from mlflow.data.numpy_dataset import from_numpy
 from mlflow.data.tensorflow_dataset import from_tensorflow
 from mlflow.entities import LoggedModelInput
+from mlflow.environment_variables import MLFLOW_ALLOW_PICKLE_DESERIALIZATION
 from mlflow.exceptions import INVALID_PARAMETER_VALUE, MlflowException
 from mlflow.models import Model, ModelInputExample, ModelSignature, infer_signature
 from mlflow.models.model import MLMODEL_FILE_NAME
@@ -61,6 +62,10 @@ from mlflow.utils.environment import (
     _process_pip_requirements,
     _PythonEnv,
     _validate_env_arguments,
+)
+from mlflow.utils.databricks_utils import (
+    is_in_databricks_model_serving_environment,
+    is_in_databricks_runtime,
 )
 from mlflow.utils.file_utils import TempDir, get_total_file_size, write_to
 from mlflow.utils.model_utils import (
@@ -548,6 +553,16 @@ def _load_custom_objects(path, file_name):
         if os.path.isfile(os.path.join(path, file_name)):
             custom_objects_path = os.path.join(path, file_name)
     if custom_objects_path is not None:
+        if (
+            not MLFLOW_ALLOW_PICKLE_DESERIALIZATION.get()
+            and not is_in_databricks_runtime()
+            and not is_in_databricks_model_serving_environment()
+        ):
+            raise MlflowException(
+                "Deserializing custom objects using cloudpickle is disallowed, but this model "
+                "has custom objects saved in cloudpickle format. To address this issue, you need "
+                "to set environment variable 'MLFLOW_ALLOW_PICKLE_DESERIALIZATION' to 'true'."
+            )
         import cloudpickle
 
         with open(custom_objects_path, "rb") as f:
