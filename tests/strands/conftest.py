@@ -29,3 +29,4 @@ def clear_autolog_state(reset_tracing):
     otel_trace._TRACER_PROVIDER_SET_ONCE._done = False
     provider._global_provider_init_once._done = False
     provider._isolated_tracer_provider_once._done = False
+    mlflow.tracking.fluent._experiment_id_env_cache.clear()

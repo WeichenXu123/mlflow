@@ -84,6 +84,14 @@ class StrandsSpanProcessor(SimpleSpanProcessor):
 
 
 def setup_strands_tracing():
+    # Pre-warm the experiment ID cache on the calling (main) thread. Without this,
+    # the first agent invocation would trigger a blocking HTTP call inside Strands'
+    # asyncio event loop (via on_start → _start_trace → get_experiment_id_for_trace),
+    # causing a ~120s hang when the Databricks endpoint is unreachable.
+    from mlflow.tracking.fluent import _get_experiment_id_from_env
+
+    _get_experiment_id_from_env()
+
     processor = StrandsSpanProcessor()
     provider = get_tracer_provider()
     if isinstance(provider, (NoOpTracerProvider, ProxyTracerProvider)):

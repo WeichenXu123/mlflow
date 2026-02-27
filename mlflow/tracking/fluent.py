@@ -109,6 +109,12 @@ if TYPE_CHECKING:
 
 _active_experiment_id = None
 
+# Cache for experiment ID lookups from environment variables. Keyed by
+# (MLFLOW_EXPERIMENT_NAME, MLFLOW_EXPERIMENT_ID) tuple to avoid repeated blocking
+# HTTP calls when spans are created inside asyncio event loops (e.g., Strands agents).
+_experiment_id_env_cache: dict[tuple[str | None, str | None], str | None] = {}
+_experiment_id_env_cache_lock = threading.Lock()
+
 SEARCH_MAX_RESULTS_PANDAS = 100000
 NUM_RUNS_PER_PAGE_PANDAS = 10000
 
@@ -3272,6 +3278,25 @@ def _get_or_start_run():
 def _get_experiment_id_from_env():
     experiment_name = MLFLOW_EXPERIMENT_NAME.get()
     experiment_id = MLFLOW_EXPERIMENT_ID.get()
+
+    if experiment_name is None and experiment_id is None:
+        return None
+
+    cache_key = (experiment_name, experiment_id)
+    with _experiment_id_env_cache_lock:
+        if cache_key in _experiment_id_env_cache:
+            return _experiment_id_env_cache[cache_key]
+
+    result = _resolve_experiment_id_from_env(experiment_name, experiment_id)
+
+    with _experiment_id_env_cache_lock:
+        _experiment_id_env_cache[cache_key] = result
+    return result
+
+
+def _resolve_experiment_id_from_env(
+    experiment_name: str | None, experiment_id: str | None
+) -> str | None:
     if experiment_name is not None:
         if exp := MlflowClient().get_experiment_by_name(experiment_name):
             if experiment_id and experiment_id != exp.experiment_id:

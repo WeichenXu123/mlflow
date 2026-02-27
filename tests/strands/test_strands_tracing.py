@@ -1,6 +1,7 @@
 import json
 from collections.abc import AsyncIterator, Sequence
 from typing import Any
+from unittest import mock
 
 from strands import Agent
 from strands.models.model import Model
@@ -8,7 +9,8 @@ from strands.tools.tools import PythonAgentTool
 
 import mlflow
 from mlflow.entities import SpanType
-from mlflow.environment_variables import MLFLOW_USE_DEFAULT_TRACER_PROVIDER
+from mlflow.environment_variables import MLFLOW_EXPERIMENT_ID, MLFLOW_USE_DEFAULT_TRACER_PROVIDER
+from mlflow.strands.autolog import setup_strands_tracing
 from mlflow.tracing.constant import SpanAttributeKey
 from mlflow.tracing.provider import trace_disabled
 
@@ -320,3 +322,35 @@ def test_strands_autolog_shared_provider_no_recursion(monkeypatch):
     agent_span = next(span for span in spans if span.span_type == SpanType.AGENT)
     assert agent_span.inputs == [{"role": "user", "content": [{"text": "hello"}]}]
     assert agent_span.outputs.strip() == "hi"
+
+
+def test_setup_strands_tracing_prewarms_experiment_id_cache(monkeypatch, tmp_path):
+    # Simulate Strands' scenario: MLFLOW_EXPERIMENT_ID is set in the environment
+    # (e.g., via mlflow.set_experiment()) but _active_experiment_id is None.
+    # Without pre-warming, the first agent span creation would trigger a blocking
+    # HTTP call inside the asyncio event loop, causing a ~120s hang.
+    exp_id = mlflow.create_experiment("prewarm-test-experiment")
+    monkeypatch.setenv(MLFLOW_EXPERIMENT_ID.name, str(exp_id))
+    mlflow.tracking.fluent._active_experiment_id = None
+
+    http_call_count = [0]
+
+    original_resolve = mlflow.tracking.fluent._resolve_experiment_id_from_env
+
+    def counting_resolve(*args, **kwargs):
+        http_call_count[0] += 1
+        return original_resolve(*args, **kwargs)
+
+    with mock.patch(
+        "mlflow.tracking.fluent._resolve_experiment_id_from_env", side_effect=counting_resolve
+    ):
+        # setup_strands_tracing() should pre-warm the cache (1 HTTP call on main thread)
+        setup_strands_tracing()
+        assert http_call_count[0] == 1
+
+        # Subsequent calls to _get_experiment_id_from_env() must hit the cache — no HTTP
+        from mlflow.tracking.fluent import _get_experiment_id_from_env
+
+        _get_experiment_id_from_env()
+        _get_experiment_id_from_env()
+        assert http_call_count[0] == 1
