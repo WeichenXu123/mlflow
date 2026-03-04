@@ -29,14 +29,15 @@ class WebhookLogEntry:
     attempt: int | None = None
 
 
-def wait_until_ready(health_endpoint: str, max_attempts: int = 10) -> None:
+def wait_until_ready(health_endpoint: str, max_attempts: int = 30) -> None:
     for _ in range(max_attempts):
         try:
             resp = requests.get(health_endpoint, timeout=2)
             if resp.status_code == 200:
                 return
         except requests.RequestException:
-            time.sleep(1)
+            pass
+        time.sleep(1)
     raise RuntimeError(f"Failed to start server at {health_endpoint}")
 
 
@@ -67,6 +68,9 @@ def _run_mlflow_server(tmp_path: Path) -> Generator[str, None, None]:
                 "MLFLOW_WEBHOOK_ALLOW_PRIVATE_IPS": "true",  # Allow localhost in e2e tests
             }
         ),
+        # Isolate server in its own process session so CI job signals (e.g. SIGTERM
+        # from a job timeout) sent to the pytest process group don't propagate to it.
+        start_new_session=True,
     ) as prc:
         try:
             url = f"http://localhost:{port}"
